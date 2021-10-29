@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4461DFC0-6F8F-4452-BADA-83C5EB77648F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bicep.Types.K8s", "src\Bicep.Types.K8s\Bicep.Types.K8s.csproj", "{B188CEEA-432E-4A0A-B023-5C0AFD2914F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bicep.Types.K8s.UnitTests", "src\Bicep.Types.K8s.UnitTests\Bicep.Types.K8s.UnitTests.csproj", "{724B0C5E-28F2-4316-A4D3-77CD2A0D49D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B188CEEA-432E-4A0A-B023-5C0AFD2914F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B188CEEA-432E-4A0A-B023-5C0AFD2914F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B188CEEA-432E-4A0A-B023-5C0AFD2914F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B188CEEA-432E-4A0A-B023-5C0AFD2914F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{724B0C5E-28F2-4316-A4D3-77CD2A0D49D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{724B0C5E-28F2-4316-A4D3-77CD2A0D49D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{724B0C5E-28F2-4316-A4D3-77CD2A0D49D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{724B0C5E-28F2-4316-A4D3-77CD2A0D49D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B188CEEA-432E-4A0A-B023-5C0AFD2914F9} = {4461DFC0-6F8F-4452-BADA-83C5EB77648F}
+		{724B0C5E-28F2-4316-A4D3-77CD2A0D49D0} = {4461DFC0-6F8F-4452-BADA-83C5EB77648F}
+	EndGlobalSection
+EndGlobal
