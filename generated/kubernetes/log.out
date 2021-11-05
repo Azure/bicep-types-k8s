@@ -31,23 +31,23 @@ INFORMATION: Accept-param true
 INFORMATION: Options {"input":["prechecker"],"prenamer":true,"always-create-content-type-parameter":true,"group-parameters":true,"additional-checks":false,"lenient-model-deduplication":true,"always-create-accept-parameter":true,"naming":{"override":{"cmyk":"CMYK","$host":"$host"}}}
 INFORMATION: Accept-param true
 WARNING (Modeler/MissingType): The schema 'io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrBool' has no type or format information whatsoever. Location:
-   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrBool
+   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrBool
 WARNING (Modeler/MissingType): The schema 'io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSON' has no type or format information whatsoever. Location:
-   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSON
+   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSON
 WARNING (Modeler/MissingType): The schema 'io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrStringArray' has no type or format information whatsoever. Location:
-   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrStringArray
+   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrStringArray
 WARNING (Modeler/MissingType): The schema 'io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrArray' has no type or format information whatsoever. Location:
-   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrArray
+   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrArray
 WARNING (Modeler/MissingType): The schema 'io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool' has no type or format information whatsoever. Location:
-   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool
+   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool
 WARNING (Modeler/MissingType): The schema 'io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSON' has no type or format information whatsoever. Location:
-   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSON
+   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSON
 WARNING (Modeler/MissingType): The schema 'io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray' has no type or format information whatsoever. Location:
-   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray
+   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray
 WARNING (Modeler/MissingType): The schema 'io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray' has no type or format information whatsoever. Location:
-   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray
+   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray
 WARNING (Modeler/MissingType): The schema 'io.dapr.v1alpha1.Component-spec-metadata-item-value' has no type or format information whatsoever. Location:
-   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.dapr.v1alpha1.Component-spec-metadata-item-value
+   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/json#/components/schemas/io.dapr.v1alpha1.Component-spec-metadata-item-value
 INFORMATION: Options {"input":["prechecker"],"prenamer":true,"always-create-content-type-parameter":true,"group-parameters":true,"additional-checks":false,"lenient-model-deduplication":true,"always-create-accept-parameter":true,"naming":{"override":{"cmyk":"CMYK","$host":"$host"}}}
 INFORMATION: Accept-param true
 INFORMATION: Options {"input":["prechecker"],"prenamer":true,"always-create-content-type-parameter":true,"group-parameters":true,"additional-checks":false,"lenient-model-deduplication":true,"always-create-accept-parameter":true,"naming":{"override":{"cmyk":"CMYK","$host":"$host"}}}
@@ -55,17 +55,17 @@ INFORMATION: Accept-param true
 INFORMATION: Options {"input":["prechecker"],"prenamer":true,"always-create-content-type-parameter":true,"group-parameters":true,"additional-checks":false,"lenient-model-deduplication":true,"always-create-accept-parameter":true,"naming":{"override":{"cmyk":"CMYK","$host":"$host"}}}
 INFORMATION: Accept-param true
 WARNING (Modeler/MissingType): The schema 'dev.radius.v1alpha1.Component-spec-bindings' has no type or format information whatsoever. Location:
-   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/dev.radius.v1alpha1.Component-spec-bindings
+   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/json#/components/schemas/dev.radius.v1alpha1.Component-spec-bindings
 WARNING (Modeler/MissingType): The schema 'dev.radius.v1alpha1.Component-spec-config' has no type or format information whatsoever. Location:
-   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/dev.radius.v1alpha1.Component-spec-config
+   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/json#/components/schemas/dev.radius.v1alpha1.Component-spec-config
 WARNING (Modeler/MissingType): The schema 'dev.radius.v1alpha1.Component-spec-run' has no type or format information whatsoever. Location:
-   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/dev.radius.v1alpha1.Component-spec-run
+   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/json#/components/schemas/dev.radius.v1alpha1.Component-spec-run
 WARNING (Modeler/MissingType): The schema 'dev.radius.v1alpha1.Component-spec-traits' has no type or format information whatsoever. Location:
-   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/dev.radius.v1alpha1.Component-spec-traits
+   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/json#/components/schemas/dev.radius.v1alpha1.Component-spec-traits
 WARNING (Modeler/MissingType): The schema 'dev.radius.v1alpha1.Component-spec-uses' has no type or format information whatsoever. Location:
-   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/dev.radius.v1alpha1.Component-spec-uses
+   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/json#/components/schemas/dev.radius.v1alpha1.Component-spec-uses
 WARNING (Modeler/MissingType): The schema 'dev.radius.v1alpha1.Component-status-bindings-item-values' has no type or format information whatsoever. Location:
-   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/dev.radius.v1alpha1.Component-status-bindings-item-values
+   file:///users/Ryan/kuby/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/json#/components/schemas/dev.radius.v1alpha1.Component-status-bindings-item-values
 WARNING: could not rationalize put: AzureIdentity
 WARNING: could not rationalize put: AzureIdentityBinding
 WARNING: could not rationalize put: AzurePodIdentityException
