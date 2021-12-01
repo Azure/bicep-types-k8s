@@ -357,3 +357,5 @@ code-model-v1
 
 # Temporary directory for GitHub workflows to use
 /workflow-temp
+
+dist/
