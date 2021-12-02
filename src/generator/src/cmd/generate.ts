@@ -344,7 +344,7 @@ function logOut(logger: ILogger, line: string) {
   logger.out(`${line}\n`);
 }
 
-function logErr(logger: ILogger, line: string) {
+function logErr(logger: ILogger, line: any) {
   logger.err(`${line}\n`);
 }
 

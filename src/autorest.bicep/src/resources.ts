@@ -4,7 +4,7 @@
 import { SchemaConverter } from "./converter";
 import { ARMConverter } from "./armconverter";
 import { ChoiceSchema, CodeModel, HttpMethod, HttpParameter, HttpRequest, HttpResponse, ImplementationLocation, ObjectSchema, Operation, Parameter, ParameterLocation, Request, Response, Schema, SchemaResponse, SealedChoiceSchema, Metadata, HttpWithBodyRequest, SerializationStyle } from "@autorest/codemodel";
-import { Channel, Host } from "@autorest/extension-base";
+import { Channel, AutorestExtensionHost } from "@autorest/extension-base";
 import { keys, Dictionary, values } from 'lodash';
 import { TypeReference } from "./types";
 import { success, failure, Result } from './utils';
@@ -93,10 +93,14 @@ export function getSerializedName(metadata: Metadata) {
   return metadata.language.default.serializedName ?? metadata.language.default.name;
 }
 
+function lastElement<T>(input?: T[]) {
+  return input?.slice(-1).pop();
+}
+
 export function getNameParameter(descriptor: ResourceDescriptor, request: HttpRequest, parameters: Parameter[]): Result<Parameter | string, string> {
   const path = getNormalizedMethodPath(request.path);
 
-  const finalProvidersMatch = path.match(parentScopePrefix)?.last;
+  const finalProvidersMatch = lastElement(path.match(parentScopePrefix) ?? undefined);
   if (!finalProvidersMatch) {
     return failure(`Unable to locate "/providers/" segment`);
   }
@@ -125,7 +129,7 @@ export function getNameParameter(descriptor: ResourceDescriptor, request: HttpRe
   return success(resNameParam);
 }
 
-export function getProviderDefinitions(codeModel: CodeModel, host: Host): ProviderDefinition[] {
+export function getProviderDefinitions(codeModel: CodeModel, host: AutorestExtensionHost): ProviderDefinition[] {
   function logWarning(message: string) {
     host.Message({
       Channel: Channel.Warning,
@@ -276,7 +280,7 @@ export function getProviderDefinitions(codeModel: CodeModel, host: Host): Provid
   function parseMethod(path: string, parameters: Parameter[], apiVersion: string): Result<ResourceDescriptor[], string> {
     path = getNormalizedMethodPath(path);
 
-    const finalProvidersMatch = path.match(parentScopePrefix)?.last;
+    const finalProvidersMatch = lastElement(path.match(parentScopePrefix) ?? undefined);
     if (!finalProvidersMatch) {
       return failure(`Unable to locate "/providers/" segment`);
     }

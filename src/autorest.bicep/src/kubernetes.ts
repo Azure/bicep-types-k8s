@@ -3,7 +3,7 @@
 
 import { KubernetesConverter } from './kubernetesconverter';
 import { CodeModel, HttpResponse, ObjectSchema, Operation, SchemaResponse } from "@autorest/codemodel";
-import { Channel, Host } from "@autorest/extension-base";
+import { Channel, AutorestExtensionHost } from "@autorest/extension-base";
 import { ProviderDefinition, ResourceDefinition, ResourceDescriptor, ScopeType } from './resources';
 
 export interface KubernetesDescriptor extends ResourceDescriptor {
@@ -13,9 +13,9 @@ export interface KubernetesDescriptor extends ResourceDescriptor {
     namespaced: boolean;
 }
 
-export function getKubernetesDefinitions(codeModel: CodeModel, host: Host): ProviderDefinition[] {
+export function getKubernetesDefinitions(codeModel: CodeModel, host: AutorestExtensionHost): ProviderDefinition[] {
     function logWarning(message: string) {
-        host.Message({
+        host.message({
             Channel: Channel.Warning,
             Text: message,
         })
@@ -53,6 +53,7 @@ export function getKubernetesDefinitions(codeModel: CodeModel, host: Host): Prov
     const providers: ProviderDefinition[] = [];
     for (const groupKey in groups) {
         const group = groups[groupKey];
+        const namespace = group.group === '' ? 'core' : group.group;
 
         const resources: { [type: string]: ResourceDefinition[] } = {};
         for (const kindKey in group.kinds) {
@@ -68,7 +69,7 @@ export function getKubernetesDefinitions(codeModel: CodeModel, host: Host): Prov
                 continue;
             }
 
-            const fullyQualifiedType = `kubernetes.${group.group === '' ? 'core' : group.group}/${kindKey}`
+            const fullyQualifiedType = `${namespace}/${kindKey}`
             let defintions = resources[fullyQualifiedType];
             if (!defintions) {
                 defintions = [];
@@ -77,7 +78,7 @@ export function getKubernetesDefinitions(codeModel: CodeModel, host: Host): Prov
 
             const descriptor: KubernetesDescriptor = {
                 scopeType: ScopeType.Unknown,
-                namespace: `kubernetes.${group.group === '' ? 'core' : group.group}`,
+                namespace: namespace,
                 apiVersion: group.version,
                 typeSegments: [kindKey],
                 group: group.group,
@@ -95,7 +96,7 @@ export function getKubernetesDefinitions(codeModel: CodeModel, host: Host): Prov
         const provider : ProviderDefinition = {
             kind: 'kubernetes',
             converter: new KubernetesConverter(),
-            namespace: `kubernetes.${group.group === '' ? 'core' : group.group}`,
+            namespace: namespace,
             apiVersion: group.version,
             resourcesByType: resources,
         };

@@ -7,10 +7,10 @@
     "start": "node ./dist/src/main.js"
   },
   "dependencies": {
-    "@autorest/codemodel": "^4.16.0",
-    "@autorest/extension-base": "^3.3.0",
-    "@types/lodash": "^4.14.172",
-    "autorest": "^3.3.2",
+    "@autorest/codemodel": "^4.17.0",
+    "@autorest/extension-base": "^3.4.4",
+    "@types/lodash": "^4.14.176",
+    "autorest": "^3.4.2",
     "lodash": "^4.17.21"
   },
   "devDependencies": {

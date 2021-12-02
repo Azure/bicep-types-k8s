@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { AutoRestExtension, Host, startSession } from "@autorest/extension-base";
+import { AutoRestExtension, AutorestExtensionHost, startSession } from "@autorest/extension-base";
 import { generateTypes } from "./type-generator";
 import { CodeModel, codeModelSchema } from "@autorest/codemodel";
 import { writeJson } from './writers/json';
@@ -9,7 +9,7 @@ import { writeMarkdown } from "./writers/markdown";
 import { getProviderDefinitions as getARMDefinitions, ProviderDefinition } from "./resources";
 import { getKubernetesDefinitions } from "./kubernetes"
 
-export async function processRequest(host: Host) {
+export async function processRequest(host: AutorestExtensionHost) {
   try {
     const session = await startSession<CodeModel>(
       host,
@@ -18,7 +18,7 @@ export async function processRequest(host: Host) {
     );
     const start = Date.now();
 
-    const kubernetes = await host.GetValue("kubernetes");
+    const kubernetes = await host.getValue("kubernetes");
 
     let definitions: ProviderDefinition[] | undefined;
     if (kubernetes){
@@ -34,13 +34,13 @@ export async function processRequest(host: Host) {
       const outFolder = `${namespace}/${apiVersion}`.toLowerCase();
 
       // write types.json
-      host.WriteFile(`${outFolder}/types.json`, writeJson(types));
+      host.writeFile({ filename: `${outFolder}/types.json`, content: writeJson(types) });
 
       // writer types.md
-      host.WriteFile(`${outFolder}/types.md`, writeMarkdown(namespace, apiVersion, types));
+      host.writeFile({ filename: `${outFolder}/types.md`, content: writeMarkdown(namespace, apiVersion, types) });
     }
 
-    session.log(`autorest.bicep took ${Date.now() - start}ms`, "");
+    session.info(`autorest.bicep took ${Date.now() - start}ms`);
   } catch (err) {
     console.error("An error was encountered while handling a request:", err);
     throw err;
@@ -49,8 +49,8 @@ export async function processRequest(host: Host) {
 
 async function main() {
   const pluginHost = new AutoRestExtension();
-  pluginHost.Add("bicep", processRequest);
-  await pluginHost.Run();
+  pluginHost.add("bicep", processRequest);
+  await pluginHost.run();
 }
 
 main();

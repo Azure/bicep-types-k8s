@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Host } from "@autorest/extension-base";
+import { AutorestExtensionHost } from "@autorest/extension-base";
 import { TypeBase, TypeFactory, TypeReference } from "./types";
 import { Dictionary } from 'lodash';
 import { ProviderDefinition } from "./resources";
 import { TypeBuilder } from "./typebuilder";
 
-export function generateTypes(host: Host, definition: ProviderDefinition): TypeBase[] {
+export function generateTypes(host: AutorestExtensionHost, definition: ProviderDefinition): TypeBase[] {
   const factory = new TypeFactory();
   const namedDefinitions: Dictionary<TypeReference> = {};
   const builder = new TypeBuilder(host, factory, namedDefinitions);

@@ -1,18 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Channel, Host } from "@autorest/extension-base";
+import { Channel, AutorestExtensionHost } from "@autorest/extension-base";
 import { ArrayType, BuiltInTypeKind, DiscriminatedObjectType, ObjectProperty, ObjectPropertyFlags, ObjectType, StringLiteralType, TypeBase, TypeFactory, TypeReference, UnionType } from "./types";
 import { Dictionary, flatMap, keyBy, keys, uniq } from 'lodash';
 import { getSerializedName } from "./resources";
 import { Schema, ObjectSchema, DictionarySchema, ChoiceSchema, SealedChoiceSchema, ConstantSchema, ArraySchema, PrimitiveSchema, AnySchema, Property, SchemaType, StringSchema } from "@autorest/codemodel";
 
 export class TypeBuilder {
-    readonly host: Host;
+    readonly host: AutorestExtensionHost;
     readonly factory: TypeFactory;
     readonly names: Dictionary<TypeReference>;
 
-    constructor(host: Host, factory: TypeFactory, names: Dictionary<TypeReference>) {
+    constructor(host: AutorestExtensionHost, factory: TypeFactory, names: Dictionary<TypeReference>) {
         this.host = host;
         this.factory = factory;
         this.names = names;

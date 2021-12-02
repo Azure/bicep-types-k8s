@@ -1,6 +1,6 @@
 # dapr.io @ v1alpha1
 
-## Resource Component@v1alpha1
+## Resource dapr.io/Component@v1alpha1
 * **Valid Scope(s)**: Unknown
 ### Properties
 * **apiVersion**: 'dapr.io/v1alpha1' (ReadOnly, DeployTimeConstant): The api version.
@@ -10,7 +10,7 @@
 * **scopes**: string[]: Array of IoDaprV1Alpha1ComponentScopesItem
 * **spec**: [IoDaprV1Alpha1ComponentSpec](#iodaprv1alpha1componentspec): ComponentSpec is the spec for a component
 
-## Resource Configuration@v1alpha1
+## Resource dapr.io/Configuration@v1alpha1
 * **Valid Scope(s)**: Unknown
 ### Properties
 * **apiVersion**: 'dapr.io/v1alpha1' (ReadOnly, DeployTimeConstant): The api version.
@@ -18,7 +18,7 @@
 * **metadata**: [metadata](#metadata) (Required): The resource metadata.
 * **spec**: [IoDaprV1Alpha1ConfigurationSpec](#iodaprv1alpha1configurationspec): ConfigurationSpec is the spec for an configuration
 
-## Resource Subscription@v1alpha1
+## Resource dapr.io/Subscription@v1alpha1
 * **Valid Scope(s)**: Unknown
 ### Properties
 * **apiVersion**: 'dapr.io/v1alpha1' (ReadOnly, DeployTimeConstant): The api version.
@@ -60,7 +60,7 @@
 ### Properties
 * **name**: string (Required)
 * **secretKeyRef**: [IoDaprV1Alpha1ComponentSpecMetadataItemSecretKeyRef](#iodaprv1alpha1componentspecmetadataitemsecretkeyref): SecretKeyRef is a reference to a secret holding the value for the metadata item. Name is the secret name, and key is the field in the secret.
-* **value**: any: Any object
+* **value**: any: Anything
 
 ## IoDaprV1Alpha1ComponentSpecMetadataItemSecretKeyRef
 ### Properties
