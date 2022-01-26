@@ -30,7 +30,7 @@
     "@types/lodash": "^4.14.172",
     "@types/node": "^17.0.12",
     "@types/yargs": "^17.0.8",
-    "async": "^3.2.1",
+    "async": "^3.2.3",
     "autorest": "^3.3.2",
     "colors": "^1.4.0",
     "js-yaml": "^4.1.0",
