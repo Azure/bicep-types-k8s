@@ -4,7 +4,7 @@ import { createWriteStream, exists, existsSync } from 'fs';
 import { readdir, stat, rmdir, mkdir, rm, writeFile, readFile, copyFile } from 'fs/promises';
 import { series } from 'async';
 import { spawn } from 'child_process';
-import * as colors from 'colors';
+import colors from 'colors';
 import yargs from 'yargs';
 import { groupBy, keys, orderBy, sortBy, Dictionary } from 'lodash';
 import { TypeBaseKind } from '../types';
