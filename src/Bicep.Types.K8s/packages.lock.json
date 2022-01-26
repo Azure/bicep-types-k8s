@@ -4,9 +4,9 @@
     ".NETStandard,Version=v2.0": {
       "Azure.Bicep.Types": {
         "type": "Direct",
-        "requested": "[0.1.304, )",
-        "resolved": "0.1.304",
-        "contentHash": "sxaNlc6bH+gneUl77BQt0JvVK0lWSRn1HNqoTlDelD3yPrD0v/0e6V1FYlp/UJFbhfio12mcI2TlIrByU3Obpg==",
+        "requested": "[0.1.331, )",
+        "resolved": "0.1.331",
+        "contentHash": "2qx/v4q5CKu/RmyWdDJ1JPfVxlSs+1ZC+4xK9iKfcjcgeh2lvaYYESiWnGaBfNFJOGY5ftb1WoXivlKhynJ4Dg==",
         "dependencies": {
           "System.Text.Json": "5.0.2"
         }
