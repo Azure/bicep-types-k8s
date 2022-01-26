@@ -4,8 +4,7 @@ import { createWriteStream, exists, existsSync } from 'fs';
 import { readdir, stat, rmdir, mkdir, rm, writeFile, readFile, copyFile } from 'fs/promises';
 import { series } from 'async';
 import { spawn } from 'child_process';
-import chalk from 'chalk';
-import stripAnsi from 'strip-ansi';
+import * as colors from 'colors';
 import yargs from 'yargs';
 import { groupBy, keys, orderBy, sortBy, Dictionary } from 'lodash';
 import { TypeBaseKind } from '../types';
@@ -290,7 +289,7 @@ async function findRecursive(basePath: string, filter: (name: string) => boolean
 function executeCmd(logger: ILogger, verbose: boolean, cwd: string, cmd: string, args: string[]) : Promise<number> {
   return new Promise((resolve, reject) => {
     if (verbose) {
-      logOut(logger, chalk.green(`Executing: ${cmd} ${args.join(' ')}`));
+      logOut(logger, colors.green(`Executing: ${cmd} ${args.join(' ')}`));
     }
 
     const child = spawn(cmd, args, {
@@ -299,9 +298,9 @@ function executeCmd(logger: ILogger, verbose: boolean, cwd: string, cmd: string,
       shell: true,
     });
 
-    child.stdout.on('data', data => logger.out(chalk.grey(data.toString())));
+    child.stdout.on('data', data => logger.out(colors.grey(data.toString())));
     child.stderr.on('data', data => {
-      logger.err(chalk.red(data.toString()));
+      logger.err(colors.red(data.toString()));
       if (data.indexOf('FATAL ERROR') > -1 && data.indexOf('Allocation failed - JavaScript heap out of memory') > -1) {
         reject('Child process has run out of memory');
       }
@@ -355,11 +354,11 @@ async function getLogger(logFilePath: string): Promise<ILogger> {
   return {
     out: (data: string) => {
       process.stdout.write(data);
-      logFileStream.write(stripAnsi(data));
+      logFileStream.write(colors.stripColors(data));
     },
     err: (data: string) => {
       process.stdout.write(data);
-      logFileStream.write(stripAnsi(data));
+      logFileStream.write(colors.stripColors(data));
     },
   };
 }
