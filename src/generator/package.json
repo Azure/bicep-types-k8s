@@ -28,7 +28,7 @@
     "@types/async": "^3.2.12",
     "@types/js-yaml": "^4.0.2",
     "@types/lodash": "^4.14.178",
-    "@types/node": "^17.0.18",
+    "@types/node": "^17.0.23",
     "@types/yargs": "^17.0.8",
     "async": "^3.2.3",
     "autorest": "^3.3.2",
