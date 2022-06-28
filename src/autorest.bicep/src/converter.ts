@@ -5,7 +5,7 @@ import { TypeBuilder } from './typebuilder';
 import { Channel } from '@autorest/extension-base';
 import { Dictionary, keyBy } from 'lodash';
 import { getFullyQualifiedType, ProviderDefinition, ResourceDefinition } from './resources';
-import { DiscriminatedObjectType, ObjectProperty, ObjectType, ResourceType, TypeReference } from './types';
+import { DiscriminatedObjectType, ObjectProperty, ObjectType, ResourceFlags, ResourceType, TypeReference } from './types';
 
 export type TypeCallback = (definition: ResourceDefinition, properties: Dictionary<ObjectProperty>) => void;
 
@@ -114,7 +114,13 @@ export abstract class SchemaConverter {
             return null;
         }
 
-        const resourceType = new ResourceType(`${fullyQualifiedType}@${result.descriptor.apiVersion}`, result.descriptor.scopeType, result.bodyType);
+        const resourceType = new ResourceType(
+            `${fullyQualifiedType}@${result.descriptor.apiVersion}`,
+            result.descriptor.scopeType,
+            undefined,
+            result.bodyType,
+            ResourceFlags.None
+        );
         return resourceType;
     }
 }

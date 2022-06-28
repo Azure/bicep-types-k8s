@@ -104,6 +104,26 @@ export function getTypeBaseKindLabel(input: TypeBaseKind) {
   return TypeBaseKindLabel.get(input) ?? '';
 }
 
+export enum ResourceFlags {
+  None = 0,
+  ReadOnly = 1 << 0,
+}
+
+const ResourceFlagsLabels = new Map<ResourceFlags, string>([
+  [ResourceFlags.ReadOnly, 'ReadOnly'],
+]);
+
+export function getResourceFlagsLabels(input: ResourceFlags) {
+  const flags = [];
+  for (const [bitmask, label] of ResourceFlagsLabels) {
+    if ((bitmask & input) === bitmask) {
+      flags.push(label);
+    }
+  }
+
+  return flags;
+}
+
 export abstract class TypeBase {
   constructor(type: TypeBaseKind) {
     this.Type = type;
@@ -143,14 +163,18 @@ export class StringLiteralType extends TypeBase {
 }
 
 export class ResourceType extends TypeBase {
-  constructor(name: string, scopeType: ScopeType, body: TypeReference) {
+  constructor(name: string, scopeType: ScopeType, readonlyScopes: ScopeType|undefined, body: TypeReference, flags: ResourceFlags) {
     super(TypeBaseKind.ResourceType);
     this.Name = name;
     this.ScopeType = scopeType;
+    this.ReadOnlyScopes = readonlyScopes;
     this.Body = body;
+    this.Flags = flags;
   }
   readonly Name: string;
   readonly ScopeType: ScopeType;
+  readonly ReadOnlyScopes?: ScopeType;
+  readonly Flags: ResourceFlags;
   readonly Body: TypeReference;
 }
 
