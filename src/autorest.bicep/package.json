@@ -7,7 +7,7 @@
     "start": "node ./dist/src/main.js"
   },
   "dependencies": {
-    "@autorest/codemodel": "^4.19.1",
+    "@autorest/codemodel": "^4.19.2",
     "@autorest/extension-base": "^3.5.0",
     "@types/lodash": "^4.14.182",
     "autorest": "^3.6.2",
