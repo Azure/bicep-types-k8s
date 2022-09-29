@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -15,6 +16,11 @@ namespace Azure.Bicep.Types.K8s.Index
         public static TypeIndex DeserializeIndex(string content)
         {
             return JsonSerializer.Deserialize<TypeIndex>(content, SerializeOptions) ?? throw new JsonException("Failed to deserialize index");
+        }
+
+        public static TypeIndex DeserializeIndex(Stream contentStream)
+        {
+            return JsonSerializer.Deserialize<TypeIndex>(contentStream, SerializeOptions) ?? throw new JsonException("Failed to deserialize index");
         }
     }
 }
