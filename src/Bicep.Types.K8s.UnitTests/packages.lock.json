@@ -197,7 +197,7 @@
       "Newtonsoft.Json": {
         "type": "Transitive",
         "resolved": "10.0.3",
-        "contentHash": "wBM7i7i3U2WX0ecor4zdVGvgrwFUjuigBoHKiL+nH39fCOpCPjBY3RDqJM32edvdyTAVdjzlccHsg41+/+zpSA==",
+        "contentHash": "hSXaFmh7hNCuEoC4XNY5DrRkLDzYHqPx/Ik23R4J86Z7PE/Y6YidhG602dFVdLBRSdG6xp9NabH3dXpcoxWvww==",
         "dependencies": {
           "Microsoft.CSharp": "4.3.0",
           "NETStandard.Library": "1.6.1",
@@ -369,7 +369,7 @@
       "System.Collections.NonGeneric": {
         "type": "Transitive",
         "resolved": "4.3.0",
-        "contentHash": "m7pXubhUhtS7ON/QkuAb4SauHBP1ZvGhvSkmRclvpIIBj1E4hvAryP/hTURFTMzWTCV4fz3/7N6gJpDHF6ZmdQ==",
+        "contentHash": "prtjIEMhGUnQq6RnPEYLpFt8AtLbp9yq2zxOSrY7KJJZrw25Fi97IzBqY7iqssbM61Ek5b8f3MG/sG1N2sN5KA==",
         "dependencies": {
           "System.Diagnostics.Debug": "4.3.0",
           "System.Globalization": "4.3.0",
@@ -382,7 +382,7 @@
       "System.Collections.Specialized": {
         "type": "Transitive",
         "resolved": "4.3.0",
-        "contentHash": "XDVjHrZFKcFrKEF02DejanefEbrD+0BA4VANickE08z737/5W3mvPL8WfuAORRdFusoFgtAEHN8NfrIzwkPl9w==",
+        "contentHash": "Epx8PoVZR0iuOnJJDzp7pWvdfMMOAvpUo95pC4ScH2mJuXkKA2Y4aR3cG9qt2klHgSons1WFh4kcGW7cSXvrxg==",
         "dependencies": {
           "System.Collections.NonGeneric": "4.3.0",
           "System.Globalization": "4.3.0",
