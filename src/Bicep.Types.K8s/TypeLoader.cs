@@ -17,18 +17,38 @@ namespace Azure.Bicep.Types.K8s
 
         public ResourceType LoadResourceType(TypeLocation typeLocation)
         {
-            var content = GetContentAtPath(typeLocation.RelativePath);
-
-            var types = TypeSerializer.Deserialize(content);
-            if (typeLocation.Index is not int intIndex || types[intIndex] is not ResourceType resourceType)
+            using (var contentStream = GetContentStreamAtPath(typeLocation.RelativePath))
             {
-                throw new ArgumentException($"Unable to locate resource type at index {typeLocation.Index} in \"{typeLocation.RelativePath}\" resource");
-            }
+                var types = TypeSerializer.Deserialize(contentStream);
+                if (typeLocation.Index is not int intIndex || types[intIndex] is not ResourceType resourceType)
+                {
+                    throw new ArgumentException($"Unable to locate resource type at index {typeLocation.Index} in \"{typeLocation.RelativePath}\" resource");
+                }
 
-            return resourceType;
+                return resourceType;
+            }
         }
 
         public string GetContentAtPath(string? path)
+        {
+            _ = path ?? throw new ArgumentNullException(nameof(path));
+
+            using (var decompressStream = GetContentStreamAtPath(path))
+            using (var streamReader = new StreamReader(decompressStream))
+            {
+                return streamReader.ReadToEnd();
+            }
+        }
+
+        public TypeIndex GetIndexedTypes()
+        {
+            using (var contentStream = GetContentStreamAtPath(TypeIndexResourceName))
+            {
+                return TypeIndexer.DeserializeIndex(contentStream);
+            }
+        }
+
+        private Stream GetContentStreamAtPath(string? path)
         {
             _ = path ?? throw new ArgumentNullException(nameof(path));
 
@@ -38,19 +58,7 @@ namespace Azure.Bicep.Types.K8s
                 throw new ArgumentException($"Unable to locate manifest resource at path {path}", nameof(path));
             }
 
-            using (fileStream)
-            using (var decompressStream = new DeflateStream(fileStream, CompressionMode.Decompress))
-            using (var streamReader = new StreamReader(decompressStream))
-            {
-                return streamReader.ReadToEnd();
-            }
-        }
-
-        public TypeIndex GetIndexedTypes()
-        {
-            var content = GetContentAtPath(TypeIndexResourceName);
-
-            return TypeIndexer.DeserializeIndex(content);
+            return new DeflateStream(fileStream, CompressionMode.Decompress);
         }
     }
 }
