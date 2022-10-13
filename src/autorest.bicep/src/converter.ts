@@ -3,9 +3,9 @@
 
 import { TypeBuilder } from './typebuilder';
 import { Channel } from '@autorest/extension-base';
-import { Dictionary, keyBy } from 'lodash';
+import { Dictionary } from 'lodash';
 import { getFullyQualifiedType, ProviderDefinition, ResourceDefinition } from './resources';
-import { DiscriminatedObjectType, ObjectProperty, ObjectType, ResourceType, TypeReference } from './types';
+import { DiscriminatedObjectType, ObjectProperty, ObjectType, ResourceFlags, ResourceType, TypeReference } from 'bicep-types';
 
 export type TypeCallback = (definition: ResourceDefinition, properties: Dictionary<ObjectProperty>) => void;
 
@@ -30,7 +30,6 @@ export abstract class SchemaConverter {
                     }
                 }
 
-                const definitionsByConstantName = keyBy(definitions, x => x.descriptor.constantName);
                 const polymorphicBodies: Dictionary<TypeReference> = {};
                 for (const definition of definitions) {
                     const bodyType = processResourceBody(fullyQualifiedType, definition);
@@ -114,7 +113,11 @@ export abstract class SchemaConverter {
             return null;
         }
 
-        const resourceType = new ResourceType(`${fullyQualifiedType}@${result.descriptor.apiVersion}`, result.descriptor.scopeType, result.bodyType);
-        return resourceType;
+        return new ResourceType(
+            `${fullyQualifiedType}@${result.descriptor.apiVersion}`,
+            result.descriptor.scopeType,
+            undefined,
+            result.bodyType,
+            ResourceFlags.None);
     }
 }

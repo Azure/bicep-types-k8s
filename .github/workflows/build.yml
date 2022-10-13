@@ -59,14 +59,25 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
+          submodules: recursive
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
+      
+      - name: Build bicep-types dependency
+        run: |
+          npm ci
+          npm run build
+        working-directory: bicep-types/src/bicep-types
       
       - name: Install
         run: npm ci
+        working-directory: ./src/generator
+      
+      - name: Lint
+        run: npm run lint
         working-directory: ./src/generator
 
       - name: Build
@@ -81,16 +92,31 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
+          submodules: recursive
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
+      
+      - name: Build bicep-types dependency
+        run: |
+          npm ci
+          npm run build
+        working-directory: bicep-types/src/bicep-types
       
       - name: Install
         run: npm ci
         working-directory: ./src/autorest.bicep
+      
+      - name: Lint
+        run: npm run lint
+        working-directory: ./src/autorest.bicep
 
       - name: Build
         run: npm run build
+        working-directory: ./src/autorest.bicep
+      
+      - name: Test
+        run: npm test
         working-directory: ./src/autorest.bicep

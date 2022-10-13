@@ -1,26 +1,15 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import os from 'os';
 import path from 'path';
-import { createWriteStream, exists, existsSync } from 'fs';
-import { readdir, stat, rmdir, mkdir, rm, writeFile, readFile, copyFile } from 'fs/promises';
-import { series } from 'async';
-import { spawn } from 'child_process';
-import colors from 'colors';
+import { existsSync } from 'fs';
+import { mkdir, rm, writeFile, readFile } from 'fs/promises';
 import yargs from 'yargs';
-import { groupBy, keys, orderBy, sortBy, Dictionary } from 'lodash';
-import { TypeBaseKind } from '../types';
+import { TypeBase, TypeFile, buildIndex, writeIndexJson, writeIndexMarkdown } from "bicep-types";
 import { GeneratorConfig, getConfig } from '../config';
 import * as markdown from '@ts-common/commonmark-to-markdown'
 import * as yaml from 'js-yaml'
-
-interface ILogger {
-  out: (data: string) => void;
-  err: (data: string) => void;
-}
-
-const defaultLogger: ILogger = {
-  out: data => process.stdout.write(data),
-  err: data => process.stderr.write(data),
-}
+import { copyRecursive, executeSynchronous, getLogger, lowerCaseCompare, logErr, logOut, ILogger, defaultLogger, executeCmd, findRecursive } from '../utils';
 
 const rootDir = `${__dirname}/../../../../`;
 
@@ -33,16 +22,14 @@ const argsConfig = yargs
   .option('specs-dir', { type: 'string', demandOption: true, desc: 'Path to the azure-rest-api-specs dir' })
   .option('out-dir', { type: 'string', default: defaultOutDir, desc: 'Output path for generated files' })
   .option('single-path', { type: 'string', default: undefined, desc: 'Only regenerate under a specific file path - e.g. "compute"' })
-  .option('kubernetes', {type: 'boolean', default: false, desc: 'Read a Kubernetes OpenAPI doc' })
-  .option('verbose', { type: 'boolean', default: false, desc: 'Enable autorest verbose logging' })
+  .option('logging-level', { type: 'string', default: 'warning', choices: ['debug', 'verbose', 'information', 'warning', 'error', 'fatal'] })
   .option('wait-for-debugger', { type: 'boolean', default: false, desc: 'Wait for a C# debugger to be attached before running the Autorest extension' });
 
 executeSynchronous(async () => {
-  const args = await argsConfig.parseAsync();  
+  const args = await argsConfig.parseAsync();
   const inputBaseDir = path.resolve(args['specs-dir']);
   const outputBaseDir = path.resolve(args['out-dir']);
-  const verbose = args['verbose'];
-  const kubernetes = args['kubernetes'];
+  const logLevel = args['logging-level'];
   const waitForDebugger = args['wait-for-debugger'];
   const singlePath = args['single-path'];
 
@@ -58,9 +45,7 @@ executeSynchronous(async () => {
   }
 
   const tmpOutputPath = `${os.tmpdir()}/_bcp_${new Date().getTime()}`;
-  if (existsSync(tmpOutputPath)) {
-    await rmdir(tmpOutputPath, { recursive: true });
-  }
+  await rm(tmpOutputPath, { recursive: true, force: true, });
 
   // this file is deliberately gitignored as it'll be overwritten when using --single-path
   // it's used to generate the git commit message
@@ -79,9 +64,7 @@ executeSynchronous(async () => {
     }
 
     // prepare temp dir for output
-    if (existsSync(tmpOutputDir)){
-      await rmdir(tmpOutputDir, { recursive: true });
-    }
+    await rm(tmpOutputDir, { recursive: true, force: true, });
     await mkdir(tmpOutputDir, { recursive: true });
     const logger = await getLogger(`${tmpOutputDir}/log.out`);
     const config = getConfig(basePath);
@@ -89,20 +72,17 @@ executeSynchronous(async () => {
     try {
       // autorest readme.bicep.md files are not checked in, so we must generate them before invoking autorest
       await generateAutorestConfig(logger, readmePath, bicepReadmePath, config);
-      await generateSchema(logger, readmePath, tmpOutputDir, verbose, waitForDebugger, kubernetes);
+      await generateSchema(logger, readmePath, tmpOutputDir, logLevel, waitForDebugger);
 
       // remove all previously-generated files and copy over results
-      if (existsSync(outputDir)) {
-        await rmdir(outputDir, { recursive: true });
-      }
-
+      await rm(outputDir, { recursive: true, force: true, });
       await mkdir(outputDir, { recursive: true });
       await copyRecursive(tmpOutputDir, outputDir);
     } catch (err) {
       logErr(logger, err);
-      
+
       // Use markdown formatting as this summary will be included in the PR description
-      logOut(summaryLogger, 
+      logOut(summaryLogger,
 `<details>
   <summary>Failed to generate types for path '${basePath}'</summary>
 
@@ -113,8 +93,9 @@ ${err}
 `);
     }
 
-    // clean up temp dir
-    await rmdir(tmpOutputDir, { recursive: true });
+    // clean up temp dirs
+    await rm(tmpOutputDir, { recursive: true, force: true, });
+    await clearAutorestTempDir(logger, logLevel, waitForDebugger);
     // clean up autorest readme.bicep.md files
     await rm(bicepReadmePath, { force: true });
   }
@@ -124,12 +105,14 @@ ${err}
 });
 
 function normalizeJsonPath(jsonPath: string) {
+  // eslint-disable-next-line no-useless-escape
   return path.normalize(jsonPath).replace(/[\\\/]/g, '/');
 }
 
 async function generateAutorestConfig(logger: ILogger, readmePath: string, bicepReadmePath: string, config: GeneratorConfig) {
   // We expect a path format convention of <provider>/(preview|stable)/<yyyy>-<mm>-<dd>(|-preview)/<filename>.json
   // This information is used to generate individual tags in the generated autorest configuration
+  // eslint-disable-next-line no-useless-escape
   const pathRegex = /^([^\/]+)\/[^\/]+\/(\d{4}-\d{2}-\d{2}(|-preview))\/.*\.json$/i;
 
   const readmeContents = await readFile(readmePath, { encoding: 'utf8' });
@@ -148,7 +131,8 @@ async function generateAutorestConfig(logger: ILogger, readmePath: string, bicep
       !node.info.trim().startsWith('yaml')) {
       continue;
     }
-    
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const yamlData = yaml.load(node.literal) as any;
     if (yamlData) {
       // input-file may be a single string or an array of strings
@@ -163,7 +147,7 @@ async function generateAutorestConfig(logger: ILogger, readmePath: string, bicep
     }
   }
 
-  const filesByTag: Dictionary<string[]> = {};
+  const filesByTag: Record<string, string[]> = {};
   for (const file of inputFiles) {
     const normalizedFile = normalizeJsonPath(file);
     const match = pathRegex.exec(normalizedFile);
@@ -178,7 +162,7 @@ async function generateAutorestConfig(logger: ILogger, readmePath: string, bicep
 
       filesByTag[tagName].push(normalizedFile);
     } else {
-      logOut(logger, `WARNING: Unable to parse swagger path \"${file}\"`);
+      logOut(logger, `WARNING: Unable to parse swagger path "${file}"`);
     }
   }
 
@@ -201,27 +185,36 @@ ${yaml.dump({ 'input-file': filesByTag[tag] }, { lineWidth: 1000})}
   await writeFile(bicepReadmePath, generatedContent);
 }
 
-async function generateSchema(logger: ILogger, readme: string, outputBaseDir: string, verbose: boolean, waitForDebugger: boolean, kubernetes: boolean) {
+async function generateSchema(logger: ILogger, readme: string, outputBaseDir: string, logLevel: string, waitForDebugger: boolean) {
   let autoRestParams = [
     `--use=@autorest/modelerfour`,
     `--use=${extensionDir}`,
     '--bicep',
     `--output-folder=${outputBaseDir}`,
+    `--level=${logLevel}`,
     `--multiapi`,
     '--title=none',
     // This is necessary to avoid failures such as "ERROR: Semantic violation: Discriminator must be a required property." blocking type generation.
     // In an ideal world, we'd raise issues in https://github.com/Azure/azure-rest-api-specs and force RP teams to fix them, but this isn't very practical
-    // as new validations are added continuously, and there's often quite a lag before teams will fix them - we don't want to be blocked by this in generating types. 
+    // as new validations are added continuously, and there's often quite a lag before teams will fix them - we don't want to be blocked by this in generating types.
     `--skip-semantics-validation`,
+    `--bicep.kubernetes`,
     readme,
   ];
 
-  if (verbose) {
-    autoRestParams = autoRestParams.concat([
-      `--debug`,
-      `--verbose`,
-    ]);
-  }
+  autoRestParams = applyCommonAutoRestParameters(autoRestParams, logLevel, waitForDebugger);
+
+  return await executeCmd(logger, isVerboseLoggingLevel(logLevel), __dirname, autorestBinary, autoRestParams);
+}
+
+async function clearAutorestTempDir(logger: ILogger, logLevel: string, waitForDebugger: boolean) {
+  const autoRestParams = applyCommonAutoRestParameters(['--clear-temp', '--allow-no-input'], logLevel, waitForDebugger);
+
+  return await executeCmd(logger, isVerboseLoggingLevel(logLevel), __dirname, autorestBinary, autoRestParams);
+}
+
+function applyCommonAutoRestParameters(autoRestParams: string[], logLevel: string, waitForDebugger: boolean) {
+  autoRestParams = autoRestParams.concat([`--level=${logLevel}`])
 
   if (waitForDebugger) {
     autoRestParams = autoRestParams.concat([
@@ -229,13 +222,7 @@ async function generateSchema(logger: ILogger, readme: string, outputBaseDir: st
     ]);
   }
 
-  if (kubernetes) {
-    autoRestParams = autoRestParams.concat([
-      `--bicep.kubernetes`
-    ])
-  }
-
-  return await executeCmd(logger, verbose, __dirname, autorestBinary, autoRestParams);
+  return autoRestParams;
 }
 
 async function findReadmePaths(specsPath: string) {
@@ -250,199 +237,31 @@ async function findReadmePaths(specsPath: string) {
   });
 }
 
-async function copyRecursive(sourceBasePath: string, destinationBasePath: string): Promise<void> {
-  for (const filePath of await findRecursive(sourceBasePath, _ => true)) {
-    const destinationPath = path.join(destinationBasePath, path.relative(sourceBasePath, filePath));
-
-    await mkdir(path.dirname(destinationPath), { recursive: true });
-    await copyFile(filePath, destinationPath);
-  }
-}
-
-async function findRecursive(basePath: string, filter: (name: string) => boolean): Promise<string[]> {
-  let results: string[] = [];
-
-  for (const subPathName of await readdir(basePath)) {
-    const subPath = path.resolve(`${basePath}/${subPathName}`);
-
-    const fileStat = await stat(subPath);
-    if (fileStat.isDirectory()) {
-      const pathResults = await findRecursive(subPath, filter);
-      results = results.concat(pathResults);
-      continue;
-    }
-
-    if (!fileStat.isFile()) {
-      continue;
-    }
-
-    if (!filter(subPath)) {
-      continue;
-    }
-
-    results.push(subPath);
-  }
-
-  return results;
-}
-
-function executeCmd(logger: ILogger, verbose: boolean, cwd: string, cmd: string, args: string[]) : Promise<number> {
-  return new Promise((resolve, reject) => {
-    if (verbose) {
-      logOut(logger, colors.green(`Executing: ${cmd} ${args.join(' ')}`));
-    }
-
-    const child = spawn(cmd, args, {
-      cwd: cwd,
-      windowsHide: true,
-      shell: true,
-    });
-
-    child.stdout.on('data', data => logger.out(colors.grey(data.toString())));
-    child.stderr.on('data', data => {
-      logger.err(colors.red(data.toString()));
-      if (data.indexOf('FATAL ERROR') > -1 && data.indexOf('Allocation failed - JavaScript heap out of memory') > -1) {
-        reject('Child process has run out of memory');
-      }
-    });
-
-    child.on('error', err => {
-      reject(err);
-    });
-    child.on('exit', code => {
-      if (code !== 0) {
-        reject(`Exited with code ${code}`);
-      }
-      resolve(code ? code : 0);
-    });
-  });
-}
-
-function executeSynchronous<T>(asyncFunc: () => Promise<T>) {
-  series(
-    [asyncFunc],
-    (error, _) => {
-      if (error) {
-        throw error;
-      }
-    });
-}
-
-function lowerCaseCompare(a: string, b: string) {
-  const aLower = a.toLowerCase();
-  const bLower = b.toLowerCase();
-
-  if (aLower === bLower) {
-    return 0;
-  }
-
-  return aLower < bLower ? -1 : 1;
-}
-
-function logOut(logger: ILogger, line: string) {
-  logger.out(`${line}\n`);
-}
-
-function logErr(logger: ILogger, line: any) {
-  logger.err(`${line}\n`);
-}
-
-async function getLogger(logFilePath: string): Promise<ILogger> {
-  await rm(logFilePath, { force: true });
-  const logFileStream = createWriteStream(logFilePath, { flags: 'a' });
-
-  return {
-    out: (data: string) => {
-      process.stdout.write(data);
-      logFileStream.write(colors.stripColors(data));
-    },
-    err: (data: string) => {
-      process.stdout.write(data);
-      logFileStream.write(colors.stripColors(data));
-    },
-  };
-}
-
 async function buildTypeIndex(logger: ILogger, baseDir: string) {
-  const indexContent = await buildIndex(logger, baseDir);
-
-  await writeFile(
-    `${baseDir}/index.json`,
-    JSON.stringify(indexContent, null, 0));
-
-  await writeFile(
-    `${baseDir}/index.md`,
-    generateIndexMarkdown(indexContent));
-}
-
-interface TypeIndex {
-  Types: Dictionary<TypeIndexEntry>;
-}
-
-interface TypeIndexEntry {
-  RelativePath: string;
-  Index: number;
-}
-
-function generateIndexMarkdown(index: TypeIndex) {
-  let markdown = '# Bicep Types\n';
-
-  const byProvider = groupBy(keys(index.Types), x => x.split('/')[0].toLowerCase());
-  for (const namespace of sortBy(keys(byProvider), x => x.toLowerCase())) {
-    markdown += `## ${namespace}\n`;
-
-    const byResourceType = groupBy(byProvider[namespace], x => x.split('@')[0].toLowerCase());
-    for (const resourceType of sortBy(keys(byResourceType), x => x.toLowerCase())) {
-      markdown += `### ${resourceType}\n`;
-
-      for (const typeString of sortBy(byResourceType[resourceType], x => x.toLowerCase())) {
-        const version = typeString.split('@')[1];
-        const jsonPath = index.Types[typeString].RelativePath;
-        const anchor = `resource-${typeString.replace(/[^a-zA-Z0-9-]/g, '').toLowerCase()}`
-
-        markdown += `* [${version}](${path.dirname(jsonPath)}/types.md#${anchor})\n`;
-      }
-
-      markdown += '\n';
-    }
-  }
-
-  return markdown;
-}
-
-async function buildIndex(logger: ILogger, baseDir: string): Promise<TypeIndex> {
-  const typeFiles = await findRecursive(baseDir, filePath => {
+  const typesPaths = await findRecursive(baseDir, filePath => {
     return path.basename(filePath) === 'types.json';
   });
-  
-  const resourceTypes = new Set<string>();
-  const typeDictionary: Dictionary<TypeIndexEntry> = {};
 
-  // Use a consistent sort order so that file system differences don't generate changes
-  for (const typeFilePath of orderBy(typeFiles, f => f.toLowerCase(), 'asc')) {
-    const content = await readFile(typeFilePath, { encoding: 'utf8' });
-
-    const types = JSON.parse(content) as any[];
-    for (const type of types) {
-      const resource = type[TypeBaseKind.ResourceType];
-      if (!resource) {
-        continue;
-      }
-
-      if (resourceTypes.has(resource.Name.toLowerCase())) {
-        logOut(logger, `WARNING: Found duplicate type \"${resource.Name}\"`);
-        continue;
-      }
-      resourceTypes.add(resource.Name.toLowerCase());
-
-      typeDictionary[resource.Name] = {
-        RelativePath: path.relative(baseDir, typeFilePath),
-        Index: types.indexOf(type),
-      };
-    }
+  const typeFiles: TypeFile[] = [];
+  for (const relativePath of typesPaths) {
+    const content = await readFile(relativePath, { encoding: 'utf8' });
+    typeFiles.push({
+      relativePath,
+      types: JSON.parse(content) as TypeBase[],
+    });
   }
+  const indexContent = await buildIndex(typeFiles,  log => logOut(logger, log));
 
-  return {
-    Types: typeDictionary,
+  await writeFile(`${baseDir}/index.json`, writeIndexJson(indexContent));
+  await writeFile(`${baseDir}/index.md`, writeIndexMarkdown(indexContent));
+}
+
+function isVerboseLoggingLevel(logLevel: string) {
+  switch (logLevel.toLowerCase()) {
+    case 'debug':
+    case 'verbose':
+      return true;
+    default:
+      return false;
   }
 }

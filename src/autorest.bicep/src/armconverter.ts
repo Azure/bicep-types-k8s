@@ -6,12 +6,10 @@ import { Dictionary } from "lodash";
 import { SchemaConverter } from "./converter";
 import { ProviderDefinition, ResourceDefinition } from "./resources";
 import { TypeBuilder } from "./typebuilder";
-import { BuiltInTypeKind, ObjectProperty, ObjectPropertyFlags, ResourceType, StringLiteralType, TypeReference } from "./types";
+import { BuiltInTypeKind, ObjectProperty, ObjectPropertyFlags, ResourceType, StringLiteralType, TypeReference } from "bicep-types";
 
 export class ARMConverter extends SchemaConverter {
     Convert(builder: TypeBuilder, provider: ProviderDefinition, fullyQualifiedType: string, definitions: ResourceDefinition[]): ResourceType | null {
-        const that = this;
-
         function nameType(definition: ResourceDefinition): TypeReference | undefined {
             if (!definition.nameParameter) {
                 return undefined;
@@ -29,7 +27,7 @@ export class ARMConverter extends SchemaConverter {
         }
 
         function initializeResource(definition: ResourceDefinition, properties: Dictionary<ObjectProperty>) {
-            var type = builder.factory.addType(new StringLiteralType(fullyQualifiedType));
+            const type = builder.factory.addType(new StringLiteralType(fullyQualifiedType));
             properties[`id`] = builder.createObjectProperty(builder.factory.lookupBuiltInType(BuiltInTypeKind.String), ObjectPropertyFlags.ReadOnly | ObjectPropertyFlags.DeployTimeConstant, 'The resource id');
             properties[`type`] = builder.createObjectProperty(type, ObjectPropertyFlags.ReadOnly | ObjectPropertyFlags.DeployTimeConstant, 'The resource type');
             properties[`apiVersion`] = builder.createObjectProperty(builder.factory.addType(new StringLiteralType(provider.apiVersion)), ObjectPropertyFlags.ReadOnly | ObjectPropertyFlags.DeployTimeConstant, 'The resource api version');

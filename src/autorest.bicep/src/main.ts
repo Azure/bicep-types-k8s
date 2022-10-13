@@ -4,12 +4,12 @@
 import { AutoRestExtension, AutorestExtensionHost, startSession } from "@autorest/extension-base";
 import { generateTypes } from "./type-generator";
 import { CodeModel, codeModelSchema } from "@autorest/codemodel";
-import { writeJson } from './writers/json';
-import { writeMarkdown } from "./writers/markdown";
+import { writeJson, writeMarkdown } from "bicep-types";
 import { getProviderDefinitions as getARMDefinitions, ProviderDefinition } from "./resources";
 import { getKubernetesDefinitions } from "./kubernetes"
 
 export async function processRequest(host: AutorestExtensionHost) {
+  console.error("ASDIUASDIUH");
   try {
     const session = await startSession<CodeModel>(
       host,
@@ -37,7 +37,7 @@ export async function processRequest(host: AutorestExtensionHost) {
       host.writeFile({ filename: `${outFolder}/types.json`, content: writeJson(types) });
 
       // writer types.md
-      host.writeFile({ filename: `${outFolder}/types.md`, content: writeMarkdown(namespace, apiVersion, types) });
+      host.writeFile({ filename: `${outFolder}/types.md`, content: writeMarkdown(types, `${namespace} @ ${apiVersion}`) });
     }
 
     session.info(`autorest.bicep took ${Date.now() - start}ms`);

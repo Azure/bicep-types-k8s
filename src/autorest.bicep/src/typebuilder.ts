@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Channel, AutorestExtensionHost } from "@autorest/extension-base";
-import { ArrayType, BuiltInTypeKind, DiscriminatedObjectType, ObjectProperty, ObjectPropertyFlags, ObjectType, StringLiteralType, TypeBase, TypeFactory, TypeReference, UnionType } from "./types";
+import { ArrayType, BuiltInTypeKind, DiscriminatedObjectType, ObjectProperty, ObjectPropertyFlags, ObjectType, StringLiteralType, TypeFactory, TypeReference, UnionType } from "bicep-types";
 import { Dictionary, flatMap, keyBy, keys, uniq } from 'lodash';
 import { getSerializedName } from "./resources";
 import { Schema, ObjectSchema, DictionarySchema, ChoiceSchema, SealedChoiceSchema, ConstantSchema, ArraySchema, PrimitiveSchema, AnySchema, Property, SchemaType, StringSchema } from "@autorest/codemodel";
@@ -118,7 +118,6 @@ export class TypeBuilder {
             case SchemaType.Date:
             case SchemaType.DateTime:
             case SchemaType.Time:
-            case SchemaType.UnixTime:
             case SchemaType.String:
             case SchemaType.Uuid:
             case SchemaType.Duration:
@@ -322,7 +321,7 @@ export class TypeBuilder {
     }
 
     parseArrayType(putSchema: ArraySchema | undefined, getSchema: ArraySchema | undefined) {
-        var itemType = this.parseType(putSchema?.elementType, getSchema?.elementType);
+        const itemType = this.parseType(putSchema?.elementType, getSchema?.elementType);
         if (!itemType) {
             return this.factory.lookupBuiltInType(BuiltInTypeKind.Array);
         }
