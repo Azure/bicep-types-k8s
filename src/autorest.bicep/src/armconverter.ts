@@ -20,20 +20,20 @@ export class ARMConverter extends SchemaConverter {
                 if (!/^[a-zA-Z0-9]*$/.test(name as string)) {
                     throw new Error(`Unable to process non-alphanumeric name '${name as string}'`);
                 }
-                return builder.factory.addType(new StringLiteralType(name as string));
+                return builder.factory.addStringLiteralType(name as string);
             } else {
                 return builder.parseType((name as Parameter).schema, undefined);
             }
         }
 
         function initializeResource(definition: ResourceDefinition, properties: Dictionary<ObjectProperty>) {
-            const type = builder.factory.addType(new StringLiteralType(fullyQualifiedType));
+            const type = builder.factory.addStringLiteralType(fullyQualifiedType);
             properties[`id`] = builder.createObjectProperty(builder.factory.lookupBuiltInType(BuiltInTypeKind.String), ObjectPropertyFlags.ReadOnly | ObjectPropertyFlags.DeployTimeConstant, 'The resource id');
             properties[`type`] = builder.createObjectProperty(type, ObjectPropertyFlags.ReadOnly | ObjectPropertyFlags.DeployTimeConstant, 'The resource type');
-            properties[`apiVersion`] = builder.createObjectProperty(builder.factory.addType(new StringLiteralType(provider.apiVersion)), ObjectPropertyFlags.ReadOnly | ObjectPropertyFlags.DeployTimeConstant, 'The resource api version');
+            properties[`apiVersion`] = builder.createObjectProperty(builder.factory.addStringLiteralType(provider.apiVersion), ObjectPropertyFlags.ReadOnly | ObjectPropertyFlags.DeployTimeConstant, 'The resource api version');
             
             const name = nameType(definition)
-            if (name) {
+            if (name !== undefined) {
                 properties[`name`] = builder.createObjectProperty(name, ObjectPropertyFlags.Required | ObjectPropertyFlags.DeployTimeConstant, 'The resource name');
             }
         }

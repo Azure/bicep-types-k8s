@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Channel, AutorestExtensionHost } from "@autorest/extension-base";
-import { ArrayType, BuiltInTypeKind, DiscriminatedObjectType, ObjectProperty, ObjectPropertyFlags, ObjectType, StringLiteralType, TypeFactory, TypeReference, UnionType } from "bicep-types";
+import { ArrayType, BuiltInTypeKind, DiscriminatedObjectType, ObjectProperty, ObjectPropertyFlags, ObjectType, StringLiteralType, TypeBaseKind, TypeFactory, TypeReference, UnionType } from "bicep-types";
 import { Dictionary, flatMap, keyBy, keys, uniq } from 'lodash';
 import { getSerializedName } from "./resources";
 import { Schema, ObjectSchema, DictionarySchema, ChoiceSchema, SealedChoiceSchema, ConstantSchema, ArraySchema, PrimitiveSchema, AnySchema, Property, SchemaType, StringSchema } from "@autorest/codemodel";
@@ -131,14 +131,14 @@ export class TypeBuilder {
 
     createObject(definitionName: string, schema: ObjectSchema, properties: Dictionary<ObjectProperty>, additionalProperties?: TypeReference) {
         if (schema.discriminator) {
-            return this.factory.addType(new DiscriminatedObjectType(
+            return this.factory.addDiscriminatedObjectType(
                 definitionName,
                 schema.discriminator.property.serializedName,
                 properties,
-                {}));
+                {});
         }
 
-        return this.factory.addType(new ObjectType(definitionName, properties, additionalProperties));
+        return this.factory.addObjectType(definitionName, properties, additionalProperties);
     }
 
     getSchemaProperties(schema: ObjectSchema, includeBaseProperties: boolean): Dictionary<Property> {
@@ -225,7 +225,7 @@ export class TypeBuilder {
 
             const objectTypeRef = this.parseObjectType(putSubType, getSubType, false);
             const objectType = this.factory.lookupType(objectTypeRef);
-            if (!(objectType instanceof ObjectType)) {
+            if (objectType.Type !== TypeBaseKind.ObjectType) {
                 this.logWarning(`Found unexpected element of discriminated type '${discriminatedObjectType.Name}'`)
                 continue;
             }
@@ -234,7 +234,7 @@ export class TypeBuilder {
 
             const description = (putSchema ?? getSchema)?.discriminator?.property.language.default.description;
             objectType.Properties[discriminatedObjectType.Discriminator] = this.createObjectProperty(
-                this.factory.addType(new StringLiteralType(combinedSubType.discriminatorValue)),
+                this.factory.addStringLiteralType(combinedSubType.discriminatorValue),
                 ObjectPropertyFlags.Required,
                 description);
         }
@@ -269,7 +269,7 @@ export class TypeBuilder {
 
         for (const { propertyName, putProperty, getProperty } of this.getObjectTypeProperties(putSchema, getSchema, includeBaseProperties)) {
             const propertyDefinition = this.parseType(putProperty?.schema, getProperty?.schema);
-            if (propertyDefinition) {
+            if (propertyDefinition !== undefined) {
                 const description = (putProperty?.schema, getProperty?.schema)?.language.default?.description;
                 const flags = this.parsePropertyFlags(putProperty, getProperty);
                 definitionProperties[propertyName] = this.createObjectProperty(propertyDefinition, flags, description);
@@ -295,7 +295,7 @@ export class TypeBuilder {
 
         const enumTypes = [];
         for (const enumValue of combinedSchema.choices) {
-            const stringLiteralType = this.factory.addType(new StringLiteralType(enumValue.value.toString()));
+            const stringLiteralType = this.factory.addStringLiteralType(enumValue.value.toString());
             enumTypes.push(stringLiteralType);
         }
 
@@ -303,33 +303,33 @@ export class TypeBuilder {
             return enumTypes[0];
         }
 
-        return this.factory.addType(new UnionType(enumTypes));
+        return this.factory.addUnionType(enumTypes);
     }
 
     parseConstant(putSchema: ConstantSchema | undefined, getSchema: ConstantSchema | undefined) {
         const combinedSchema = this.combineAndThrowIfNull(putSchema, getSchema);
         const constantValue = combinedSchema.value;
 
-        return this.factory.addType(new StringLiteralType(constantValue.value.toString()));
+        return this.factory.addStringLiteralType(constantValue.value.toString());
     }
 
     parseDictionaryType(putSchema: DictionarySchema | undefined, getSchema: DictionarySchema | undefined) {
         const combinedSchema = this.combineAndThrowIfNull(putSchema, getSchema);
         const additionalPropertiesType = this.parseType(putSchema?.elementType, getSchema?.elementType);
 
-        return this.factory.addType(new ObjectType(getSerializedName(combinedSchema), {}, additionalPropertiesType));
+        return this.factory.addObjectType(getSerializedName(combinedSchema), {}, additionalPropertiesType);
     }
 
     parseArrayType(putSchema: ArraySchema | undefined, getSchema: ArraySchema | undefined) {
         const itemType = this.parseType(putSchema?.elementType, getSchema?.elementType);
-        if (!itemType) {
+        if (itemType === undefined) {
             return this.factory.lookupBuiltInType(BuiltInTypeKind.Array);
         }
 
-        return this.factory.addType(new ArrayType(itemType));
+        return this.factory.addArrayType(itemType);
     }
 
     createObjectProperty(type: TypeReference, flags: ObjectPropertyFlags, description?: string): ObjectProperty {
-        return new ObjectProperty(type, flags, description?.trim() || undefined);
+        return { Type: type, Flags: flags, Description: description?.trim() || undefined };
     }
 }

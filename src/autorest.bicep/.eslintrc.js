@@ -26,8 +26,17 @@ module.exports = {
       files: ["*.ts"],
       extends: [
         "plugin:@typescript-eslint/recommended",
+        "plugin:jest/all",
       ],
       rules: {
+        "jest/no-hooks": "off",
+        "jest/prefer-expect-assertions": "off",
+        "jest/expect-expect": [
+          "error",
+          {
+            assertFunctionNames: ["expect*"],
+          },
+        ],
       },
     },
     {

@@ -1,7 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Azure.Bicep.Types.K8s;
+using FluentAssertions;
+using System.Linq;
 
 namespace Azure.Bicep.Types.K8s.UnitTests
 {
@@ -14,9 +15,34 @@ namespace Azure.Bicep.Types.K8s.UnitTests
             var typeLoader = new TypeLoader();
             var indexedTypes = typeLoader.GetIndexedTypes();
 
-            foreach (var kvp in indexedTypes.Types)
+            foreach (var kvp in indexedTypes.Resources)
             {
                 var resourceType = typeLoader.LoadResourceType(kvp.Value);
+            }
+
+            foreach (var (resourceType, functionsByApiVersion) in indexedTypes.Functions)
+            {
+                foreach (var (apiVersion, functions) in functionsByApiVersion)
+                {
+                    foreach (var functionLocation in functions)
+                    {
+                        var resourceFunctionType = typeLoader.LoadResourceFunctionType(functionLocation);
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
+        public void TypeLoader_type_keys_are_insensitively_unique()
+        {
+            var typeLoader = new TypeLoader();
+            var indexedTypes = typeLoader.GetIndexedTypes();
+
+            indexedTypes.Resources.Keys.Select(x => x.ToLowerInvariant()).Should().OnlyHaveUniqueItems();
+            indexedTypes.Functions.Keys.Select(x => x.ToLowerInvariant()).Should().OnlyHaveUniqueItems();
+            foreach (var functionsByApiVersion in indexedTypes.Functions.Values)
+            {
+                functionsByApiVersion.Keys.Select(x => x.ToLowerInvariant()).Should().OnlyHaveUniqueItems();
             }
         }
     }

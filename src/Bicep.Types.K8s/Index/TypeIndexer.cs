@@ -3,6 +3,7 @@
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace Azure.Bicep.Types.K8s.Index
 {
@@ -10,7 +11,7 @@ namespace Azure.Bicep.Types.K8s.Index
     {
         private static readonly JsonSerializerOptions SerializeOptions = new JsonSerializerOptions
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
         public static TypeIndex DeserializeIndex(string content)

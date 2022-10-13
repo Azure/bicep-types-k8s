@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 import { AutorestExtensionHost } from "@autorest/extension-base";
-import { TypeBase, TypeFactory, TypeReference } from "bicep-types";
+import { TypeFactory, TypeReference } from "bicep-types";
 import { Dictionary } from 'lodash';
 import { ProviderDefinition } from "./resources";
 import { TypeBuilder } from "./typebuilder";
 
-export function generateTypes(host: AutorestExtensionHost, definition: ProviderDefinition): TypeBase[] {
+export function generateTypes(host: AutorestExtensionHost, definition: ProviderDefinition) {
   const factory = new TypeFactory();
   const namedDefinitions: Dictionary<TypeReference> = {};
   const builder = new TypeBuilder(host, factory, namedDefinitions);

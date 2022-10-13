@@ -10,6 +10,8 @@ namespace Azure.Bicep.Types.K8s
     {
         ResourceType LoadResourceType(TypeLocation location);
 
+        ResourceFunctionType LoadResourceFunctionType(TypeLocation location);
+
         TypeIndex GetIndexedTypes();
     }
 }
