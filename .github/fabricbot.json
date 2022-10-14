@@ -25,66 +25,6 @@
           "operator": "and",
           "operands": [
             {
-              "name": "isAction",
-              "parameters": {
-                "action": "opened"
-              }
-            },
-            {
-              "name": "isActivitySender",
-              "parameters": {
-                "user": "github-actions[bot]"
-              }
-            },
-            {
-              "name": "titleContains",
-              "parameters": {
-                "titlePattern": "Update Generated Types"
-              }
-            }
-          ]
-        },
-        "eventType": "pull_request",
-        "eventNames": [
-          "pull_request",
-          "issues",
-          "project_card"
-        ],
-        "taskName": "Automatically approve type generation PRs sent by github-actions[bot]",
-        "actions": [
-          {
-            "name": "closeIssue",
-            "parameters": {}
-          },
-          {
-            "name": "reopenIssue",
-            "parameters": {}
-          },
-          {
-            "name": "addLabel",
-            "parameters": {
-              "label": "AutoMerge"
-            }
-          },
-          {
-            "name": "approvePullRequest",
-            "parameters": {
-              "comment": "Automatically approving type generation pull request sent by @github-actions[bot]."
-            }
-          }
-        ]
-      }
-    },
-    {
-      "taskType": "trigger",
-      "capabilityId": "IssueResponder",
-      "subCapability": "PullRequestResponder",
-      "version": "1.0",
-      "config": {
-        "conditions": {
-          "operator": "and",
-          "operands": [
-            {
               "name": "hasLabel",
               "parameters": {
                 "label": "dependencies"
