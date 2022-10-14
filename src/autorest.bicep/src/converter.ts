@@ -3,9 +3,9 @@
 
 import { TypeBuilder } from './typebuilder';
 import { Channel } from '@autorest/extension-base';
-import { Dictionary, keyBy } from 'lodash';
+import { Dictionary } from 'lodash';
 import { getFullyQualifiedType, ProviderDefinition, ResourceDefinition } from './resources';
-import { DiscriminatedObjectType, ObjectProperty, ObjectType, ResourceType, TypeReference } from './types';
+import { DiscriminatedObjectType, ObjectProperty, ObjectType, ResourceFlags, ResourceType, TypeBaseKind, TypeReference } from 'bicep-types';
 
 export type TypeCallback = (definition: ResourceDefinition, properties: Dictionary<ObjectProperty>) => void;
 
@@ -30,7 +30,6 @@ export abstract class SchemaConverter {
                     }
                 }
 
-                const definitionsByConstantName = keyBy(definitions, x => x.descriptor.constantName);
                 const polymorphicBodies: Dictionary<TypeReference> = {};
                 for (const definition of definitions) {
                     const bodyType = processResourceBody(fullyQualifiedType, definition);
@@ -41,11 +40,11 @@ export abstract class SchemaConverter {
                     polymorphicBodies[definition.descriptor.constantName] = bodyType;
                 }
 
-                const discriminatedBodyType = builder.factory.addType(new DiscriminatedObjectType(
+                const discriminatedBodyType = builder.factory.addDiscriminatedObjectType(
                     fullyQualifiedType,
                     'name',
                     {},
-                    polymorphicBodies));
+                    polymorphicBodies);
 
                 const descriptor = {
                     ...definitions[0].descriptor,
@@ -85,7 +84,7 @@ export abstract class SchemaConverter {
                 }
 
                 const propertyDefinition = builder.parseType(putProperty?.schema, getProperty?.schema);
-                if (propertyDefinition) {
+                if (propertyDefinition !== undefined) {
                     const description = (putProperty?.schema, getProperty?.schema)?.language.default?.description;
                     const flags = builder.parsePropertyFlags(putProperty, getProperty);
                     resourceProperties[propertyName] = builder.createObjectProperty(propertyDefinition, flags, description);
@@ -97,7 +96,7 @@ export abstract class SchemaConverter {
                 resourceDefinition = builder.createObject(getFullyQualifiedType(descriptor), schema, resourceProperties);
             } else {
                 logInfo(`Resource type ${fullyQualifiedType} has no body defined.`);
-                resourceDefinition = builder.factory.addType(new ObjectType(getFullyQualifiedType(descriptor), resourceProperties));
+                resourceDefinition = builder.factory.addObjectType(getFullyQualifiedType(descriptor), resourceProperties);
             }
 
             if (schema?.discriminator || schema?.discriminator) {
@@ -114,7 +113,12 @@ export abstract class SchemaConverter {
             return null;
         }
 
-        const resourceType = new ResourceType(`${fullyQualifiedType}@${result.descriptor.apiVersion}`, result.descriptor.scopeType, result.bodyType);
-        return resourceType;
+        return {
+            Type: TypeBaseKind.ResourceType,
+            Name: `${fullyQualifiedType}@${result.descriptor.apiVersion}`,
+            ScopeType: result.descriptor.scopeType,
+            Body: result.bodyType,
+            Flags: ResourceFlags.None,
+        };
     }
 }

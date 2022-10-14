@@ -6,7 +6,7 @@ import { SchemaConverter } from "./converter";
 import { KubernetesDescriptor } from "./kubernetes";
 import { ProviderDefinition, ResourceDefinition } from "./resources";
 import { TypeBuilder } from "./typebuilder";
-import { BuiltInTypeKind, ObjectProperty, ObjectPropertyFlags, ObjectType, ResourceType, StringLiteralType, TypeReference } from "./types";
+import { BuiltInTypeKind, ObjectProperty, ObjectPropertyFlags, ObjectType, ResourceType, StringLiteralType, TypeReference } from "bicep-types";
 
 export class KubernetesConverter extends SchemaConverter {
     Convert(builder: TypeBuilder, provider: ProviderDefinition, fullyQualifiedType: string, definitions: ResourceDefinition[]): ResourceType | null {
@@ -14,12 +14,12 @@ export class KubernetesConverter extends SchemaConverter {
             const descriptor = definition.descriptor as KubernetesDescriptor;
 
             properties[`kind`] = builder.createObjectProperty(
-                builder.factory.addType(new StringLiteralType(descriptor.kind)), 
+                builder.factory.addStringLiteralType(descriptor.kind), 
                 ObjectPropertyFlags.ReadOnly | ObjectPropertyFlags.DeployTimeConstant, 
                 'The resource kind.');
 
             properties[`apiVersion`] = builder.createObjectProperty(
-                builder.factory.addType(new StringLiteralType(gvToApiVersion(descriptor.group, descriptor.version))), 
+                builder.factory.addStringLiteralType(gvToApiVersion(descriptor.group, descriptor.version)), 
                 ObjectPropertyFlags.ReadOnly | ObjectPropertyFlags.DeployTimeConstant, 
                 'The api version.');
 
@@ -45,16 +45,16 @@ export class KubernetesConverter extends SchemaConverter {
             }
 
             properties[`labels`] = builder.createObjectProperty(
-                builder.factory.addType(new ObjectType(`labels`, {}, builder.factory.lookupBuiltInType(BuiltInTypeKind.String))),
+                builder.factory.addObjectType(`labels`, {}, builder.factory.lookupBuiltInType(BuiltInTypeKind.String)),
                 ObjectPropertyFlags.None,
                 `The labels for the resource.`);
 
             properties[`annotations`] = builder.createObjectProperty(
-                builder.factory.addType(new ObjectType(`annotations`, {}, builder.factory.lookupBuiltInType(BuiltInTypeKind.String))),
+                builder.factory.addObjectType(`annotations`, {}, builder.factory.lookupBuiltInType(BuiltInTypeKind.String)),
                 ObjectPropertyFlags.None,
                 `The annotations for the resource.`);
 
-            return builder.factory.addType(new ObjectType(`metadata`, properties, undefined))
+            return builder.factory.addObjectType(`metadata`, properties, undefined);
         }
 
         return this.process(builder, provider, fullyQualifiedType, definitions, initializeResource);

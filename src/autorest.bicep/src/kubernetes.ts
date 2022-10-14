@@ -4,7 +4,8 @@
 import { KubernetesConverter } from './kubernetesconverter';
 import { CodeModel, HttpResponse, ObjectSchema, Operation, SchemaResponse } from "@autorest/codemodel";
 import { Channel, AutorestExtensionHost } from "@autorest/extension-base";
-import { ProviderDefinition, ResourceDefinition, ResourceDescriptor, ScopeType } from './resources';
+import { ProviderDefinition, ResourceDefinition, ResourceDescriptor } from './resources';
+import { ScopeType } from 'bicep-types';
 
 export interface KubernetesDescriptor extends ResourceDescriptor {
     group: string;
@@ -106,13 +107,6 @@ export function getKubernetesDefinitions(codeModel: CodeModel, host: AutorestExt
     return providers;
 }
 
-// Like an operation, but *cool*
-interface CoolOperation {
-    gvk: GroupVersionKind;
-    get?: Operation;
-    put?: Operation;
-}
-
 interface GroupVersionKind {
     group: string;
     version: string;
@@ -140,14 +134,6 @@ function gvKey(gvk: GroupVersionKind): string {
     }
 }
 
-function gkKey(gvk: GroupVersionKind): string {
-    if (gvk.group == '') {
-        return `${gvk.kind}`
-    } else {
-        return `${gvk.group}/${gvk.kind}`
-    }
-}
-
 function resolveSchema(kind: Kind): ObjectSchema | null {
     if (!kind.get?.responses) {
         return null;
@@ -169,7 +155,7 @@ function isNamespaced(kind: Kind): boolean {
         return false
     }
 
-    for (const parameter of kind.get?.parameters) {
+    for (const parameter of kind.get.parameters) {
         if (parameter.language.default.name === 'namespace') {
             return true;
         }

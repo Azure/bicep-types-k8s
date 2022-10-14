@@ -3,20 +3,11 @@
 
 import { SchemaConverter } from "./converter";
 import { ARMConverter } from "./armconverter";
-import { ChoiceSchema, CodeModel, HttpMethod, HttpParameter, HttpRequest, HttpResponse, ImplementationLocation, ObjectSchema, Operation, Parameter, ParameterLocation, Request, Response, Schema, SchemaResponse, SealedChoiceSchema, Metadata, HttpWithBodyRequest, SerializationStyle } from "@autorest/codemodel";
+import { ChoiceSchema, CodeModel, HttpMethod, HttpParameter, HttpRequest, HttpResponse, ImplementationLocation, ObjectSchema, Operation, Parameter, ParameterLocation, Request, Response, SchemaResponse, SealedChoiceSchema, Metadata } from "@autorest/codemodel";
 import { Channel, AutorestExtensionHost } from "@autorest/extension-base";
 import { keys, Dictionary, values } from 'lodash';
-import { TypeReference } from "./types";
 import { success, failure, Result } from './utils';
-
-export enum ScopeType {
-  Unknown = 0,
-  Tenant = 1 << 0,
-  ManagementGroup = 1 << 1,
-  Subscription = 1 << 2,
-  ResourceGroup = 1 << 3,
-  Extension = 1 << 4,
-}
+import { ScopeType } from "bicep-types";
 
 export interface ResourceDescriptor {
   scopeType: ScopeType;
@@ -108,13 +99,13 @@ export function getNameParameter(descriptor: ResourceDescriptor, request: HttpRe
   const routingScope = trimScope(path.substr(finalProvidersMatch.length));
 
   // get the resource name parameter, e.g. {fooName}
-  var resNameParam = routingScope.substr(routingScope.lastIndexOf('/') + 1);
+  let resNameParam = routingScope.substr(routingScope.lastIndexOf('/') + 1);
 
   if (isPathVariable(resNameParam)) {
     // strip the enclosing braces
     resNameParam = trimParamBraces(resNameParam);
 
-    var param = parameters.filter(p => getSerializedName(p) === resNameParam)[0];
+    const param = parameters.filter(p => getSerializedName(p) === resNameParam)[0];
     if (!param) {
       return failure(`Unable to locate parameter with name '${resNameParam}'`);
     }
