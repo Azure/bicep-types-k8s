@@ -1,53 +1,53 @@
-# autoscaling @ v2beta2
+# autoscaling @ v2
 
-## Resource autoscaling/HorizontalPodAutoscaler@v2beta2
+## Resource autoscaling/HorizontalPodAutoscaler@v2
 * **Valid Scope(s)**: Unknown
 ### Properties
-* **apiVersion**: 'autoscaling/v2beta2' (ReadOnly, DeployTimeConstant): The api version.
+* **apiVersion**: 'autoscaling/v2' (ReadOnly, DeployTimeConstant): The api version.
 * **kind**: 'HorizontalPodAutoscaler' (ReadOnly, DeployTimeConstant): The resource kind.
 * **metadata**: [metadata](#metadata) (Required): The resource metadata.
-* **spec**: [IoK8SApiAutoscalingV2Beta2HorizontalPodAutoscalerSpec](#iok8sapiautoscalingv2beta2horizontalpodautoscalerspec): HorizontalPodAutoscalerSpec describes the desired functionality of the HorizontalPodAutoscaler.
-* **status**: [IoK8SApiAutoscalingV2Beta2HorizontalPodAutoscalerStatus](#iok8sapiautoscalingv2beta2horizontalpodautoscalerstatus): HorizontalPodAutoscalerStatus describes the current status of a horizontal pod autoscaler.
+* **spec**: [IoK8SApiAutoscalingV2HorizontalPodAutoscalerSpec](#iok8sapiautoscalingv2horizontalpodautoscalerspec): HorizontalPodAutoscalerSpec describes the desired functionality of the HorizontalPodAutoscaler.
+* **status**: [IoK8SApiAutoscalingV2HorizontalPodAutoscalerStatus](#iok8sapiautoscalingv2horizontalpodautoscalerstatus): HorizontalPodAutoscalerStatus describes the current status of a horizontal pod autoscaler.
 
 ## annotations
 ### Properties
 ### Additional Properties
 * **Additional Properties Type**: string
 
-## IoK8SApiAutoscalingV2Beta2ContainerResourceMetricSource
+## IoK8SApiAutoscalingV2ContainerResourceMetricSource
 ### Properties
 * **container**: string (Required): container is the name of the container in the pods of the scaling target
 * **name**: string (Required): name is the name of the resource in question.
-* **target**: [IoK8SApiAutoscalingV2Beta2MetricTarget](#iok8sapiautoscalingv2beta2metrictarget) (Required): MetricTarget defines the target value, average value, or average utilization of a specific metric
+* **target**: [IoK8SApiAutoscalingV2MetricTarget](#iok8sapiautoscalingv2metrictarget) (Required): MetricTarget defines the target value, average value, or average utilization of a specific metric
 
-## IoK8SApiAutoscalingV2Beta2ContainerResourceMetricStatus
+## IoK8SApiAutoscalingV2ContainerResourceMetricStatus
 ### Properties
 * **container**: string (Required): Container is the name of the container in the pods of the scaling target
-* **current**: [IoK8SApiAutoscalingV2Beta2MetricValueStatus](#iok8sapiautoscalingv2beta2metricvaluestatus) (Required): MetricValueStatus holds the current value for a metric
+* **current**: [IoK8SApiAutoscalingV2MetricValueStatus](#iok8sapiautoscalingv2metricvaluestatus) (Required): MetricValueStatus holds the current value for a metric
 * **name**: string (Required): Name is the name of the resource in question.
 
-## IoK8SApiAutoscalingV2Beta2CrossVersionObjectReference
+## IoK8SApiAutoscalingV2CrossVersionObjectReference
 ### Properties
 * **apiVersion**: string: API version of the referent
 * **kind**: string (Required): Kind of the referent; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
 * **name**: string (Required): Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
 
-## IoK8SApiAutoscalingV2Beta2ExternalMetricSource
+## IoK8SApiAutoscalingV2ExternalMetricSource
 ### Properties
-* **metric**: [IoK8SApiAutoscalingV2Beta2MetricIdentifier](#iok8sapiautoscalingv2beta2metricidentifier) (Required): MetricIdentifier defines the name and optionally selector for a metric
-* **target**: [IoK8SApiAutoscalingV2Beta2MetricTarget](#iok8sapiautoscalingv2beta2metrictarget) (Required): MetricTarget defines the target value, average value, or average utilization of a specific metric
+* **metric**: [IoK8SApiAutoscalingV2MetricIdentifier](#iok8sapiautoscalingv2metricidentifier) (Required): MetricIdentifier defines the name and optionally selector for a metric
+* **target**: [IoK8SApiAutoscalingV2MetricTarget](#iok8sapiautoscalingv2metrictarget) (Required): MetricTarget defines the target value, average value, or average utilization of a specific metric
 
-## IoK8SApiAutoscalingV2Beta2ExternalMetricStatus
+## IoK8SApiAutoscalingV2ExternalMetricStatus
 ### Properties
-* **current**: [IoK8SApiAutoscalingV2Beta2MetricValueStatus](#iok8sapiautoscalingv2beta2metricvaluestatus) (Required): MetricValueStatus holds the current value for a metric
-* **metric**: [IoK8SApiAutoscalingV2Beta2MetricIdentifier](#iok8sapiautoscalingv2beta2metricidentifier) (Required): MetricIdentifier defines the name and optionally selector for a metric
+* **current**: [IoK8SApiAutoscalingV2MetricValueStatus](#iok8sapiautoscalingv2metricvaluestatus) (Required): MetricValueStatus holds the current value for a metric
+* **metric**: [IoK8SApiAutoscalingV2MetricIdentifier](#iok8sapiautoscalingv2metricidentifier) (Required): MetricIdentifier defines the name and optionally selector for a metric
 
-## IoK8SApiAutoscalingV2Beta2HorizontalPodAutoscalerBehavior
+## IoK8SApiAutoscalingV2HorizontalPodAutoscalerBehavior
 ### Properties
-* **scaleDown**: [IoK8SApiAutoscalingV2Beta2HPAScalingRules](#iok8sapiautoscalingv2beta2hpascalingrules): HPAScalingRules configures the scaling behavior for one direction. These Rules are applied after calculating DesiredReplicas from metrics for the HPA. They can limit the scaling velocity by specifying scaling policies. They can prevent flapping by specifying the stabilization window, so that the number of replicas is not set instantly, instead, the safest value from the stabilization window is chosen.
-* **scaleUp**: [IoK8SApiAutoscalingV2Beta2HPAScalingRules](#iok8sapiautoscalingv2beta2hpascalingrules): HPAScalingRules configures the scaling behavior for one direction. These Rules are applied after calculating DesiredReplicas from metrics for the HPA. They can limit the scaling velocity by specifying scaling policies. They can prevent flapping by specifying the stabilization window, so that the number of replicas is not set instantly, instead, the safest value from the stabilization window is chosen.
+* **scaleDown**: [IoK8SApiAutoscalingV2HPAScalingRules](#iok8sapiautoscalingv2hpascalingrules): HPAScalingRules configures the scaling behavior for one direction. These Rules are applied after calculating DesiredReplicas from metrics for the HPA. They can limit the scaling velocity by specifying scaling policies. They can prevent flapping by specifying the stabilization window, so that the number of replicas is not set instantly, instead, the safest value from the stabilization window is chosen.
+* **scaleUp**: [IoK8SApiAutoscalingV2HPAScalingRules](#iok8sapiautoscalingv2hpascalingrules): HPAScalingRules configures the scaling behavior for one direction. These Rules are applied after calculating DesiredReplicas from metrics for the HPA. They can limit the scaling velocity by specifying scaling policies. They can prevent flapping by specifying the stabilization window, so that the number of replicas is not set instantly, instead, the safest value from the stabilization window is chosen.
 
-## IoK8SApiAutoscalingV2Beta2HorizontalPodAutoscalerCondition
+## IoK8SApiAutoscalingV2HorizontalPodAutoscalerCondition
 ### Properties
 * **lastTransitionTime**: string: Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.
 * **message**: string: message is a human-readable explanation containing details about the transition
@@ -55,59 +55,59 @@
 * **status**: string (Required): status is the status of the condition (True, False, Unknown)
 * **type**: string (Required): type describes the current condition
 
-## IoK8SApiAutoscalingV2Beta2HorizontalPodAutoscalerSpec
+## IoK8SApiAutoscalingV2HorizontalPodAutoscalerSpec
 ### Properties
-* **behavior**: [IoK8SApiAutoscalingV2Beta2HorizontalPodAutoscalerBehavior](#iok8sapiautoscalingv2beta2horizontalpodautoscalerbehavior): HorizontalPodAutoscalerBehavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively).
+* **behavior**: [IoK8SApiAutoscalingV2HorizontalPodAutoscalerBehavior](#iok8sapiautoscalingv2horizontalpodautoscalerbehavior): HorizontalPodAutoscalerBehavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively).
 * **maxReplicas**: int (Required): maxReplicas is the upper limit for the number of replicas to which the autoscaler can scale up. It cannot be less that minReplicas.
-* **metrics**: [IoK8SApiAutoscalingV2Beta2MetricSpec](#iok8sapiautoscalingv2beta2metricspec)[]: metrics contains the specifications for which to use to calculate the desired replica count (the maximum replica count across all metrics will be used).  The desired replica count is calculated multiplying the ratio between the target value and the current value by the current number of pods.  Ergo, metrics used must decrease as the pod count is increased, and vice-versa.  See the individual metric source types for more information about how each type of metric must respond. If not set, the default metric will be set to 80% average CPU utilization.
+* **metrics**: [IoK8SApiAutoscalingV2MetricSpec](#iok8sapiautoscalingv2metricspec)[]: metrics contains the specifications for which to use to calculate the desired replica count (the maximum replica count across all metrics will be used).  The desired replica count is calculated multiplying the ratio between the target value and the current value by the current number of pods.  Ergo, metrics used must decrease as the pod count is increased, and vice-versa.  See the individual metric source types for more information about how each type of metric must respond. If not set, the default metric will be set to 80% average CPU utilization.
 * **minReplicas**: int: minReplicas is the lower limit for the number of replicas to which the autoscaler can scale down.  It defaults to 1 pod.  minReplicas is allowed to be 0 if the alpha feature gate HPAScaleToZero is enabled and at least one Object or External metric is configured.  Scaling is active as long as at least one metric value is available.
-* **scaleTargetRef**: [IoK8SApiAutoscalingV2Beta2CrossVersionObjectReference](#iok8sapiautoscalingv2beta2crossversionobjectreference) (Required): CrossVersionObjectReference contains enough information to let you identify the referred resource.
+* **scaleTargetRef**: [IoK8SApiAutoscalingV2CrossVersionObjectReference](#iok8sapiautoscalingv2crossversionobjectreference) (Required): CrossVersionObjectReference contains enough information to let you identify the referred resource.
 
-## IoK8SApiAutoscalingV2Beta2HorizontalPodAutoscalerStatus
+## IoK8SApiAutoscalingV2HorizontalPodAutoscalerStatus
 ### Properties
-* **conditions**: [IoK8SApiAutoscalingV2Beta2HorizontalPodAutoscalerCondition](#iok8sapiautoscalingv2beta2horizontalpodautoscalercondition)[]: conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met.
-* **currentMetrics**: [IoK8SApiAutoscalingV2Beta2MetricStatus](#iok8sapiautoscalingv2beta2metricstatus)[]: currentMetrics is the last read state of the metrics used by this autoscaler.
-* **currentReplicas**: int (Required): currentReplicas is current number of replicas of pods managed by this autoscaler, as last seen by the autoscaler.
+* **conditions**: [IoK8SApiAutoscalingV2HorizontalPodAutoscalerCondition](#iok8sapiautoscalingv2horizontalpodautoscalercondition)[]: conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met.
+* **currentMetrics**: [IoK8SApiAutoscalingV2MetricStatus](#iok8sapiautoscalingv2metricstatus)[]: currentMetrics is the last read state of the metrics used by this autoscaler.
+* **currentReplicas**: int: currentReplicas is current number of replicas of pods managed by this autoscaler, as last seen by the autoscaler.
 * **desiredReplicas**: int (Required): desiredReplicas is the desired number of replicas of pods managed by this autoscaler, as last calculated by the autoscaler.
 * **lastScaleTime**: string: Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.
 * **observedGeneration**: int: observedGeneration is the most recent generation observed by this autoscaler.
 
-## IoK8SApiAutoscalingV2Beta2HPAScalingPolicy
+## IoK8SApiAutoscalingV2HPAScalingPolicy
 ### Properties
 * **periodSeconds**: int (Required): PeriodSeconds specifies the window of time for which the policy should hold true. PeriodSeconds must be greater than zero and less than or equal to 1800 (30 min).
 * **type**: string (Required): Type is used to specify the scaling policy.
 * **value**: int (Required): Value contains the amount of change which is permitted by the policy. It must be greater than zero
 
-## IoK8SApiAutoscalingV2Beta2HPAScalingRules
+## IoK8SApiAutoscalingV2HPAScalingRules
 ### Properties
-* **policies**: [IoK8SApiAutoscalingV2Beta2HPAScalingPolicy](#iok8sapiautoscalingv2beta2hpascalingpolicy)[]: policies is a list of potential scaling polices which can be used during scaling. At least one policy must be specified, otherwise the HPAScalingRules will be discarded as invalid
-* **selectPolicy**: string: selectPolicy is used to specify which policy should be used. If not set, the default value MaxPolicySelect is used.
+* **policies**: [IoK8SApiAutoscalingV2HPAScalingPolicy](#iok8sapiautoscalingv2hpascalingpolicy)[]: policies is a list of potential scaling polices which can be used during scaling. At least one policy must be specified, otherwise the HPAScalingRules will be discarded as invalid
+* **selectPolicy**: string: selectPolicy is used to specify which policy should be used. If not set, the default value Max is used.
 * **stabilizationWindowSeconds**: int: StabilizationWindowSeconds is the number of seconds for which past recommendations should be considered while scaling up or scaling down. StabilizationWindowSeconds must be greater than or equal to zero and less than or equal to 3600 (one hour). If not set, use the default values: - For scale up: 0 (i.e. no stabilization is done). - For scale down: 300 (i.e. the stabilization window is 300 seconds long).
 
-## IoK8SApiAutoscalingV2Beta2MetricIdentifier
+## IoK8SApiAutoscalingV2MetricIdentifier
 ### Properties
 * **name**: string (Required): name is the name of the given metric
 * **selector**: [IoK8SApimachineryPkgApisMetaV1LabelSelector](#iok8sapimachinerypkgapismetav1labelselector): A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
 
-## IoK8SApiAutoscalingV2Beta2MetricSpec
+## IoK8SApiAutoscalingV2MetricSpec
 ### Properties
-* **containerResource**: [IoK8SApiAutoscalingV2Beta2ContainerResourceMetricSource](#iok8sapiautoscalingv2beta2containerresourcemetricsource): ContainerResourceMetricSource indicates how to scale on a resource metric known to Kubernetes, as specified in requests and limits, describing each pod in the current scale target (e.g. CPU or memory).  The values will be averaged together before being compared to the target.  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.  Only one "target" type should be set.
-* **external**: [IoK8SApiAutoscalingV2Beta2ExternalMetricSource](#iok8sapiautoscalingv2beta2externalmetricsource): ExternalMetricSource indicates how to scale on a metric not associated with any Kubernetes object (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).
-* **object**: [IoK8SApiAutoscalingV2Beta2ObjectMetricSource](#iok8sapiautoscalingv2beta2objectmetricsource): ObjectMetricSource indicates how to scale on a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).
-* **pods**: [IoK8SApiAutoscalingV2Beta2PodsMetricSource](#iok8sapiautoscalingv2beta2podsmetricsource): PodsMetricSource indicates how to scale on a metric describing each pod in the current scale target (for example, transactions-processed-per-second). The values will be averaged together before being compared to the target value.
-* **resource**: [IoK8SApiAutoscalingV2Beta2ResourceMetricSource](#iok8sapiautoscalingv2beta2resourcemetricsource): ResourceMetricSource indicates how to scale on a resource metric known to Kubernetes, as specified in requests and limits, describing each pod in the current scale target (e.g. CPU or memory).  The values will be averaged together before being compared to the target.  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.  Only one "target" type should be set.
+* **containerResource**: [IoK8SApiAutoscalingV2ContainerResourceMetricSource](#iok8sapiautoscalingv2containerresourcemetricsource): ContainerResourceMetricSource indicates how to scale on a resource metric known to Kubernetes, as specified in requests and limits, describing each pod in the current scale target (e.g. CPU or memory).  The values will be averaged together before being compared to the target.  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.  Only one "target" type should be set.
+* **external**: [IoK8SApiAutoscalingV2ExternalMetricSource](#iok8sapiautoscalingv2externalmetricsource): ExternalMetricSource indicates how to scale on a metric not associated with any Kubernetes object (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).
+* **object**: [IoK8SApiAutoscalingV2ObjectMetricSource](#iok8sapiautoscalingv2objectmetricsource): ObjectMetricSource indicates how to scale on a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).
+* **pods**: [IoK8SApiAutoscalingV2PodsMetricSource](#iok8sapiautoscalingv2podsmetricsource): PodsMetricSource indicates how to scale on a metric describing each pod in the current scale target (for example, transactions-processed-per-second). The values will be averaged together before being compared to the target value.
+* **resource**: [IoK8SApiAutoscalingV2ResourceMetricSource](#iok8sapiautoscalingv2resourcemetricsource): ResourceMetricSource indicates how to scale on a resource metric known to Kubernetes, as specified in requests and limits, describing each pod in the current scale target (e.g. CPU or memory).  The values will be averaged together before being compared to the target.  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.  Only one "target" type should be set.
 * **type**: string (Required): type is the type of metric source.  It should be one of "ContainerResource", "External", "Object", "Pods" or "Resource", each mapping to a matching field in the object. Note: "ContainerResource" type is available on when the feature-gate HPAContainerMetrics is enabled
 
-## IoK8SApiAutoscalingV2Beta2MetricStatus
+## IoK8SApiAutoscalingV2MetricStatus
 ### Properties
-* **containerResource**: [IoK8SApiAutoscalingV2Beta2ContainerResourceMetricStatus](#iok8sapiautoscalingv2beta2containerresourcemetricstatus): ContainerResourceMetricStatus indicates the current value of a resource metric known to Kubernetes, as specified in requests and limits, describing a single container in each pod in the current scale target (e.g. CPU or memory).  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.
-* **external**: [IoK8SApiAutoscalingV2Beta2ExternalMetricStatus](#iok8sapiautoscalingv2beta2externalmetricstatus): ExternalMetricStatus indicates the current value of a global metric not associated with any Kubernetes object.
-* **object**: [IoK8SApiAutoscalingV2Beta2ObjectMetricStatus](#iok8sapiautoscalingv2beta2objectmetricstatus): ObjectMetricStatus indicates the current value of a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).
-* **pods**: [IoK8SApiAutoscalingV2Beta2PodsMetricStatus](#iok8sapiautoscalingv2beta2podsmetricstatus): PodsMetricStatus indicates the current value of a metric describing each pod in the current scale target (for example, transactions-processed-per-second).
-* **resource**: [IoK8SApiAutoscalingV2Beta2ResourceMetricStatus](#iok8sapiautoscalingv2beta2resourcemetricstatus): ResourceMetricStatus indicates the current value of a resource metric known to Kubernetes, as specified in requests and limits, describing each pod in the current scale target (e.g. CPU or memory).  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.
+* **containerResource**: [IoK8SApiAutoscalingV2ContainerResourceMetricStatus](#iok8sapiautoscalingv2containerresourcemetricstatus): ContainerResourceMetricStatus indicates the current value of a resource metric known to Kubernetes, as specified in requests and limits, describing a single container in each pod in the current scale target (e.g. CPU or memory).  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.
+* **external**: [IoK8SApiAutoscalingV2ExternalMetricStatus](#iok8sapiautoscalingv2externalmetricstatus): ExternalMetricStatus indicates the current value of a global metric not associated with any Kubernetes object.
+* **object**: [IoK8SApiAutoscalingV2ObjectMetricStatus](#iok8sapiautoscalingv2objectmetricstatus): ObjectMetricStatus indicates the current value of a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).
+* **pods**: [IoK8SApiAutoscalingV2PodsMetricStatus](#iok8sapiautoscalingv2podsmetricstatus): PodsMetricStatus indicates the current value of a metric describing each pod in the current scale target (for example, transactions-processed-per-second).
+* **resource**: [IoK8SApiAutoscalingV2ResourceMetricStatus](#iok8sapiautoscalingv2resourcemetricstatus): ResourceMetricStatus indicates the current value of a resource metric known to Kubernetes, as specified in requests and limits, describing each pod in the current scale target (e.g. CPU or memory).  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.
 * **type**: string (Required): type is the type of metric source.  It will be one of "ContainerResource", "External", "Object", "Pods" or "Resource", each corresponds to a matching field in the object. Note: "ContainerResource" type is available on when the feature-gate HPAContainerMetrics is enabled
 
-## IoK8SApiAutoscalingV2Beta2MetricTarget
+## IoK8SApiAutoscalingV2MetricTarget
 ### Properties
 * **averageUtilization**: int: averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type
 * **averageValue**: string: Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.
@@ -186,7 +186,7 @@ Non-canonical values will still parse as long as they are well formed, but will 
 
 This format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation.
 
-## IoK8SApiAutoscalingV2Beta2MetricValueStatus
+## IoK8SApiAutoscalingV2MetricValueStatus
 ### Properties
 * **averageUtilization**: int: currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.
 * **averageValue**: string: Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.
@@ -264,36 +264,36 @@ Non-canonical values will still parse as long as they are well formed, but will 
 
 This format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation.
 
-## IoK8SApiAutoscalingV2Beta2ObjectMetricSource
+## IoK8SApiAutoscalingV2ObjectMetricSource
 ### Properties
-* **describedObject**: [IoK8SApiAutoscalingV2Beta2CrossVersionObjectReference](#iok8sapiautoscalingv2beta2crossversionobjectreference) (Required): CrossVersionObjectReference contains enough information to let you identify the referred resource.
-* **metric**: [IoK8SApiAutoscalingV2Beta2MetricIdentifier](#iok8sapiautoscalingv2beta2metricidentifier) (Required): MetricIdentifier defines the name and optionally selector for a metric
-* **target**: [IoK8SApiAutoscalingV2Beta2MetricTarget](#iok8sapiautoscalingv2beta2metrictarget) (Required): MetricTarget defines the target value, average value, or average utilization of a specific metric
+* **describedObject**: [IoK8SApiAutoscalingV2CrossVersionObjectReference](#iok8sapiautoscalingv2crossversionobjectreference) (Required): CrossVersionObjectReference contains enough information to let you identify the referred resource.
+* **metric**: [IoK8SApiAutoscalingV2MetricIdentifier](#iok8sapiautoscalingv2metricidentifier) (Required): MetricIdentifier defines the name and optionally selector for a metric
+* **target**: [IoK8SApiAutoscalingV2MetricTarget](#iok8sapiautoscalingv2metrictarget) (Required): MetricTarget defines the target value, average value, or average utilization of a specific metric
 
-## IoK8SApiAutoscalingV2Beta2ObjectMetricStatus
+## IoK8SApiAutoscalingV2ObjectMetricStatus
 ### Properties
-* **current**: [IoK8SApiAutoscalingV2Beta2MetricValueStatus](#iok8sapiautoscalingv2beta2metricvaluestatus) (Required): MetricValueStatus holds the current value for a metric
-* **describedObject**: [IoK8SApiAutoscalingV2Beta2CrossVersionObjectReference](#iok8sapiautoscalingv2beta2crossversionobjectreference) (Required): CrossVersionObjectReference contains enough information to let you identify the referred resource.
-* **metric**: [IoK8SApiAutoscalingV2Beta2MetricIdentifier](#iok8sapiautoscalingv2beta2metricidentifier) (Required): MetricIdentifier defines the name and optionally selector for a metric
+* **current**: [IoK8SApiAutoscalingV2MetricValueStatus](#iok8sapiautoscalingv2metricvaluestatus) (Required): MetricValueStatus holds the current value for a metric
+* **describedObject**: [IoK8SApiAutoscalingV2CrossVersionObjectReference](#iok8sapiautoscalingv2crossversionobjectreference) (Required): CrossVersionObjectReference contains enough information to let you identify the referred resource.
+* **metric**: [IoK8SApiAutoscalingV2MetricIdentifier](#iok8sapiautoscalingv2metricidentifier) (Required): MetricIdentifier defines the name and optionally selector for a metric
 
-## IoK8SApiAutoscalingV2Beta2PodsMetricSource
+## IoK8SApiAutoscalingV2PodsMetricSource
 ### Properties
-* **metric**: [IoK8SApiAutoscalingV2Beta2MetricIdentifier](#iok8sapiautoscalingv2beta2metricidentifier) (Required): MetricIdentifier defines the name and optionally selector for a metric
-* **target**: [IoK8SApiAutoscalingV2Beta2MetricTarget](#iok8sapiautoscalingv2beta2metrictarget) (Required): MetricTarget defines the target value, average value, or average utilization of a specific metric
+* **metric**: [IoK8SApiAutoscalingV2MetricIdentifier](#iok8sapiautoscalingv2metricidentifier) (Required): MetricIdentifier defines the name and optionally selector for a metric
+* **target**: [IoK8SApiAutoscalingV2MetricTarget](#iok8sapiautoscalingv2metrictarget) (Required): MetricTarget defines the target value, average value, or average utilization of a specific metric
 
-## IoK8SApiAutoscalingV2Beta2PodsMetricStatus
+## IoK8SApiAutoscalingV2PodsMetricStatus
 ### Properties
-* **current**: [IoK8SApiAutoscalingV2Beta2MetricValueStatus](#iok8sapiautoscalingv2beta2metricvaluestatus) (Required): MetricValueStatus holds the current value for a metric
-* **metric**: [IoK8SApiAutoscalingV2Beta2MetricIdentifier](#iok8sapiautoscalingv2beta2metricidentifier) (Required): MetricIdentifier defines the name and optionally selector for a metric
+* **current**: [IoK8SApiAutoscalingV2MetricValueStatus](#iok8sapiautoscalingv2metricvaluestatus) (Required): MetricValueStatus holds the current value for a metric
+* **metric**: [IoK8SApiAutoscalingV2MetricIdentifier](#iok8sapiautoscalingv2metricidentifier) (Required): MetricIdentifier defines the name and optionally selector for a metric
 
-## IoK8SApiAutoscalingV2Beta2ResourceMetricSource
+## IoK8SApiAutoscalingV2ResourceMetricSource
 ### Properties
 * **name**: string (Required): name is the name of the resource in question.
-* **target**: [IoK8SApiAutoscalingV2Beta2MetricTarget](#iok8sapiautoscalingv2beta2metrictarget) (Required): MetricTarget defines the target value, average value, or average utilization of a specific metric
+* **target**: [IoK8SApiAutoscalingV2MetricTarget](#iok8sapiautoscalingv2metrictarget) (Required): MetricTarget defines the target value, average value, or average utilization of a specific metric
 
-## IoK8SApiAutoscalingV2Beta2ResourceMetricStatus
+## IoK8SApiAutoscalingV2ResourceMetricStatus
 ### Properties
-* **current**: [IoK8SApiAutoscalingV2Beta2MetricValueStatus](#iok8sapiautoscalingv2beta2metricvaluestatus) (Required): MetricValueStatus holds the current value for a metric
+* **current**: [IoK8SApiAutoscalingV2MetricValueStatus](#iok8sapiautoscalingv2metricvaluestatus) (Required): MetricValueStatus holds the current value for a metric
 * **name**: string (Required): Name is the name of the resource in question.
 
 ## IoK8SApimachineryPkgApisMetaV1LabelSelector

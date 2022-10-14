@@ -1,75 +1,26 @@
-AutoRest code generation utility [cli version: 3.6.2; node: v18.7.0]
+AutoRest code generation utility [cli version: 3.6.2; node: v16.17.1]
 (C) 2018 Microsoft Corporation.
 https://aka.ms/autorest
 warning | SkippedSemanticValidation | Semantic validation was skipped.
-warning | PreCheck/SchemaMissingType | The schema 'dev.radius.v1alpha1.ApplicationList' with an undefined type and declared properties is a bit ambiguous. This has been auto-corrected to 'type:object'
-    - file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json:34111:9
-warning | PreCheck/SchemaMissingType | The schema 'dev.radius.v1alpha1.ComponentList' with an undefined type and declared properties is a bit ambiguous. This has been auto-corrected to 'type:object'
-    - file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json:34270:9
-warning | PreCheck/SchemaMissingType | The schema 'dev.radius.v1alpha1.DeploymentList' with an undefined type and declared properties is a bit ambiguous. This has been auto-corrected to 'type:object'
-    - file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json:34359:9
-warning | PreCheck/SchemaMissingType | The schema 'io.dapr.v1alpha1.ComponentList' with an undefined type and declared properties is a bit ambiguous. This has been auto-corrected to 'type:object'
-    - file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json:34493:9
-warning | PreCheck/SchemaMissingType | The schema 'io.dapr.v1alpha1.ConfigurationList' with an undefined type and declared properties is a bit ambiguous. This has been auto-corrected to 'type:object'
-    - file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json:34766:9
-warning | PreCheck/SchemaMissingType | The schema 'io.dapr.v1alpha1.SubscriptionList' with an undefined type and declared properties is a bit ambiguous. This has been auto-corrected to 'type:object'
-    - file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json:34851:9
-warning | PreCheck/SchemaMissingType | The schema 'io.k8s.aadpodidentity.v1.AzureIdentityBindingList' with an undefined type and declared properties is a bit ambiguous. This has been auto-corrected to 'type:object'
-    - file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json:34905:9
-warning | PreCheck/SchemaMissingType | The schema 'io.k8s.aadpodidentity.v1.AzureIdentityList' with an undefined type and declared properties is a bit ambiguous. This has been auto-corrected to 'type:object'
-    - file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json:34939:9
-warning | PreCheck/SchemaMissingType | The schema 'io.k8s.aadpodidentity.v1.AzurePodIdentityExceptionList' with an undefined type and declared properties is a bit ambiguous. This has been auto-corrected to 'type:object'
-    - file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json:34983:9
 warning | PreCheck/CheckDuplicateSchemas | Checking for duplicate schemas, this could take a (long) while.  Run with --verbose for more detail.
 warning | Modeler/MissingType | The schema 'io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrBool' has no type or format information whatsoever. Location:
-   file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrBool
+   file:///workspaces/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrBool
 warning | Modeler/MissingType | The schema 'io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSON' has no type or format information whatsoever. Location:
-   file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSON
+   file:///workspaces/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSON
 warning | Modeler/MissingType | The schema 'io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrStringArray' has no type or format information whatsoever. Location:
-   file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrStringArray
+   file:///workspaces/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrStringArray
 warning | Modeler/MissingType | The schema 'io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrArray' has no type or format information whatsoever. Location:
-   file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrArray
-warning | Modeler/MissingType | The schema 'io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool' has no type or format information whatsoever. Location:
-   file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool
-warning | Modeler/MissingType | The schema 'io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSON' has no type or format information whatsoever. Location:
-   file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSON
-warning | Modeler/MissingType | The schema 'io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray' has no type or format information whatsoever. Location:
-   file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray
-warning | Modeler/MissingType | The schema 'io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray' has no type or format information whatsoever. Location:
-   file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray
-warning | Modeler/MissingType | The schema 'io.dapr.v1alpha1.Component-spec-metadata-item-value' has no type or format information whatsoever. Location:
-   file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.dapr.v1alpha1.Component-spec-metadata-item-value
-warning | Modeler/MissingType | The schema 'dev.radius.v1alpha1.Component-spec-bindings' has no type or format information whatsoever. Location:
-   file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/dev.radius.v1alpha1.Component-spec-bindings
-warning | Modeler/MissingType | The schema 'dev.radius.v1alpha1.Component-spec-config' has no type or format information whatsoever. Location:
-   file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/dev.radius.v1alpha1.Component-spec-config
-warning | Modeler/MissingType | The schema 'dev.radius.v1alpha1.Component-spec-run' has no type or format information whatsoever. Location:
-   file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/dev.radius.v1alpha1.Component-spec-run
-warning | Modeler/MissingType | The schema 'dev.radius.v1alpha1.Component-spec-traits' has no type or format information whatsoever. Location:
-   file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/dev.radius.v1alpha1.Component-spec-traits
-warning | Modeler/MissingType | The schema 'dev.radius.v1alpha1.Component-spec-uses' has no type or format information whatsoever. Location:
-   file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/dev.radius.v1alpha1.Component-spec-uses
-warning | Modeler/MissingType | The schema 'dev.radius.v1alpha1.Component-status-bindings-item-values' has no type or format information whatsoever. Location:
-   file:///Users/ant/Desktop/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/dev.radius.v1alpha1.Component-status-bindings-item-values
-warning | could not rationalize put: AzureIdentity
-warning | could not rationalize put: AzureIdentityBinding
-warning | could not rationalize put: AzurePodIdentityException
+   file:///workspaces/bicep-types-k8s/input/specification/kubernetes/resource-manager/kubernetes/preview/2021-01-01-preview/kubernetes.json#/components/schemas/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrArray
 warning | Unrecognized property type: byte-array. Returning 'any'.
 warning | Unrecognized property type: any-object. Returning 'any'.
-warning | Unrecognized property type: byte-array. Returning 'any'.
 warning | Unrecognized property type: byte-array. Returning 'any'.
 warning | Unrecognized property type: byte-array. Returning 'any'.
 warning | Unrecognized property type: byte-array. Returning 'any'.
 warning | Unrecognized property type: any-object. Returning 'any'.
 warning | Unrecognized property type: byte-array. Returning 'any'.
 warning | Unrecognized property type: any-object. Returning 'any'.
-warning | Unrecognized property type: byte-array. Returning 'any'.
-warning | Unrecognized property type: byte-array. Returning 'any'.
-warning | Unrecognized property type: any-object. Returning 'any'.
-warning | Unrecognized property type: any-object. Returning 'any'.
 warning | Unrecognized property type: any-object. Returning 'any'.
 warning | Unrecognized property type: any-object. Returning 'any'.
 warning | Unrecognized property type: byte-array. Returning 'any'.
 warning | Unrecognized property type: byte-array. Returning 'any'.
-warning | Unrecognized property type: byte-array. Returning 'any'.
-warning | Unrecognized property type: byte-array. Returning 'any'.
+warning | Unrecognized property type: any-object. Returning 'any'.
