@@ -6,7 +6,7 @@
 * **apiVersion**: 'v1' (ReadOnly, DeployTimeConstant): The api version.
 * **binaryData**: [IoK8SApiCoreV1ConfigMapBinaryData](#iok8sapicorev1configmapbinarydata): BinaryData contains the binary data. Each key must consist of alphanumeric characters, '-', '_' or '.'. BinaryData can contain byte sequences that are not in the UTF-8 range. The keys stored in BinaryData must not overlap with the ones in the Data field, this is enforced during validation process. Using this field will require 1.10+ apiserver and kubelet.
 * **data**: [IoK8SApiCoreV1ConfigMapData](#iok8sapicorev1configmapdata): Data contains the configuration data. Each key must consist of alphanumeric characters, '-', '_' or '.'. Values with non-UTF-8 byte sequences must use the BinaryData field. The keys stored in Data must not overlap with the keys in the BinaryData field, this is enforced during validation process.
-* **immutable**: bool: Immutable, if set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified). If not set to true, the field can be modified at any time. Defaulted to nil. This is a beta field enabled by ImmutableEphemeralVolumes feature gate.
+* **immutable**: bool: Immutable, if set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified). If not set to true, the field can be modified at any time. Defaulted to nil.
 * **kind**: 'ConfigMap' (ReadOnly, DeployTimeConstant): The resource kind.
 * **metadata**: [metadata](#metadata) (Required): The resource metadata.
 
@@ -123,11 +123,11 @@
 ### Properties
 * **apiVersion**: 'v1' (ReadOnly, DeployTimeConstant): The api version.
 * **data**: [IoK8SApiCoreV1SecretData](#iok8sapicorev1secretdata): Data contains the secret data. Each key must consist of alphanumeric characters, '-', '_' or '.'. The serialized form of the secret data is a base64 encoded string, representing the arbitrary (possibly non-string) data value here. Described in https://tools.ietf.org/html/rfc4648#section-4
-* **immutable**: bool: Immutable, if set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified). If not set to true, the field can be modified at any time. Defaulted to nil. This is a beta field enabled by ImmutableEphemeralVolumes feature gate.
+* **immutable**: bool: Immutable, if set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified). If not set to true, the field can be modified at any time. Defaulted to nil.
 * **kind**: 'Secret' (ReadOnly, DeployTimeConstant): The resource kind.
 * **metadata**: [metadata](#metadata) (Required): The resource metadata.
-* **stringData**: [IoK8SApiCoreV1SecretStringData](#iok8sapicorev1secretstringdata): stringData allows specifying non-binary secret data in string form. It is provided as a write-only convenience method. All keys and values are merged into the data field on write, overwriting any existing values. It is never output when reading from the API.
-* **type**: string: Used to facilitate programmatic handling of secret data.
+* **stringData**: [IoK8SApiCoreV1SecretStringData](#iok8sapicorev1secretstringdata): stringData allows specifying non-binary secret data in string form. It is provided as a write-only input field for convenience. All keys and values are merged into the data field on write, overwriting any existing values. The stringData field is never output when reading from the API.
+* **type**: string: Used to facilitate programmatic handling of secret data. More info: https://kubernetes.io/docs/concepts/configuration/secret/#secret-types
 
 ## Resource core/Service@v1
 * **Valid Scope(s)**: Unknown
@@ -146,7 +146,7 @@
 * **imagePullSecrets**: [IoK8SApiCoreV1LocalObjectReference](#iok8sapicorev1localobjectreference)[]: ImagePullSecrets is a list of references to secrets in the same namespace to use for pulling any images in pods that reference this ServiceAccount. ImagePullSecrets are distinct from Secrets because Secrets can be mounted in the pod, but ImagePullSecrets are only accessed by the kubelet. More info: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
 * **kind**: 'ServiceAccount' (ReadOnly, DeployTimeConstant): The resource kind.
 * **metadata**: [metadata](#metadata) (Required): The resource metadata.
-* **secrets**: [IoK8SApiCoreV1ObjectReference](#iok8sapicorev1objectreference)[]: Secrets is the list of secrets allowed to be used by pods running using this ServiceAccount. More info: https://kubernetes.io/docs/concepts/configuration/secret
+* **secrets**: [IoK8SApiCoreV1ObjectReference](#iok8sapicorev1objectreference)[]: Secrets is a list of the secrets in the same namespace that pods running using this ServiceAccount are allowed to use. Pods are only limited to this list if this service account has a "kubernetes.io/enforce-mountable-secrets" annotation set to "true". This field should not be used to find auto-generated service account token secrets for use outside of pods. Instead, tokens can be requested directly using the TokenRequest API, or service account token secrets can be manually created. More info: https://kubernetes.io/docs/concepts/configuration/secret
 
 ## annotations
 ### Properties
@@ -236,32 +236,32 @@
 
 ## IoK8SApiCoreV1AWSElasticBlockStoreVolumeSource
 ### Properties
-* **fsType**: string: Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
-* **partition**: int: The partition in the volume that you want to mount. If omitted, the default is to mount by volume name. Examples: For volume /dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
-* **readOnly**: bool: Specify "true" to force and set the ReadOnly property in VolumeMounts to "true". If omitted, the default is "false". More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
-* **volumeID**: string (Required): Unique ID of the persistent disk resource in AWS (Amazon EBS volume). More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+* **fsType**: string: fsType is the filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+* **partition**: int: partition is the partition in the volume that you want to mount. If omitted, the default is to mount by volume name. Examples: For volume /dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+* **readOnly**: bool: readOnly value true will force the readOnly setting in VolumeMounts. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+* **volumeID**: string (Required): volumeID is unique ID of the persistent disk resource in AWS (Amazon EBS volume). More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
 
 ## IoK8SApiCoreV1AzureDiskVolumeSource
 ### Properties
-* **cachingMode**: string: Host Caching mode: None, Read Only, Read Write.
-* **diskName**: string (Required): The Name of the data disk in the blob storage
-* **diskURI**: string (Required): The URI the data disk in the blob storage
-* **fsType**: string: Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
-* **kind**: string: Expected values Shared: multiple blob disks per storage account  Dedicated: single blob disk per storage account  Managed: azure managed data disk (only in managed availability set). defaults to shared
-* **readOnly**: bool: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
+* **cachingMode**: string: cachingMode is the Host Caching mode: None, Read Only, Read Write.
+* **diskName**: string (Required): diskName is the Name of the data disk in the blob storage
+* **diskURI**: string (Required): diskURI is the URI of data disk in the blob storage
+* **fsType**: string: fsType is Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
+* **kind**: string: kind expected values are Shared: multiple blob disks per storage account  Dedicated: single blob disk per storage account  Managed: azure managed data disk (only in managed availability set). defaults to shared
+* **readOnly**: bool: readOnly Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
 
 ## IoK8SApiCoreV1AzureFilePersistentVolumeSource
 ### Properties
-* **readOnly**: bool: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
-* **secretName**: string (Required): the name of secret that contains Azure Storage Account Name and Key
-* **secretNamespace**: string: the namespace of the secret that contains Azure Storage Account Name and Key default is the same as the Pod
-* **shareName**: string (Required): Share Name
+* **readOnly**: bool: readOnly defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
+* **secretName**: string (Required): secretName is the name of secret that contains Azure Storage Account Name and Key
+* **secretNamespace**: string: secretNamespace is the namespace of the secret that contains Azure Storage Account Name and Key default is the same as the Pod
+* **shareName**: string (Required): shareName is the azure Share Name
 
 ## IoK8SApiCoreV1AzureFileVolumeSource
 ### Properties
-* **readOnly**: bool: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
-* **secretName**: string (Required): the name of secret that contains Azure Storage Account Name and Key
-* **shareName**: string (Required): Share Name
+* **readOnly**: bool: readOnly defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
+* **secretName**: string (Required): secretName is the  name of secret that contains Azure Storage Account Name and Key
+* **shareName**: string (Required): shareName is the azure share Name
 
 ## IoK8SApiCoreV1Capabilities
 ### Properties
@@ -270,35 +270,35 @@
 
 ## IoK8SApiCoreV1CephFSPersistentVolumeSource
 ### Properties
-* **monitors**: string[] (Required): Required: Monitors is a collection of Ceph monitors More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
-* **path**: string: Optional: Used as the mounted root, rather than the full Ceph tree, default is /
-* **readOnly**: bool: Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
-* **secretFile**: string: Optional: SecretFile is the path to key ring for User, default is /etc/ceph/user.secret More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
+* **monitors**: string[] (Required): monitors is Required: Monitors is a collection of Ceph monitors More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
+* **path**: string: path is Optional: Used as the mounted root, rather than the full Ceph tree, default is /
+* **readOnly**: bool: readOnly is Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
+* **secretFile**: string: secretFile is Optional: SecretFile is the path to key ring for User, default is /etc/ceph/user.secret More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
 * **secretRef**: [IoK8SApiCoreV1SecretReference](#iok8sapicorev1secretreference): SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
-* **user**: string: Optional: User is the rados user name, default is admin More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
+* **user**: string: user is Optional: User is the rados user name, default is admin More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
 
 ## IoK8SApiCoreV1CephFSVolumeSource
 ### Properties
-* **monitors**: string[] (Required): Required: Monitors is a collection of Ceph monitors More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
-* **path**: string: Optional: Used as the mounted root, rather than the full Ceph tree, default is /
-* **readOnly**: bool: Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
-* **secretFile**: string: Optional: SecretFile is the path to key ring for User, default is /etc/ceph/user.secret More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
+* **monitors**: string[] (Required): monitors is Required: Monitors is a collection of Ceph monitors More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
+* **path**: string: path is Optional: Used as the mounted root, rather than the full Ceph tree, default is /
+* **readOnly**: bool: readOnly is Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
+* **secretFile**: string: secretFile is Optional: SecretFile is the path to key ring for User, default is /etc/ceph/user.secret More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
 * **secretRef**: [IoK8SApiCoreV1LocalObjectReference](#iok8sapicorev1localobjectreference): LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
-* **user**: string: Optional: User is the rados user name, default is admin More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
+* **user**: string: user is optional: User is the rados user name, default is admin More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
 
 ## IoK8SApiCoreV1CinderPersistentVolumeSource
 ### Properties
-* **fsType**: string: Filesystem type to mount. Must be a filesystem type supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
-* **readOnly**: bool: Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
+* **fsType**: string: fsType Filesystem type to mount. Must be a filesystem type supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
+* **readOnly**: bool: readOnly is Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
 * **secretRef**: [IoK8SApiCoreV1SecretReference](#iok8sapicorev1secretreference): SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
-* **volumeID**: string (Required): volume id used to identify the volume in cinder. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
+* **volumeID**: string (Required): volumeID used to identify the volume in cinder. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
 
 ## IoK8SApiCoreV1CinderVolumeSource
 ### Properties
-* **fsType**: string: Filesystem type to mount. Must be a filesystem type supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
-* **readOnly**: bool: Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
+* **fsType**: string: fsType is the filesystem type to mount. Must be a filesystem type supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
+* **readOnly**: bool: readOnly defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
 * **secretRef**: [IoK8SApiCoreV1LocalObjectReference](#iok8sapicorev1localobjectreference): LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
-* **volumeID**: string (Required): volume id used to identify the volume in cinder. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
+* **volumeID**: string (Required): volumeID used to identify the volume in cinder. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
 
 ## IoK8SApiCoreV1ClientIPConfig
 ### Properties
@@ -335,29 +335,29 @@
 
 ## IoK8SApiCoreV1ConfigMapProjection
 ### Properties
-* **items**: [IoK8SApiCoreV1KeyToPath](#iok8sapicorev1keytopath)[]: If unspecified, each key-value pair in the Data field of the referenced ConfigMap will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the ConfigMap, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
+* **items**: [IoK8SApiCoreV1KeyToPath](#iok8sapicorev1keytopath)[]: items if unspecified, each key-value pair in the Data field of the referenced ConfigMap will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the ConfigMap, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
 * **name**: string: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-* **optional**: bool: Specify whether the ConfigMap or its keys must be defined
+* **optional**: bool: optional specify whether the ConfigMap or its keys must be defined
 
 ## IoK8SApiCoreV1ConfigMapVolumeSource
 ### Properties
-* **defaultMode**: int: Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
-* **items**: [IoK8SApiCoreV1KeyToPath](#iok8sapicorev1keytopath)[]: If unspecified, each key-value pair in the Data field of the referenced ConfigMap will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the ConfigMap, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
+* **defaultMode**: int: defaultMode is optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+* **items**: [IoK8SApiCoreV1KeyToPath](#iok8sapicorev1keytopath)[]: items if unspecified, each key-value pair in the Data field of the referenced ConfigMap will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the ConfigMap, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
 * **name**: string: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-* **optional**: bool: Specify whether the ConfigMap or its keys must be defined
+* **optional**: bool: optional specify whether the ConfigMap or its keys must be defined
 
 ## IoK8SApiCoreV1Container
 ### Properties
-* **args**: string[]: Arguments to the entrypoint. The docker image's CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-* **command**: string[]: Entrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+* **args**: string[]: Arguments to the entrypoint. The container image's CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. "$$(VAR_NAME)" will produce the string literal "$(VAR_NAME)". Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+* **command**: string[]: Entrypoint array. Not executed within a shell. The container image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. "$$(VAR_NAME)" will produce the string literal "$(VAR_NAME)". Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
 * **env**: [IoK8SApiCoreV1EnvVar](#iok8sapicorev1envvar)[]: List of environment variables to set in the container. Cannot be updated.
 * **envFrom**: [IoK8SApiCoreV1EnvFromSource](#iok8sapicorev1envfromsource)[]: List of sources to populate environment variables in the container. The keys defined within a source must be a C_IDENTIFIER. All invalid keys will be reported as an event when the container is starting. When a key exists in multiple sources, the value associated with the last source will take precedence. Values defined by an Env with a duplicate key will take precedence. Cannot be updated.
-* **image**: string: Docker image name. More info: https://kubernetes.io/docs/concepts/containers/images This field is optional to allow higher level config management to default or override container images in workload controllers like Deployments and StatefulSets.
+* **image**: string: Container image name. More info: https://kubernetes.io/docs/concepts/containers/images This field is optional to allow higher level config management to default or override container images in workload controllers like Deployments and StatefulSets.
 * **imagePullPolicy**: string: Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise. Cannot be updated. More info: https://kubernetes.io/docs/concepts/containers/images#updating-images
 * **lifecycle**: [IoK8SApiCoreV1Lifecycle](#iok8sapicorev1lifecycle): Lifecycle describes actions that the management system should take in response to container lifecycle events. For the PostStart and PreStop lifecycle handlers, management of the container blocks until the action is complete, unless the container process fails, in which case the handler is aborted.
 * **livenessProbe**: [IoK8SApiCoreV1Probe](#iok8sapicorev1probe): Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
 * **name**: string (Required): Name of the container specified as a DNS_LABEL. Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
-* **ports**: [IoK8SApiCoreV1ContainerPort](#iok8sapicorev1containerport)[]: List of ports to expose from the container. Exposing a port here gives the system additional information about the network connections a container uses, but is primarily informational. Not specifying a port here DOES NOT prevent that port from being exposed. Any port which is listening on the default "0.0.0.0" address inside a container will be accessible from the network. Cannot be updated.
+* **ports**: [IoK8SApiCoreV1ContainerPort](#iok8sapicorev1containerport)[]: List of ports to expose from the container. Not specifying a port here DOES NOT prevent that port from being exposed. Any port which is listening on the default "0.0.0.0" address inside a container will be accessible from the network. Modifying this array with strategic merge patch may corrupt the data. For more information See https://github.com/kubernetes/kubernetes/issues/108255. Cannot be updated.
 * **readinessProbe**: [IoK8SApiCoreV1Probe](#iok8sapicorev1probe): Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
 * **resources**: [IoK8SApiCoreV1ResourceRequirements](#iok8sapicorev1resourcerequirements): ResourceRequirements describes the compute resource requirements.
 * **securityContext**: [IoK8SApiCoreV1SecurityContext](#iok8sapicorev1securitycontext): SecurityContext holds security configuration that will be applied to a container. Some fields are present in both SecurityContext and PodSecurityContext.  When both are set, the values in SecurityContext take precedence.
@@ -373,7 +373,7 @@
 
 ## IoK8SApiCoreV1ContainerImage
 ### Properties
-* **names**: string[] (Required): Names by which this image is known. e.g. ["k8s.gcr.io/hyperkube:v1.0.7", "dockerhub.io/google_containers/hyperkube:v1.0.7"]
+* **names**: string[]: Names by which this image is known. e.g. ["kubernetes.example/hyperkube:v1.0.7", "cloud-vendor.registry.example/cloud-vendor/hyperkube:v1.0.7"]
 * **sizeBytes**: int: The size of the image in bytes.
 
 ## IoK8SApiCoreV1ContainerPort
@@ -396,7 +396,7 @@
 
 ## IoK8SApiCoreV1ContainerStateTerminated
 ### Properties
-* **containerID**: string: Container's ID in the format 'docker://<container_id>'
+* **containerID**: string: Container's ID in the format '<type>://<container_id>'
 * **exitCode**: int (Required): Exit status from the last termination of the container
 * **finishedAt**: string: Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.
 * **message**: string: Message regarding the last termination of the container
@@ -411,13 +411,13 @@
 
 ## IoK8SApiCoreV1ContainerStatus
 ### Properties
-* **containerID**: string: Container's ID in the format 'docker://<container_id>'.
-* **image**: string (Required): The image the container is running. More info: https://kubernetes.io/docs/concepts/containers/images
+* **containerID**: string: Container's ID in the format '<type>://<container_id>'.
+* **image**: string (Required): The image the container is running. More info: https://kubernetes.io/docs/concepts/containers/images.
 * **imageID**: string (Required): ImageID of the container's image.
 * **lastState**: [IoK8SApiCoreV1ContainerState](#iok8sapicorev1containerstate): ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
 * **name**: string (Required): This must be a DNS_LABEL. Each container in a pod must have a unique name. Cannot be updated.
 * **ready**: bool (Required): Specifies whether the container has passed its readiness probe.
-* **restartCount**: int (Required): The number of times the container has been restarted, currently based on the number of dead containers that have not yet been removed. Note that this is calculated from dead containers. But those containers are subject to garbage collection. This value will get capped at 5 by GC.
+* **restartCount**: int (Required): The number of times the container has been restarted.
 * **started**: bool: Specifies whether the container has passed its startup probe. Initialized as false, becomes true after startupProbe is considered successful. Resets to false when the container is restarted, or if kubelet loses state temporarily. Is always true when no startupProbe is defined.
 * **state**: [IoK8SApiCoreV1ContainerState](#iok8sapicorev1containerstate): ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
 
@@ -425,13 +425,14 @@
 ### Properties
 * **controllerExpandSecretRef**: [IoK8SApiCoreV1SecretReference](#iok8sapicorev1secretreference): SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
 * **controllerPublishSecretRef**: [IoK8SApiCoreV1SecretReference](#iok8sapicorev1secretreference): SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
-* **driver**: string (Required): Driver is the name of the driver to use for this volume. Required.
-* **fsType**: string: Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs".
+* **driver**: string (Required): driver is the name of the driver to use for this volume. Required.
+* **fsType**: string: fsType to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs".
+* **nodeExpandSecretRef**: [IoK8SApiCoreV1SecretReference](#iok8sapicorev1secretreference): SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
 * **nodePublishSecretRef**: [IoK8SApiCoreV1SecretReference](#iok8sapicorev1secretreference): SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
 * **nodeStageSecretRef**: [IoK8SApiCoreV1SecretReference](#iok8sapicorev1secretreference): SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
-* **readOnly**: bool: Optional: The value to pass to ControllerPublishVolumeRequest. Defaults to false (read/write).
-* **volumeAttributes**: [IoK8SApiCoreV1CSIPersistentVolumeSourceVolumeAttributes](#iok8sapicorev1csipersistentvolumesourcevolumeattributes): Attributes of the volume to publish.
-* **volumeHandle**: string (Required): VolumeHandle is the unique volume name returned by the CSI volume plugin’s CreateVolume to refer to the volume on all subsequent calls. Required.
+* **readOnly**: bool: readOnly value to pass to ControllerPublishVolumeRequest. Defaults to false (read/write).
+* **volumeAttributes**: [IoK8SApiCoreV1CSIPersistentVolumeSourceVolumeAttributes](#iok8sapicorev1csipersistentvolumesourcevolumeattributes): volumeAttributes of the volume to publish.
+* **volumeHandle**: string (Required): volumeHandle is the unique volume name returned by the CSI volume plugin’s CreateVolume to refer to the volume on all subsequent calls. Required.
 
 ## IoK8SApiCoreV1CSIPersistentVolumeSourceVolumeAttributes
 ### Properties
@@ -440,11 +441,11 @@
 
 ## IoK8SApiCoreV1CSIVolumeSource
 ### Properties
-* **driver**: string (Required): Driver is the name of the CSI driver that handles this volume. Consult with your admin for the correct name as registered in the cluster.
-* **fsType**: string: Filesystem type to mount. Ex. "ext4", "xfs", "ntfs". If not provided, the empty value is passed to the associated CSI driver which will determine the default filesystem to apply.
+* **driver**: string (Required): driver is the name of the CSI driver that handles this volume. Consult with your admin for the correct name as registered in the cluster.
+* **fsType**: string: fsType to mount. Ex. "ext4", "xfs", "ntfs". If not provided, the empty value is passed to the associated CSI driver which will determine the default filesystem to apply.
 * **nodePublishSecretRef**: [IoK8SApiCoreV1LocalObjectReference](#iok8sapicorev1localobjectreference): LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
-* **readOnly**: bool: Specifies a read-only configuration for the volume. Defaults to false (read/write).
-* **volumeAttributes**: [IoK8SApiCoreV1CSIVolumeSourceVolumeAttributes](#iok8sapicorev1csivolumesourcevolumeattributes): VolumeAttributes stores driver-specific properties that are passed to the CSI driver. Consult your driver's documentation for supported values.
+* **readOnly**: bool: readOnly specifies a read-only configuration for the volume. Defaults to false (read/write).
+* **volumeAttributes**: [IoK8SApiCoreV1CSIVolumeSourceVolumeAttributes](#iok8sapicorev1csivolumesourcevolumeattributes): volumeAttributes stores driver-specific properties that are passed to the CSI driver. Consult your driver's documentation for supported values.
 
 ## IoK8SApiCoreV1CSIVolumeSourceVolumeAttributes
 ### Properties
@@ -473,32 +474,38 @@
 
 ## IoK8SApiCoreV1EmptyDirVolumeSource
 ### Properties
-* **medium**: string: What type of storage medium should back this directory. The default is "" which means to use the node's default medium. Must be an empty string (default) or Memory. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir
+* **medium**: string: medium represents what type of storage medium should back this directory. The default is "" which means to use the node's default medium. Must be an empty string (default) or Memory. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir
 * **sizeLimit**: string: Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.
 
 The serialization format is:
 
-<quantity>        ::= <signedNumber><suffix>
-  (Note that <suffix> may be empty, from the "" case in <decimalSI>.)
+``` <quantity>        ::= <signedNumber><suffix>
+
+	(Note that <suffix> may be empty, from the "" case in <decimalSI>.)
+
 <digit>           ::= 0 | 1 | ... | 9 <digits>          ::= <digit> | <digit><digits> <number>          ::= <digits> | <digits>.<digits> | <digits>. | .<digits> <sign>            ::= "+" | "-" <signedNumber>    ::= <number> | <sign><number> <suffix>          ::= <binarySI> | <decimalExponent> | <decimalSI> <binarySI>        ::= Ki | Mi | Gi | Ti | Pi | Ei
-  (International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)
+
+	(International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)
+
 <decimalSI>       ::= m | "" | k | M | G | T | P | E
-  (Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)
-<decimalExponent> ::= "e" <signedNumber> | "E" <signedNumber>
+
+	(Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)
+
+<decimalExponent> ::= "e" <signedNumber> | "E" <signedNumber> ```
 
 No matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.
 
 When a Quantity is parsed from a string, it will remember the type of suffix it had, and will use the same type again when it is serialized.
 
 Before serializing, Quantity will be put in "canonical form". This means that Exponent/suffix will be adjusted up or down (with a corresponding increase or decrease in Mantissa) such that:
-  a. No precision is lost
-  b. No fractional digits will be emitted
-  c. The exponent (or suffix) is as large as possible.
+
+- No precision is lost - No fractional digits will be emitted - The exponent (or suffix) is as large as possible.
+
 The sign will be omitted unless the number is negative.
 
 Examples:
-  1.5 will be serialized as "1500m"
-  1.5Gi will be serialized as "1536Mi"
+
+- 1.5 will be serialized as "1500m" - 1.5Gi will be serialized as "1536Mi"
 
 Note that the quantity will NEVER be internally represented by a floating point number. That is the whole point of this exercise.
 
@@ -515,7 +522,7 @@ This format is intended to make it difficult to use these numbers without writin
 
 ## IoK8SApiCoreV1EndpointPort
 ### Properties
-* **appProtocol**: string: The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. This is a beta field that is guarded by the ServiceAppProtocol feature gate and enabled by default.
+* **appProtocol**: string: The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and https://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol.
 * **name**: string: The name of this port.  This must match the 'name' field in the corresponding ServicePort. Must be a DNS_LABEL. Optional only if one port is defined.
 * **port**: int (Required): The port number of the endpoint.
 * **protocol**: string: The IP protocol for this port. Must be UDP, TCP, or SCTP. Default is TCP.
@@ -539,7 +546,7 @@ The contents of the target Secret's Data field will represent the key-value pair
 ## IoK8SApiCoreV1EnvVar
 ### Properties
 * **name**: string (Required): Name of the environment variable. Must be a C_IDENTIFIER.
-* **value**: string: Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+* **value**: string: Variable references $(VAR_NAME) are expanded using the previously defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. "$$(VAR_NAME)" will produce the string literal "$(VAR_NAME)". Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
 * **valueFrom**: [IoK8SApiCoreV1EnvVarSource](#iok8sapicorev1envvarsource): EnvVarSource represents a source for the value of an EnvVar.
 
 ## IoK8SApiCoreV1EnvVarSource
@@ -551,11 +558,11 @@ The contents of the target Secret's Data field will represent the key-value pair
 
 ## IoK8SApiCoreV1EphemeralContainer
 ### Properties
-* **args**: string[]: Arguments to the entrypoint. The docker image's CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-* **command**: string[]: Entrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+* **args**: string[]: Arguments to the entrypoint. The image's CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. "$$(VAR_NAME)" will produce the string literal "$(VAR_NAME)". Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+* **command**: string[]: Entrypoint array. Not executed within a shell. The image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. "$$(VAR_NAME)" will produce the string literal "$(VAR_NAME)". Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
 * **env**: [IoK8SApiCoreV1EnvVar](#iok8sapicorev1envvar)[]: List of environment variables to set in the container. Cannot be updated.
 * **envFrom**: [IoK8SApiCoreV1EnvFromSource](#iok8sapicorev1envfromsource)[]: List of sources to populate environment variables in the container. The keys defined within a source must be a C_IDENTIFIER. All invalid keys will be reported as an event when the container is starting. When a key exists in multiple sources, the value associated with the last source will take precedence. Values defined by an Env with a duplicate key will take precedence. Cannot be updated.
-* **image**: string: Docker image name. More info: https://kubernetes.io/docs/concepts/containers/images
+* **image**: string: Container image name. More info: https://kubernetes.io/docs/concepts/containers/images
 * **imagePullPolicy**: string: Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise. Cannot be updated. More info: https://kubernetes.io/docs/concepts/containers/images#updating-images
 * **lifecycle**: [IoK8SApiCoreV1Lifecycle](#iok8sapicorev1lifecycle): Lifecycle describes actions that the management system should take in response to container lifecycle events. For the PostStart and PreStop lifecycle handlers, management of the container blocks until the action is complete, unless the container process fails, in which case the handler is aborted.
 * **livenessProbe**: [IoK8SApiCoreV1Probe](#iok8sapicorev1probe): Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
@@ -567,17 +574,18 @@ The contents of the target Secret's Data field will represent the key-value pair
 * **startupProbe**: [IoK8SApiCoreV1Probe](#iok8sapicorev1probe): Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
 * **stdin**: bool: Whether this container should allocate a buffer for stdin in the container runtime. If this is not set, reads from stdin in the container will always result in EOF. Default is false.
 * **stdinOnce**: bool: Whether the container runtime should close the stdin channel after it has been opened by a single attach. When stdin is true the stdin stream will remain open across multiple attach sessions. If stdinOnce is set to true, stdin is opened on container start, is empty until the first client attaches to stdin, and then remains open and accepts data until the client disconnects, at which time stdin is closed and remains closed until the container is restarted. If this flag is false, a container processes that reads from stdin will never receive an EOF. Default is false
-* **targetContainerName**: string: If set, the name of the container from PodSpec that this ephemeral container targets. The ephemeral container will be run in the namespaces (IPC, PID, etc) of this container. If not set then the ephemeral container is run in whatever namespaces are shared for the pod. Note that the container runtime must support this feature.
+* **targetContainerName**: string: If set, the name of the container from PodSpec that this ephemeral container targets. The ephemeral container will be run in the namespaces (IPC, PID, etc) of this container. If not set then the ephemeral container uses the namespaces configured in the Pod spec.
+
+The container runtime must implement support for this feature. If the runtime does not support namespace targeting then the result of setting this field is undefined.
 * **terminationMessagePath**: string: Optional: Path at which the file to which the container's termination message will be written is mounted into the container's filesystem. Message written is intended to be brief final status, such as an assertion failure message. Will be truncated by the node if greater than 4096 bytes. The total message length across all containers will be limited to 12kb. Defaults to /dev/termination-log. Cannot be updated.
 * **terminationMessagePolicy**: string: Indicate how the termination message should be populated. File will use the contents of terminationMessagePath to populate the container status message on both success and failure. FallbackToLogsOnError will use the last chunk of container log output if the termination message file is empty and the container exited with an error. The log output is limited to 2048 bytes or 80 lines, whichever is smaller. Defaults to File. Cannot be updated.
 * **tty**: bool: Whether this container should allocate a TTY for itself, also requires 'stdin' to be true. Default is false.
 * **volumeDevices**: [IoK8SApiCoreV1VolumeDevice](#iok8sapicorev1volumedevice)[]: volumeDevices is the list of block devices to be used by the container.
-* **volumeMounts**: [IoK8SApiCoreV1VolumeMount](#iok8sapicorev1volumemount)[]: Pod volumes to mount into the container's filesystem. Cannot be updated.
+* **volumeMounts**: [IoK8SApiCoreV1VolumeMount](#iok8sapicorev1volumemount)[]: Pod volumes to mount into the container's filesystem. Subpath mounts are not allowed for ephemeral containers. Cannot be updated.
 * **workingDir**: string: Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
 
 ## IoK8SApiCoreV1EphemeralVolumeSource
 ### Properties
-* **readOnly**: bool: Specifies a read-only configuration for the volume. Defaults to false (read/write).
 * **volumeClaimTemplate**: [IoK8SApiCoreV1PersistentVolumeClaimTemplate](#iok8sapicorev1persistentvolumeclaimtemplate): PersistentVolumeClaimTemplate is used to produce PersistentVolumeClaim objects as part of an EphemeralVolumeSource.
 
 ## IoK8SApiCoreV1EventSeries
@@ -596,18 +604,18 @@ The contents of the target Secret's Data field will represent the key-value pair
 
 ## IoK8SApiCoreV1FCVolumeSource
 ### Properties
-* **fsType**: string: Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
-* **lun**: int: Optional: FC target lun number
-* **readOnly**: bool: Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
-* **targetWWNs**: string[]: Optional: FC target worldwide names (WWNs)
-* **wwids**: string[]: Optional: FC volume world wide identifiers (wwids) Either wwids or combination of targetWWNs and lun must be set, but not both simultaneously.
+* **fsType**: string: fsType is the filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
+* **lun**: int: lun is Optional: FC target lun number
+* **readOnly**: bool: readOnly is Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
+* **targetWWNs**: string[]: targetWWNs is Optional: FC target worldwide names (WWNs)
+* **wwids**: string[]: wwids Optional: FC volume world wide identifiers (wwids) Either wwids or combination of targetWWNs and lun must be set, but not both simultaneously.
 
 ## IoK8SApiCoreV1FlexPersistentVolumeSource
 ### Properties
-* **driver**: string (Required): Driver is the name of the driver to use for this volume.
-* **fsType**: string: Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". The default filesystem depends on FlexVolume script.
-* **options**: [IoK8SApiCoreV1FlexPersistentVolumeSourceOptions](#iok8sapicorev1flexpersistentvolumesourceoptions): Optional: Extra command options if any.
-* **readOnly**: bool: Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
+* **driver**: string (Required): driver is the name of the driver to use for this volume.
+* **fsType**: string: fsType is the Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". The default filesystem depends on FlexVolume script.
+* **options**: [IoK8SApiCoreV1FlexPersistentVolumeSourceOptions](#iok8sapicorev1flexpersistentvolumesourceoptions): options is Optional: this field holds extra command options if any.
+* **readOnly**: bool: readOnly is Optional: defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
 * **secretRef**: [IoK8SApiCoreV1SecretReference](#iok8sapicorev1secretreference): SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
 
 ## IoK8SApiCoreV1FlexPersistentVolumeSourceOptions
@@ -617,10 +625,10 @@ The contents of the target Secret's Data field will represent the key-value pair
 
 ## IoK8SApiCoreV1FlexVolumeSource
 ### Properties
-* **driver**: string (Required): Driver is the name of the driver to use for this volume.
-* **fsType**: string: Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". The default filesystem depends on FlexVolume script.
-* **options**: [IoK8SApiCoreV1FlexVolumeSourceOptions](#iok8sapicorev1flexvolumesourceoptions): Optional: Extra command options if any.
-* **readOnly**: bool: Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
+* **driver**: string (Required): driver is the name of the driver to use for this volume.
+* **fsType**: string: fsType is the filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". The default filesystem depends on FlexVolume script.
+* **options**: [IoK8SApiCoreV1FlexVolumeSourceOptions](#iok8sapicorev1flexvolumesourceoptions): options is Optional: this field holds extra command options if any.
+* **readOnly**: bool: readOnly is Optional: defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
 * **secretRef**: [IoK8SApiCoreV1LocalObjectReference](#iok8sapicorev1localobjectreference): LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
 
 ## IoK8SApiCoreV1FlexVolumeSourceOptions
@@ -630,40 +638,41 @@ The contents of the target Secret's Data field will represent the key-value pair
 
 ## IoK8SApiCoreV1FlockerVolumeSource
 ### Properties
-* **datasetName**: string: Name of the dataset stored as metadata -> name on the dataset for Flocker should be considered as deprecated
-* **datasetUUID**: string: UUID of the dataset. This is unique identifier of a Flocker dataset
+* **datasetName**: string: datasetName is Name of the dataset stored as metadata -> name on the dataset for Flocker should be considered as deprecated
+* **datasetUUID**: string: datasetUUID is the UUID of the dataset. This is unique identifier of a Flocker dataset
 
 ## IoK8SApiCoreV1GCEPersistentDiskVolumeSource
 ### Properties
-* **fsType**: string: Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
-* **partition**: int: The partition in the volume that you want to mount. If omitted, the default is to mount by volume name. Examples: For volume /dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty). More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
-* **pdName**: string (Required): Unique name of the PD resource in GCE. Used to identify the disk in GCE. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
-* **readOnly**: bool: ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
+* **fsType**: string: fsType is filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
+* **partition**: int: partition is the partition in the volume that you want to mount. If omitted, the default is to mount by volume name. Examples: For volume /dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty). More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
+* **pdName**: string (Required): pdName is unique name of the PD resource in GCE. Used to identify the disk in GCE. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
+* **readOnly**: bool: readOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
 
 ## IoK8SApiCoreV1GitRepoVolumeSource
 ### Properties
-* **directory**: string: Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name.
-* **repository**: string (Required): Repository URL
-* **revision**: string: Commit hash for the specified revision.
+* **directory**: string: directory is the target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name.
+* **repository**: string (Required): repository is the URL
+* **revision**: string: revision is the commit hash for the specified revision.
 
 ## IoK8SApiCoreV1GlusterfsPersistentVolumeSource
 ### Properties
-* **endpoints**: string (Required): EndpointsName is the endpoint name that details Glusterfs topology. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
-* **endpointsNamespace**: string: EndpointsNamespace is the namespace that contains Glusterfs endpoint. If this field is empty, the EndpointNamespace defaults to the same namespace as the bound PVC. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
-* **path**: string (Required): Path is the Glusterfs volume path. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
-* **readOnly**: bool: ReadOnly here will force the Glusterfs volume to be mounted with read-only permissions. Defaults to false. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
+* **endpoints**: string (Required): endpoints is the endpoint name that details Glusterfs topology. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
+* **endpointsNamespace**: string: endpointsNamespace is the namespace that contains Glusterfs endpoint. If this field is empty, the EndpointNamespace defaults to the same namespace as the bound PVC. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
+* **path**: string (Required): path is the Glusterfs volume path. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
+* **readOnly**: bool: readOnly here will force the Glusterfs volume to be mounted with read-only permissions. Defaults to false. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
 
 ## IoK8SApiCoreV1GlusterfsVolumeSource
 ### Properties
-* **endpoints**: string (Required): EndpointsName is the endpoint name that details Glusterfs topology. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
-* **path**: string (Required): Path is the Glusterfs volume path. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
-* **readOnly**: bool: ReadOnly here will force the Glusterfs volume to be mounted with read-only permissions. Defaults to false. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
+* **endpoints**: string (Required): endpoints is the endpoint name that details Glusterfs topology. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
+* **path**: string (Required): path is the Glusterfs volume path. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
+* **readOnly**: bool: readOnly here will force the Glusterfs volume to be mounted with read-only permissions. Defaults to false. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
 
-## IoK8SApiCoreV1Handler
+## IoK8SApiCoreV1GrpcAction
 ### Properties
-* **exec**: [IoK8SApiCoreV1ExecAction](#iok8sapicorev1execaction): ExecAction describes a "run in container" action.
-* **httpGet**: [IoK8SApiCoreV1HttpGetAction](#iok8sapicorev1httpgetaction): HTTPGetAction describes an action based on HTTP Get requests.
-* **tcpSocket**: [IoK8SApiCoreV1TCPSocketAction](#iok8sapicorev1tcpsocketaction): TCPSocketAction describes an action based on opening a socket
+* **port**: int (Required): Port number of the gRPC service. Number must be in the range 1 to 65535.
+* **service**: string: Service is the name of the service to place in the gRPC HealthCheckRequest (see https://github.com/grpc/grpc/blob/master/doc/health-checking.md).
+
+If this is not specified, the default behavior is defined by gRPC.
 
 ## IoK8SApiCoreV1HostAlias
 ### Properties
@@ -672,8 +681,8 @@ The contents of the target Secret's Data field will represent the key-value pair
 
 ## IoK8SApiCoreV1HostPathVolumeSource
 ### Properties
-* **path**: string (Required): Path of the directory on the host. If the path is a symlink, it will follow the link to the real path. More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath
-* **type**: string: Type for HostPath Volume Defaults to "" More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath
+* **path**: string (Required): path of the directory on the host. If the path is a symlink, it will follow the link to the real path. More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath
+* **type**: string: type for HostPath Volume Defaults to "" More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath
 
 ## IoK8SApiCoreV1HttpGetAction
 ### Properties
@@ -690,42 +699,48 @@ The contents of the target Secret's Data field will represent the key-value pair
 
 ## IoK8SApiCoreV1IscsiPersistentVolumeSource
 ### Properties
-* **chapAuthDiscovery**: bool: whether support iSCSI Discovery CHAP authentication
-* **chapAuthSession**: bool: whether support iSCSI Session CHAP authentication
-* **fsType**: string: Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://kubernetes.io/docs/concepts/storage/volumes#iscsi
-* **initiatorName**: string: Custom iSCSI Initiator Name. If initiatorName is specified with iscsiInterface simultaneously, new iSCSI interface <target portal>:<volume name> will be created for the connection.
-* **iqn**: string (Required): Target iSCSI Qualified Name.
-* **iscsiInterface**: string: iSCSI Interface Name that uses an iSCSI transport. Defaults to 'default' (tcp).
-* **lun**: int (Required): iSCSI Target Lun number.
-* **portals**: string[]: iSCSI Target Portal List. The Portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).
-* **readOnly**: bool: ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false.
+* **chapAuthDiscovery**: bool: chapAuthDiscovery defines whether support iSCSI Discovery CHAP authentication
+* **chapAuthSession**: bool: chapAuthSession defines whether support iSCSI Session CHAP authentication
+* **fsType**: string: fsType is the filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://kubernetes.io/docs/concepts/storage/volumes#iscsi
+* **initiatorName**: string: initiatorName is the custom iSCSI Initiator Name. If initiatorName is specified with iscsiInterface simultaneously, new iSCSI interface <target portal>:<volume name> will be created for the connection.
+* **iqn**: string (Required): iqn is Target iSCSI Qualified Name.
+* **iscsiInterface**: string: iscsiInterface is the interface Name that uses an iSCSI transport. Defaults to 'default' (tcp).
+* **lun**: int (Required): lun is iSCSI Target Lun number.
+* **portals**: string[]: portals is the iSCSI Target Portal List. The Portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).
+* **readOnly**: bool: readOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false.
 * **secretRef**: [IoK8SApiCoreV1SecretReference](#iok8sapicorev1secretreference): SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
-* **targetPortal**: string (Required): iSCSI Target Portal. The Portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).
+* **targetPortal**: string (Required): targetPortal is iSCSI Target Portal. The Portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).
 
 ## IoK8SApiCoreV1IscsiVolumeSource
 ### Properties
-* **chapAuthDiscovery**: bool: whether support iSCSI Discovery CHAP authentication
-* **chapAuthSession**: bool: whether support iSCSI Session CHAP authentication
-* **fsType**: string: Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://kubernetes.io/docs/concepts/storage/volumes#iscsi
-* **initiatorName**: string: Custom iSCSI Initiator Name. If initiatorName is specified with iscsiInterface simultaneously, new iSCSI interface <target portal>:<volume name> will be created for the connection.
-* **iqn**: string (Required): Target iSCSI Qualified Name.
-* **iscsiInterface**: string: iSCSI Interface Name that uses an iSCSI transport. Defaults to 'default' (tcp).
-* **lun**: int (Required): iSCSI Target Lun number.
-* **portals**: string[]: iSCSI Target Portal List. The portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).
-* **readOnly**: bool: ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false.
+* **chapAuthDiscovery**: bool: chapAuthDiscovery defines whether support iSCSI Discovery CHAP authentication
+* **chapAuthSession**: bool: chapAuthSession defines whether support iSCSI Session CHAP authentication
+* **fsType**: string: fsType is the filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://kubernetes.io/docs/concepts/storage/volumes#iscsi
+* **initiatorName**: string: initiatorName is the custom iSCSI Initiator Name. If initiatorName is specified with iscsiInterface simultaneously, new iSCSI interface <target portal>:<volume name> will be created for the connection.
+* **iqn**: string (Required): iqn is the target iSCSI Qualified Name.
+* **iscsiInterface**: string: iscsiInterface is the interface Name that uses an iSCSI transport. Defaults to 'default' (tcp).
+* **lun**: int (Required): lun represents iSCSI Target Lun number.
+* **portals**: string[]: portals is the iSCSI Target Portal List. The portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).
+* **readOnly**: bool: readOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false.
 * **secretRef**: [IoK8SApiCoreV1LocalObjectReference](#iok8sapicorev1localobjectreference): LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
-* **targetPortal**: string (Required): iSCSI Target Portal. The Portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).
+* **targetPortal**: string (Required): targetPortal is iSCSI Target Portal. The Portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).
 
 ## IoK8SApiCoreV1KeyToPath
 ### Properties
-* **key**: string (Required): The key to project.
-* **mode**: int: Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
-* **path**: string (Required): The relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.
+* **key**: string (Required): key is the key to project.
+* **mode**: int: mode is Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+* **path**: string (Required): path is the relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.
 
 ## IoK8SApiCoreV1Lifecycle
 ### Properties
-* **postStart**: [IoK8SApiCoreV1Handler](#iok8sapicorev1handler): Handler defines a specific action that should be taken
-* **preStop**: [IoK8SApiCoreV1Handler](#iok8sapicorev1handler): Handler defines a specific action that should be taken
+* **postStart**: [IoK8SApiCoreV1LifecycleHandler](#iok8sapicorev1lifecyclehandler): LifecycleHandler defines a specific action that should be taken in a lifecycle hook. One and only one of the fields, except TCPSocket must be specified.
+* **preStop**: [IoK8SApiCoreV1LifecycleHandler](#iok8sapicorev1lifecyclehandler): LifecycleHandler defines a specific action that should be taken in a lifecycle hook. One and only one of the fields, except TCPSocket must be specified.
+
+## IoK8SApiCoreV1LifecycleHandler
+### Properties
+* **exec**: [IoK8SApiCoreV1ExecAction](#iok8sapicorev1execaction): ExecAction describes a "run in container" action.
+* **httpGet**: [IoK8SApiCoreV1HttpGetAction](#iok8sapicorev1httpgetaction): HTTPGetAction describes an action based on HTTP Get requests.
+* **tcpSocket**: [IoK8SApiCoreV1TCPSocketAction](#iok8sapicorev1tcpsocketaction): TCPSocketAction describes an action based on opening a socket
 
 ## IoK8SApiCoreV1LimitRangeItem
 ### Properties
@@ -769,6 +784,7 @@ The contents of the target Secret's Data field will represent the key-value pair
 ### Properties
 * **hostname**: string: Hostname is set for load-balancer ingress points that are DNS based (typically AWS load-balancers)
 * **ip**: string: IP is set for load-balancer ingress points that are IP based (typically GCE or OpenStack load-balancers)
+* **ports**: [IoK8SApiCoreV1PortStatus](#iok8sapicorev1portstatus)[]: Ports is a list of records of service ports If used, every port defined in the service should have an entry in it
 
 ## IoK8SApiCoreV1LoadBalancerStatus
 ### Properties
@@ -780,8 +796,8 @@ The contents of the target Secret's Data field will represent the key-value pair
 
 ## IoK8SApiCoreV1LocalVolumeSource
 ### Properties
-* **fsType**: string: Filesystem type to mount. It applies only when the Path is a block device. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". The default value is to auto-select a fileystem if unspecified.
-* **path**: string (Required): The full path to the volume on the node. It can be either a directory or block device (disk, partition, ...).
+* **fsType**: string: fsType is the filesystem type to mount. It applies only when the Path is a block device. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". The default value is to auto-select a filesystem if unspecified.
+* **path**: string (Required): path of the full path to the volume on the node. It can be either a directory or block device (disk, partition, ...).
 
 ## IoK8SApiCoreV1NamespaceCondition
 ### Properties
@@ -802,9 +818,9 @@ The contents of the target Secret's Data field will represent the key-value pair
 
 ## IoK8SApiCoreV1NFSVolumeSource
 ### Properties
-* **path**: string (Required): Path that is exported by the NFS server. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
-* **readOnly**: bool: ReadOnly here will force the NFS export to be mounted with read-only permissions. Defaults to false. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
-* **server**: string (Required): Server is the hostname or IP address of the NFS server. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
+* **path**: string (Required): path that is exported by the NFS server. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
+* **readOnly**: bool: readOnly here will force the NFS export to be mounted with read-only permissions. Defaults to false. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
+* **server**: string (Required): server is the hostname or IP address of the NFS server. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
 
 ## IoK8SApiCoreV1NodeAddress
 ### Properties
@@ -827,14 +843,14 @@ The contents of the target Secret's Data field will represent the key-value pair
 
 ## IoK8SApiCoreV1NodeConfigSource
 ### Properties
-* **configMap**: [IoK8SApiCoreV1ConfigMapNodeConfigSource](#iok8sapicorev1configmapnodeconfigsource): ConfigMapNodeConfigSource contains the information to reference a ConfigMap as a config source for the Node.
+* **configMap**: [IoK8SApiCoreV1ConfigMapNodeConfigSource](#iok8sapicorev1configmapnodeconfigsource): ConfigMapNodeConfigSource contains the information to reference a ConfigMap as a config source for the Node. This API is deprecated since 1.22: https://git.k8s.io/enhancements/keps/sig-node/281-dynamic-kubelet-configuration
 
 ## IoK8SApiCoreV1NodeConfigStatus
 ### Properties
-* **active**: [IoK8SApiCoreV1NodeConfigSource](#iok8sapicorev1nodeconfigsource): NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil.
-* **assigned**: [IoK8SApiCoreV1NodeConfigSource](#iok8sapicorev1nodeconfigsource): NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil.
+* **active**: [IoK8SApiCoreV1NodeConfigSource](#iok8sapicorev1nodeconfigsource): NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil. This API is deprecated since 1.22
+* **assigned**: [IoK8SApiCoreV1NodeConfigSource](#iok8sapicorev1nodeconfigsource): NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil. This API is deprecated since 1.22
 * **error**: string: Error describes any problems reconciling the Spec.ConfigSource to the Active config. Errors may occur, for example, attempting to checkpoint Spec.ConfigSource to the local Assigned record, attempting to checkpoint the payload associated with Spec.ConfigSource, attempting to load or validate the Assigned config, etc. Errors may occur at different points while syncing config. Earlier errors (e.g. download or checkpointing errors) will not result in a rollback to LastKnownGood, and may resolve across Kubelet retries. Later errors (e.g. loading or validating a checkpointed config) will result in a rollback to LastKnownGood. In the latter case, it is usually possible to resolve the error by fixing the config assigned in Spec.ConfigSource. You can find additional information for debugging by searching the error message in the Kubelet log. Error is a human-readable description of the error state; machines can check whether or not Error is empty, but should not rely on the stability of the Error text across Kubelet versions.
-* **lastKnownGood**: [IoK8SApiCoreV1NodeConfigSource](#iok8sapicorev1nodeconfigsource): NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil.
+* **lastKnownGood**: [IoK8SApiCoreV1NodeConfigSource](#iok8sapicorev1nodeconfigsource): NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil. This API is deprecated since 1.22
 
 ## IoK8SApiCoreV1NodeDaemonEndpoints
 ### Properties
@@ -857,7 +873,7 @@ The contents of the target Secret's Data field will represent the key-value pair
 
 ## IoK8SApiCoreV1NodeSpec
 ### Properties
-* **configSource**: [IoK8SApiCoreV1NodeConfigSource](#iok8sapicorev1nodeconfigsource): NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil.
+* **configSource**: [IoK8SApiCoreV1NodeConfigSource](#iok8sapicorev1nodeconfigsource): NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil. This API is deprecated since 1.22
 * **externalID**: string: Deprecated. Not all kubelets will set this field. Remove field after 1.13. see: https://issues.k8s.io/61966
 * **podCIDR**: string: PodCIDR represents the pod IP range assigned to the node.
 * **podCIDRs**: string[]: podCIDRs represents the IP ranges assigned to the node for usage by Pods on that node. If this field is specified, the 0th entry must match the podCIDR field. It may contain at most 1 value for each of IPv4 and IPv6.
@@ -893,7 +909,7 @@ The contents of the target Secret's Data field will represent the key-value pair
 ### Properties
 * **architecture**: string (Required): The Architecture reported by the node
 * **bootID**: string (Required): Boot ID reported by the node.
-* **containerRuntimeVersion**: string (Required): ContainerRuntime Version reported by the node through runtime remote API (e.g. docker://1.5.0).
+* **containerRuntimeVersion**: string (Required): ContainerRuntime Version reported by the node through runtime remote API (e.g. containerd://1.4.2).
 * **kernelVersion**: string (Required): Kernel Version reported by the node from 'uname -r' (e.g. 3.16.0-0.bpo.4-amd64).
 * **kubeletVersion**: string (Required): Kubelet Version reported by the node.
 * **kubeProxyVersion**: string (Required): KubeProxy Version reported by the node.
@@ -921,27 +937,35 @@ The contents of the target Secret's Data field will represent the key-value pair
 ### Properties
 * **lastProbeTime**: string: Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.
 * **lastTransitionTime**: string: Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.
-* **message**: string: Human-readable message indicating details about last transition.
-* **reason**: string: Unique, this should be a short, machine understandable string that gives the reason for condition's last transition. If it reports "ResizeStarted" that means the underlying persistent volume is being resized.
+* **message**: string: message is the human-readable message indicating details about last transition.
+* **reason**: string: reason is a unique, this should be a short, machine understandable string that gives the reason for condition's last transition. If it reports "ResizeStarted" that means the underlying persistent volume is being resized.
 * **status**: string (Required)
 * **type**: string (Required)
 
 ## IoK8SApiCoreV1PersistentVolumeClaimSpec
 ### Properties
-* **accessModes**: string[]: AccessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
+* **accessModes**: string[]: accessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
 * **dataSource**: [IoK8SApiCoreV1TypedLocalObjectReference](#iok8sapicorev1typedlocalobjectreference): TypedLocalObjectReference contains enough information to let you locate the typed referenced object inside the same namespace.
+* **dataSourceRef**: [IoK8SApiCoreV1TypedLocalObjectReference](#iok8sapicorev1typedlocalobjectreference): TypedLocalObjectReference contains enough information to let you locate the typed referenced object inside the same namespace.
 * **resources**: [IoK8SApiCoreV1ResourceRequirements](#iok8sapicorev1resourcerequirements): ResourceRequirements describes the compute resource requirements.
 * **selector**: [IoK8SApimachineryPkgApisMetaV1LabelSelector](#iok8sapimachinerypkgapismetav1labelselector): A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
-* **storageClassName**: string: Name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
+* **storageClassName**: string: storageClassName is the name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
 * **volumeMode**: string: volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
-* **volumeName**: string: VolumeName is the binding reference to the PersistentVolume backing this claim.
+* **volumeName**: string: volumeName is the binding reference to the PersistentVolume backing this claim.
 
 ## IoK8SApiCoreV1PersistentVolumeClaimStatus
 ### Properties
-* **accessModes**: string[]: AccessModes contains the actual access modes the volume backing the PVC has. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
-* **capacity**: [IoK8SApiCoreV1PersistentVolumeClaimStatusCapacity](#iok8sapicorev1persistentvolumeclaimstatuscapacity): Represents the actual resources of the underlying volume.
-* **conditions**: [IoK8SApiCoreV1PersistentVolumeClaimCondition](#iok8sapicorev1persistentvolumeclaimcondition)[]: Current Condition of persistent volume claim. If underlying persistent volume is being resized then the Condition will be set to 'ResizeStarted'.
-* **phase**: string: Phase represents the current phase of PersistentVolumeClaim.
+* **accessModes**: string[]: accessModes contains the actual access modes the volume backing the PVC has. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
+* **allocatedResources**: [IoK8SApiCoreV1PersistentVolumeClaimStatusAllocatedResources](#iok8sapicorev1persistentvolumeclaimstatusallocatedresources): allocatedResources is the storage resource within AllocatedResources tracks the capacity allocated to a PVC. It may be larger than the actual capacity when a volume expansion operation is requested. For storage quota, the larger value from allocatedResources and PVC.spec.resources is used. If allocatedResources is not set, PVC.spec.resources alone is used for quota calculation. If a volume expansion capacity request is lowered, allocatedResources is only lowered if there are no expansion operations in progress and if the actual volume capacity is equal or lower than the requested capacity. This is an alpha field and requires enabling RecoverVolumeExpansionFailure feature.
+* **capacity**: [IoK8SApiCoreV1PersistentVolumeClaimStatusCapacity](#iok8sapicorev1persistentvolumeclaimstatuscapacity): capacity represents the actual resources of the underlying volume.
+* **conditions**: [IoK8SApiCoreV1PersistentVolumeClaimCondition](#iok8sapicorev1persistentvolumeclaimcondition)[]: conditions is the current Condition of persistent volume claim. If underlying persistent volume is being resized then the Condition will be set to 'ResizeStarted'.
+* **phase**: string: phase represents the current phase of PersistentVolumeClaim.
+* **resizeStatus**: string: resizeStatus stores status of resize operation. ResizeStatus is not set by default but when expansion is complete resizeStatus is set to empty string by resize controller or kubelet. This is an alpha field and requires enabling RecoverVolumeExpansionFailure feature.
+
+## IoK8SApiCoreV1PersistentVolumeClaimStatusAllocatedResources
+### Properties
+### Additional Properties
+* **Additional Properties Type**: string
 
 ## IoK8SApiCoreV1PersistentVolumeClaimStatusCapacity
 ### Properties
@@ -955,18 +979,18 @@ The contents of the target Secret's Data field will represent the key-value pair
 
 ## IoK8SApiCoreV1PersistentVolumeClaimVolumeSource
 ### Properties
-* **claimName**: string (Required): ClaimName is the name of a PersistentVolumeClaim in the same namespace as the pod using this volume. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
-* **readOnly**: bool: Will force the ReadOnly setting in VolumeMounts. Default false.
+* **claimName**: string (Required): claimName is the name of a PersistentVolumeClaim in the same namespace as the pod using this volume. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
+* **readOnly**: bool: readOnly Will force the ReadOnly setting in VolumeMounts. Default false.
 
 ## IoK8SApiCoreV1PersistentVolumeSpec
 ### Properties
-* **accessModes**: string[]: AccessModes contains all ways the volume can be mounted. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes
+* **accessModes**: string[]: accessModes contains all ways the volume can be mounted. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes
 * **awsElasticBlockStore**: [IoK8SApiCoreV1AWSElasticBlockStoreVolumeSource](#iok8sapicorev1awselasticblockstorevolumesource): Represents a Persistent Disk resource in AWS.
 
 An AWS EBS disk must exist before mounting to a container. The disk must also be in the same AWS zone as the kubelet. An AWS EBS disk can only be mounted as read/write once. AWS EBS volumes support ownership management and SELinux relabeling.
 * **azureDisk**: [IoK8SApiCoreV1AzureDiskVolumeSource](#iok8sapicorev1azurediskvolumesource): AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
 * **azureFile**: [IoK8SApiCoreV1AzureFilePersistentVolumeSource](#iok8sapicorev1azurefilepersistentvolumesource): AzureFile represents an Azure File Service mount on the host and bind mount to the pod.
-* **capacity**: [IoK8SApiCoreV1PersistentVolumeSpecCapacity](#iok8sapicorev1persistentvolumespeccapacity): A description of the persistent volume's resources and capacity. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity
+* **capacity**: [IoK8SApiCoreV1PersistentVolumeSpecCapacity](#iok8sapicorev1persistentvolumespeccapacity): capacity is the description of the persistent volume's resources and capacity. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity
 * **cephfs**: [IoK8SApiCoreV1CephFSPersistentVolumeSource](#iok8sapicorev1cephfspersistentvolumesource): Represents a Ceph Filesystem mount that lasts the lifetime of a pod Cephfs volumes do not support ownership management or SELinux relabeling.
 * **cinder**: [IoK8SApiCoreV1CinderPersistentVolumeSource](#iok8sapicorev1cinderpersistentvolumesource): Represents a cinder volume resource in Openstack. A Cinder volume must exist before mounting to a container. The volume must also be in the same region as the kubelet. Cinder volumes support ownership management and SELinux relabeling.
 * **claimRef**: [IoK8SApiCoreV1ObjectReference](#iok8sapicorev1objectreference): ObjectReference contains enough information to let you inspect or modify the referred object.
@@ -981,16 +1005,16 @@ A GCE PD must exist before mounting to a container. The disk must also be in the
 * **hostPath**: [IoK8SApiCoreV1HostPathVolumeSource](#iok8sapicorev1hostpathvolumesource): Represents a host path mapped into a pod. Host path volumes do not support ownership management or SELinux relabeling.
 * **iscsi**: [IoK8SApiCoreV1IscsiPersistentVolumeSource](#iok8sapicorev1iscsipersistentvolumesource): ISCSIPersistentVolumeSource represents an ISCSI disk. ISCSI volumes can only be mounted as read/write once. ISCSI volumes support ownership management and SELinux relabeling.
 * **local**: [IoK8SApiCoreV1LocalVolumeSource](#iok8sapicorev1localvolumesource): Local represents directly-attached storage with node affinity (Beta feature)
-* **mountOptions**: string[]: A list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one is invalid. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
+* **mountOptions**: string[]: mountOptions is the list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one is invalid. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
 * **nfs**: [IoK8SApiCoreV1NFSVolumeSource](#iok8sapicorev1nfsvolumesource): Represents an NFS mount that lasts the lifetime of a pod. NFS volumes do not support ownership management or SELinux relabeling.
 * **nodeAffinity**: [IoK8SApiCoreV1VolumeNodeAffinity](#iok8sapicorev1volumenodeaffinity): VolumeNodeAffinity defines constraints that limit what nodes this volume can be accessed from.
-* **persistentVolumeReclaimPolicy**: string: What happens to a persistent volume when released from its claim. Valid options are Retain (default for manually created PersistentVolumes), Delete (default for dynamically provisioned PersistentVolumes), and Recycle (deprecated). Recycle must be supported by the volume plugin underlying this PersistentVolume. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming
+* **persistentVolumeReclaimPolicy**: string: persistentVolumeReclaimPolicy defines what happens to a persistent volume when released from its claim. Valid options are Retain (default for manually created PersistentVolumes), Delete (default for dynamically provisioned PersistentVolumes), and Recycle (deprecated). Recycle must be supported by the volume plugin underlying this PersistentVolume. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming
 * **photonPersistentDisk**: [IoK8SApiCoreV1PhotonPersistentDiskVolumeSource](#iok8sapicorev1photonpersistentdiskvolumesource): Represents a Photon Controller persistent disk resource.
 * **portworxVolume**: [IoK8SApiCoreV1PortworxVolumeSource](#iok8sapicorev1portworxvolumesource): PortworxVolumeSource represents a Portworx volume resource.
 * **quobyte**: [IoK8SApiCoreV1QuobyteVolumeSource](#iok8sapicorev1quobytevolumesource): Represents a Quobyte mount that lasts the lifetime of a pod. Quobyte volumes do not support ownership management or SELinux relabeling.
 * **rbd**: [IoK8SApiCoreV1RBDPersistentVolumeSource](#iok8sapicorev1rbdpersistentvolumesource): Represents a Rados Block Device mount that lasts the lifetime of a pod. RBD volumes support ownership management and SELinux relabeling.
 * **scaleIO**: [IoK8SApiCoreV1ScaleIOPersistentVolumeSource](#iok8sapicorev1scaleiopersistentvolumesource): ScaleIOPersistentVolumeSource represents a persistent ScaleIO volume
-* **storageClassName**: string: Name of StorageClass to which this persistent volume belongs. Empty value means that this volume does not belong to any StorageClass.
+* **storageClassName**: string: storageClassName is the name of StorageClass to which this persistent volume belongs. Empty value means that this volume does not belong to any StorageClass.
 * **storageos**: [IoK8SApiCoreV1StorageOSPersistentVolumeSource](#iok8sapicorev1storageospersistentvolumesource): Represents a StorageOS persistent volume resource.
 * **volumeMode**: string: volumeMode defines if a volume is intended to be used with a formatted filesystem or to remain in raw block state. Value of Filesystem is implied when not included in spec.
 * **vsphereVolume**: [IoK8SApiCoreV1VsphereVirtualDiskVolumeSource](#iok8sapicorev1vspherevirtualdiskvolumesource): Represents a vSphere volume resource.
@@ -1002,14 +1026,14 @@ A GCE PD must exist before mounting to a container. The disk must also be in the
 
 ## IoK8SApiCoreV1PersistentVolumeStatus
 ### Properties
-* **message**: string: A human-readable message indicating details about why the volume is in this state.
-* **phase**: string: Phase indicates if a volume is available, bound to a claim, or released by a claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#phase
-* **reason**: string: Reason is a brief CamelCase string that describes any failure and is meant for machine parsing and tidy display in the CLI.
+* **message**: string: message is a human-readable message indicating details about why the volume is in this state.
+* **phase**: string: phase indicates if a volume is available, bound to a claim, or released by a claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#phase
+* **reason**: string: reason is a brief CamelCase string that describes any failure and is meant for machine parsing and tidy display in the CLI.
 
 ## IoK8SApiCoreV1PhotonPersistentDiskVolumeSource
 ### Properties
-* **fsType**: string: Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
-* **pdID**: string (Required): ID that identifies Photon Controller persistent disk
+* **fsType**: string: fsType is the filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
+* **pdID**: string (Required): pdID is the ID that identifies Photon Controller persistent disk
 
 ## IoK8SApiCoreV1PodAffinity
 ### Properties
@@ -1019,7 +1043,8 @@ A GCE PD must exist before mounting to a container. The disk must also be in the
 ## IoK8SApiCoreV1PodAffinityTerm
 ### Properties
 * **labelSelector**: [IoK8SApimachineryPkgApisMetaV1LabelSelector](#iok8sapimachinerypkgapismetav1labelselector): A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
-* **namespaces**: string[]: namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+* **namespaces**: string[]: namespaces specifies a static list of namespace names that the term applies to. The term is applied to the union of the namespaces listed in this field and the ones selected by namespaceSelector. null or empty namespaces list and null namespaceSelector means "this pod's namespace".
+* **namespaceSelector**: [IoK8SApimachineryPkgApisMetaV1LabelSelector](#iok8sapimachinerypkgapismetav1labelselector): A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
 * **topologyKey**: string (Required): This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
 
 ## IoK8SApiCoreV1PodAntiAffinity
@@ -1051,6 +1076,10 @@ A GCE PD must exist before mounting to a container. The disk must also be in the
 ### Properties
 * **ip**: string: ip is an IP address (IPv4 or IPv6) assigned to the pod
 
+## IoK8SApiCoreV1PodOS
+### Properties
+* **name**: string (Required): Name is the name of the operating system. The currently supported values are linux and windows. Additional value may be defined in future and can be one of: https://github.com/opencontainers/runtime-spec/blob/master/config.md#platform-specific-configuration Clients should expect to handle additional values and treat unrecognized values in this field as os: null
+
 ## IoK8SApiCoreV1PodReadinessGate
 ### Properties
 * **conditionType**: string (Required): ConditionType refers to a condition in the pod's condition list with matching type.
@@ -1061,15 +1090,15 @@ A GCE PD must exist before mounting to a container. The disk must also be in the
 
 1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw----
 
-If unset, the Kubelet will not modify the ownership and permissions of any volume.
-* **fsGroupChangePolicy**: string: fsGroupChangePolicy defines behavior of changing ownership and permission of the volume before being exposed inside Pod. This field will only apply to volume types which support fsGroup based ownership(and permissions). It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir. Valid values are "OnRootMismatch" and "Always". If not specified defaults to "Always".
-* **runAsGroup**: int: The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
+If unset, the Kubelet will not modify the ownership and permissions of any volume. Note that this field cannot be set when spec.os.name is windows.
+* **fsGroupChangePolicy**: string: fsGroupChangePolicy defines behavior of changing ownership and permission of the volume before being exposed inside Pod. This field will only apply to volume types which support fsGroup based ownership(and permissions). It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir. Valid values are "OnRootMismatch" and "Always". If not specified, "Always" is used. Note that this field cannot be set when spec.os.name is windows.
+* **runAsGroup**: int: The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container. Note that this field cannot be set when spec.os.name is windows.
 * **runAsNonRoot**: bool: Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
-* **runAsUser**: int: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
+* **runAsUser**: int: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container. Note that this field cannot be set when spec.os.name is windows.
 * **seccompProfile**: [IoK8SApiCoreV1SeccompProfile](#iok8sapicorev1seccompprofile): SeccompProfile defines a pod/container's seccomp profile settings. Only one profile source may be set.
 * **seLinuxOptions**: [IoK8SApiCoreV1SELinuxOptions](#iok8sapicorev1selinuxoptions): SELinuxOptions are the labels to be applied to the container
-* **supplementalGroups**: int[]: A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
-* **sysctls**: [IoK8SApiCoreV1Sysctl](#iok8sapicorev1sysctl)[]: Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.
+* **supplementalGroups**: int[]: A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container. Note that this field cannot be set when spec.os.name is windows.
+* **sysctls**: [IoK8SApiCoreV1Sysctl](#iok8sapicorev1sysctl)[]: Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch. Note that this field cannot be set when spec.os.name is windows.
 * **windowsOptions**: [IoK8SApiCoreV1WindowsSecurityContextOptions](#iok8sapicorev1windowssecuritycontextoptions): WindowsSecurityContextOptions contain Windows-specific options and credentials.
 
 ## IoK8SApiCoreV1PodSpec
@@ -1081,23 +1110,25 @@ If unset, the Kubelet will not modify the ownership and permissions of any volum
 * **dnsConfig**: [IoK8SApiCoreV1PodDNSConfig](#iok8sapicorev1poddnsconfig): PodDNSConfig defines the DNS parameters of a pod in addition to those generated from DNSPolicy.
 * **dnsPolicy**: string: Set DNS policy for the pod. Defaults to "ClusterFirst". Valid values are 'ClusterFirstWithHostNet', 'ClusterFirst', 'Default' or 'None'. DNS parameters given in DNSConfig will be merged with the policy selected with DNSPolicy. To have DNS options set along with hostNetwork, you have to specify DNS policy explicitly to 'ClusterFirstWithHostNet'.
 * **enableServiceLinks**: bool: EnableServiceLinks indicates whether information about services should be injected into pod's environment variables, matching the syntax of Docker links. Optional: Defaults to true.
-* **ephemeralContainers**: [IoK8SApiCoreV1EphemeralContainer](#iok8sapicorev1ephemeralcontainer)[]: List of ephemeral containers run in this pod. Ephemeral containers may be run in an existing pod to perform user-initiated actions such as debugging. This list cannot be specified when creating a pod, and it cannot be modified by updating the pod spec. In order to add an ephemeral container to an existing pod, use the pod's ephemeralcontainers subresource. This field is alpha-level and is only honored by servers that enable the EphemeralContainers feature.
+* **ephemeralContainers**: [IoK8SApiCoreV1EphemeralContainer](#iok8sapicorev1ephemeralcontainer)[]: List of ephemeral containers run in this pod. Ephemeral containers may be run in an existing pod to perform user-initiated actions such as debugging. This list cannot be specified when creating a pod, and it cannot be modified by updating the pod spec. In order to add an ephemeral container to an existing pod, use the pod's ephemeralcontainers subresource.
 * **hostAliases**: [IoK8SApiCoreV1HostAlias](#iok8sapicorev1hostalias)[]: HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified. This is only valid for non-hostNetwork pods.
 * **hostIPC**: bool: Use the host's ipc namespace. Optional: Default to false.
 * **hostname**: string: Specifies the hostname of the Pod If not specified, the pod's hostname will be set to a system-defined value.
 * **hostNetwork**: bool: Host networking requested for this pod. Use the host's network namespace. If this option is set, the ports that will be used must be specified. Default to false.
 * **hostPID**: bool: Use the host's pid namespace. Optional: Default to false.
-* **imagePullSecrets**: [IoK8SApiCoreV1LocalObjectReference](#iok8sapicorev1localobjectreference)[]: ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by this PodSpec. If specified, these secrets will be passed to individual puller implementations for them to use. For example, in the case of docker, only DockerConfig type secrets are honored. More info: https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod
+* **hostUsers**: bool: Use the host's user namespace. Optional: Default to true. If set to true or not present, the pod will be run in the host user namespace, useful for when the pod needs a feature only available to the host user namespace, such as loading a kernel module with CAP_SYS_MODULE. When set to false, a new userns is created for the pod. Setting false is useful for mitigating container breakout vulnerabilities even allowing users to run their containers as root without actually having root privileges on the host. This field is alpha-level and is only honored by servers that enable the UserNamespacesSupport feature.
+* **imagePullSecrets**: [IoK8SApiCoreV1LocalObjectReference](#iok8sapicorev1localobjectreference)[]: ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by this PodSpec. If specified, these secrets will be passed to individual puller implementations for them to use. More info: https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod
 * **initContainers**: [IoK8SApiCoreV1Container](#iok8sapicorev1container)[]: List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started. If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy. The name for an init container or normal container must be unique among all containers. Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes. The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit for each resource type, and then using the max of of that value or the sum of the normal containers. Limits are applied to init containers in a similar fashion. Init containers cannot currently be added or removed. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 * **nodeName**: string: NodeName is a request to schedule this pod onto a specific node. If it is non-empty, the scheduler simply schedules this pod onto that node, assuming that it fits resource requirements.
 * **nodeSelector**: [IoK8SApiCoreV1PodSpecNodeSelector](#iok8sapicorev1podspecnodeselector): NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
-* **overhead**: [IoK8SApiCoreV1PodSpecOverhead](#iok8sapicorev1podspecoverhead): Overhead represents the resource overhead associated with running a pod for a given RuntimeClass. This field will be autopopulated at admission time by the RuntimeClass admission controller. If the RuntimeClass admission controller is enabled, overhead must not be set in Pod create requests. The RuntimeClass admission controller will reject Pod create requests which have the overhead already set. If RuntimeClass is configured and selected in the PodSpec, Overhead will be set to the value defined in the corresponding RuntimeClass, otherwise it will remain unset and treated as zero. More info: https://git.k8s.io/enhancements/keps/sig-node/20190226-pod-overhead.md This field is alpha-level as of Kubernetes v1.16, and is only honored by servers that enable the PodOverhead feature.
-* **preemptionPolicy**: string: PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is beta-level, gated by the NonPreemptingPriority feature-gate.
+* **os**: [IoK8SApiCoreV1PodOS](#iok8sapicorev1podos): PodOS defines the OS parameters of a pod.
+* **overhead**: [IoK8SApiCoreV1PodSpecOverhead](#iok8sapicorev1podspecoverhead): Overhead represents the resource overhead associated with running a pod for a given RuntimeClass. This field will be autopopulated at admission time by the RuntimeClass admission controller. If the RuntimeClass admission controller is enabled, overhead must not be set in Pod create requests. The RuntimeClass admission controller will reject Pod create requests which have the overhead already set. If RuntimeClass is configured and selected in the PodSpec, Overhead will be set to the value defined in the corresponding RuntimeClass, otherwise it will remain unset and treated as zero. More info: https://git.k8s.io/enhancements/keps/sig-node/688-pod-overhead/README.md
+* **preemptionPolicy**: string: PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset.
 * **priority**: int: The priority value. Various system components use this field to find the priority of the pod. When Priority Admission Controller is enabled, it prevents users from setting this field. The admission controller populates this field from PriorityClassName. The higher the value, the higher the priority.
 * **priorityClassName**: string: If specified, indicates the pod's priority. "system-node-critical" and "system-cluster-critical" are two special keywords which indicate the highest priorities with the former being the highest priority. Any other name must be defined by creating a PriorityClass object with that name. If not specified, the pod priority will be default or zero if there is no default.
-* **readinessGates**: [IoK8SApiCoreV1PodReadinessGate](#iok8sapicorev1podreadinessgate)[]: If specified, all readiness gates will be evaluated for pod readiness. A pod is ready when all its containers are ready AND all conditions specified in the readiness gates have status equal to "True" More info: https://git.k8s.io/enhancements/keps/sig-network/0007-pod-ready%2B%2B.md
+* **readinessGates**: [IoK8SApiCoreV1PodReadinessGate](#iok8sapicorev1podreadinessgate)[]: If specified, all readiness gates will be evaluated for pod readiness. A pod is ready when all its containers are ready AND all conditions specified in the readiness gates have status equal to "True" More info: https://git.k8s.io/enhancements/keps/sig-network/580-pod-readiness-gates
 * **restartPolicy**: string: Restart policy for all containers within the pod. One of Always, OnFailure, Never. Default to Always. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
-* **runtimeClassName**: string: RuntimeClassName refers to a RuntimeClass object in the node.k8s.io group, which should be used to run this pod.  If no RuntimeClass resource matches the named class, the pod will not be run. If unset or empty, the "legacy" RuntimeClass will be used, which is an implicit class with an empty definition that uses the default runtime handler. More info: https://git.k8s.io/enhancements/keps/sig-node/runtime-class.md This is a beta feature as of Kubernetes v1.14.
+* **runtimeClassName**: string: RuntimeClassName refers to a RuntimeClass object in the node.k8s.io group, which should be used to run this pod.  If no RuntimeClass resource matches the named class, the pod will not be run. If unset or empty, the "legacy" RuntimeClass will be used, which is an implicit class with an empty definition that uses the default runtime handler. More info: https://git.k8s.io/enhancements/keps/sig-node/585-runtime-class
 * **schedulerName**: string: If specified, the pod will be dispatched by specified scheduler. If not specified, the pod will be dispatched by default scheduler.
 * **securityContext**: [IoK8SApiCoreV1PodSecurityContext](#iok8sapicorev1podsecuritycontext): PodSecurityContext holds pod-level security attributes and common container settings. Some fields are also present in container.securityContext.  Field values of container.securityContext take precedence over field values of PodSecurityContext.
 * **serviceAccount**: string: DeprecatedServiceAccount is a depreciated alias for ServiceAccountName. Deprecated: Use serviceAccountName instead.
@@ -1105,7 +1136,7 @@ If unset, the Kubelet will not modify the ownership and permissions of any volum
 * **setHostnameAsFQDN**: bool: If true the pod's hostname will be configured as the pod's FQDN, rather than the leaf name (the default). In Linux containers, this means setting the FQDN in the hostname field of the kernel (the nodename field of struct utsname). In Windows containers, this means setting the registry value of hostname for the registry key HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters to FQDN. If a pod does not have FQDN, this has no effect. Default to false.
 * **shareProcessNamespace**: bool: Share a single process namespace between all of the containers in a pod. When this is set containers will be able to view and signal processes from other containers in the same pod, and the first process in each container will not be assigned PID 1. HostPID and ShareProcessNamespace cannot both be set. Optional: Default to false.
 * **subdomain**: string: If specified, the fully qualified Pod hostname will be "<hostname>.<subdomain>.<pod namespace>.svc.<cluster domain>". If not specified, the pod will not have a domainname at all.
-* **terminationGracePeriodSeconds**: int: Optional duration in seconds the pod needs to terminate gracefully. May be decreased in delete request. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period will be used instead. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. Defaults to 30 seconds.
+* **terminationGracePeriodSeconds**: int: Optional duration in seconds the pod needs to terminate gracefully. May be decreased in delete request. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). If this value is nil, the default grace period will be used instead. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. Defaults to 30 seconds.
 * **tolerations**: [IoK8SApiCoreV1Toleration](#iok8sapicorev1toleration)[]: If specified, the pod's tolerations.
 * **topologySpreadConstraints**: [IoK8SApiCoreV1TopologySpreadConstraint](#iok8sapicorev1topologyspreadconstraint)[]: TopologySpreadConstraints describes how a group of pods ought to spread across topology domains. Scheduler will schedule pods in a way which abides by the constraints. All topologySpreadConstraints are ANDed.
 * **volumes**: [IoK8SApiCoreV1Volume](#iok8sapicorev1volume)[]: List of volumes that can be mounted by containers belonging to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes
@@ -1123,8 +1154,8 @@ If unset, the Kubelet will not modify the ownership and permissions of any volum
 ## IoK8SApiCoreV1PodStatus
 ### Properties
 * **conditions**: [IoK8SApiCoreV1PodCondition](#iok8sapicorev1podcondition)[]: Current service state of pod. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions
-* **containerStatuses**: [IoK8SApiCoreV1ContainerStatus](#iok8sapicorev1containerstatus)[]: The list has one entry per container in the manifest. Each entry is currently the output of `docker inspect`. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status
-* **ephemeralContainerStatuses**: [IoK8SApiCoreV1ContainerStatus](#iok8sapicorev1containerstatus)[]: Status for any ephemeral containers that have run in this pod. This field is alpha-level and is only populated by servers that enable the EphemeralContainers feature.
+* **containerStatuses**: [IoK8SApiCoreV1ContainerStatus](#iok8sapicorev1containerstatus)[]: The list has one entry per container in the manifest. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status
+* **ephemeralContainerStatuses**: [IoK8SApiCoreV1ContainerStatus](#iok8sapicorev1containerstatus)[]: Status for any ephemeral containers that have run in this pod.
 * **hostIP**: string: IP address of the host to which the pod is assigned. Empty if not yet scheduled.
 * **initContainerStatuses**: [IoK8SApiCoreV1ContainerStatus](#iok8sapicorev1containerstatus)[]: The list has one entry per init container in the manifest. The most recent successful init container will have ready = true, the most recently started container will have startTime set. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status
 * **message**: string: A human readable message indicating details about why the pod is in this condition.
@@ -1145,11 +1176,20 @@ More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-
 * **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **spec**: [IoK8SApiCoreV1PodSpec](#iok8sapicorev1podspec): PodSpec is a description of a pod.
 
+## IoK8SApiCoreV1PortStatus
+### Properties
+* **error**: string: Error is to record the problem with the service port The format of the error shall comply with the following rules: - built-in error values shall be specified in this file and those shall use
+  CamelCase names
+- cloud provider specific error values must have names that comply with the
+  format foo.example.com/CamelCase.
+* **port**: int (Required): Port is the port number of the service port of which status is recorded here
+* **protocol**: string (Required): Protocol is the protocol of the service port of which status is recorded here The supported values are: "TCP", "UDP", "SCTP"
+
 ## IoK8SApiCoreV1PortworxVolumeSource
 ### Properties
-* **fsType**: string: FSType represents the filesystem type to mount Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs". Implicitly inferred to be "ext4" if unspecified.
-* **readOnly**: bool: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
-* **volumeID**: string (Required): VolumeID uniquely identifies a Portworx volume
+* **fsType**: string: fSType represents the filesystem type to mount Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs". Implicitly inferred to be "ext4" if unspecified.
+* **readOnly**: bool: readOnly defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
+* **volumeID**: string (Required): volumeID uniquely identifies a Portworx volume
 
 ## IoK8SApiCoreV1PreferredSchedulingTerm
 ### Properties
@@ -1160,48 +1200,50 @@ More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-
 ### Properties
 * **exec**: [IoK8SApiCoreV1ExecAction](#iok8sapicorev1execaction): ExecAction describes a "run in container" action.
 * **failureThreshold**: int: Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+* **grpc**: [IoK8SApiCoreV1GrpcAction](#iok8sapicorev1grpcaction)
 * **httpGet**: [IoK8SApiCoreV1HttpGetAction](#iok8sapicorev1httpgetaction): HTTPGetAction describes an action based on HTTP Get requests.
 * **initialDelaySeconds**: int: Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 * **periodSeconds**: int: How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
 * **successThreshold**: int: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
 * **tcpSocket**: [IoK8SApiCoreV1TCPSocketAction](#iok8sapicorev1tcpsocketaction): TCPSocketAction describes an action based on opening a socket
+* **terminationGracePeriodSeconds**: int: Optional duration in seconds the pod needs to terminate gracefully upon probe failure. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. If this value is nil, the pod's terminationGracePeriodSeconds will be used. Otherwise, this value overrides the value provided by the pod spec. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). This is a beta field and requires enabling ProbeTerminationGracePeriod feature gate. Minimum value is 1. spec.terminationGracePeriodSeconds is used if unset.
 * **timeoutSeconds**: int: Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 
 ## IoK8SApiCoreV1ProjectedVolumeSource
 ### Properties
-* **defaultMode**: int: Mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
-* **sources**: [IoK8SApiCoreV1VolumeProjection](#iok8sapicorev1volumeprojection)[] (Required): list of volume projections
+* **defaultMode**: int: defaultMode are the mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+* **sources**: [IoK8SApiCoreV1VolumeProjection](#iok8sapicorev1volumeprojection)[]: sources is the list of volume projections
 
 ## IoK8SApiCoreV1QuobyteVolumeSource
 ### Properties
-* **group**: string: Group to map volume access to Default is no group
-* **readOnly**: bool: ReadOnly here will force the Quobyte volume to be mounted with read-only permissions. Defaults to false.
-* **registry**: string (Required): Registry represents a single or multiple Quobyte Registry services specified as a string as host:port pair (multiple entries are separated with commas) which acts as the central registry for volumes
-* **tenant**: string: Tenant owning the given Quobyte volume in the Backend Used with dynamically provisioned Quobyte volumes, value is set by the plugin
-* **user**: string: User to map volume access to Defaults to serivceaccount user
-* **volume**: string (Required): Volume is a string that references an already created Quobyte volume by name.
+* **group**: string: group to map volume access to Default is no group
+* **readOnly**: bool: readOnly here will force the Quobyte volume to be mounted with read-only permissions. Defaults to false.
+* **registry**: string (Required): registry represents a single or multiple Quobyte Registry services specified as a string as host:port pair (multiple entries are separated with commas) which acts as the central registry for volumes
+* **tenant**: string: tenant owning the given Quobyte volume in the Backend Used with dynamically provisioned Quobyte volumes, value is set by the plugin
+* **user**: string: user to map volume access to Defaults to serivceaccount user
+* **volume**: string (Required): volume is a string that references an already created Quobyte volume by name.
 
 ## IoK8SApiCoreV1RBDPersistentVolumeSource
 ### Properties
-* **fsType**: string: Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://kubernetes.io/docs/concepts/storage/volumes#rbd
-* **image**: string (Required): The rados image name. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
-* **keyring**: string: Keyring is the path to key ring for RBDUser. Default is /etc/ceph/keyring. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
-* **monitors**: string[] (Required): A collection of Ceph monitors. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
-* **pool**: string: The rados pool name. Default is rbd. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
-* **readOnly**: bool: ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
+* **fsType**: string: fsType is the filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://kubernetes.io/docs/concepts/storage/volumes#rbd
+* **image**: string (Required): image is the rados image name. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
+* **keyring**: string: keyring is the path to key ring for RBDUser. Default is /etc/ceph/keyring. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
+* **monitors**: string[] (Required): monitors is a collection of Ceph monitors. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
+* **pool**: string: pool is the rados pool name. Default is rbd. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
+* **readOnly**: bool: readOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
 * **secretRef**: [IoK8SApiCoreV1SecretReference](#iok8sapicorev1secretreference): SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
-* **user**: string: The rados user name. Default is admin. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
+* **user**: string: user is the rados user name. Default is admin. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
 
 ## IoK8SApiCoreV1RBDVolumeSource
 ### Properties
-* **fsType**: string: Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://kubernetes.io/docs/concepts/storage/volumes#rbd
-* **image**: string (Required): The rados image name. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
-* **keyring**: string: Keyring is the path to key ring for RBDUser. Default is /etc/ceph/keyring. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
-* **monitors**: string[] (Required): A collection of Ceph monitors. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
-* **pool**: string: The rados pool name. Default is rbd. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
-* **readOnly**: bool: ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
+* **fsType**: string: fsType is the filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://kubernetes.io/docs/concepts/storage/volumes#rbd
+* **image**: string (Required): image is the rados image name. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
+* **keyring**: string: keyring is the path to key ring for RBDUser. Default is /etc/ceph/keyring. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
+* **monitors**: string[] (Required): monitors is a collection of Ceph monitors. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
+* **pool**: string: pool is the rados pool name. Default is rbd. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
+* **readOnly**: bool: readOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
 * **secretRef**: [IoK8SApiCoreV1LocalObjectReference](#iok8sapicorev1localobjectreference): LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
-* **user**: string: The rados user name. Default is admin. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
+* **user**: string: user is the rados user name. Default is admin. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
 
 ## IoK8SApiCoreV1ReplicationControllerCondition
 ### Properties
@@ -1239,27 +1281,33 @@ More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-
 
 The serialization format is:
 
-<quantity>        ::= <signedNumber><suffix>
-  (Note that <suffix> may be empty, from the "" case in <decimalSI>.)
+``` <quantity>        ::= <signedNumber><suffix>
+
+	(Note that <suffix> may be empty, from the "" case in <decimalSI>.)
+
 <digit>           ::= 0 | 1 | ... | 9 <digits>          ::= <digit> | <digit><digits> <number>          ::= <digits> | <digits>.<digits> | <digits>. | .<digits> <sign>            ::= "+" | "-" <signedNumber>    ::= <number> | <sign><number> <suffix>          ::= <binarySI> | <decimalExponent> | <decimalSI> <binarySI>        ::= Ki | Mi | Gi | Ti | Pi | Ei
-  (International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)
+
+	(International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)
+
 <decimalSI>       ::= m | "" | k | M | G | T | P | E
-  (Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)
-<decimalExponent> ::= "e" <signedNumber> | "E" <signedNumber>
+
+	(Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)
+
+<decimalExponent> ::= "e" <signedNumber> | "E" <signedNumber> ```
 
 No matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.
 
 When a Quantity is parsed from a string, it will remember the type of suffix it had, and will use the same type again when it is serialized.
 
 Before serializing, Quantity will be put in "canonical form". This means that Exponent/suffix will be adjusted up or down (with a corresponding increase or decrease in Mantissa) such that:
-  a. No precision is lost
-  b. No fractional digits will be emitted
-  c. The exponent (or suffix) is as large as possible.
+
+- No precision is lost - No fractional digits will be emitted - The exponent (or suffix) is as large as possible.
+
 The sign will be omitted unless the number is negative.
 
 Examples:
-  1.5 will be serialized as "1500m"
-  1.5Gi will be serialized as "1536Mi"
+
+- 1.5 will be serialized as "1500m" - 1.5Gi will be serialized as "1536Mi"
 
 Note that the quantity will NEVER be internally represented by a floating point number. That is the whole point of this exercise.
 
@@ -1296,8 +1344,8 @@ This format is intended to make it difficult to use these numbers without writin
 
 ## IoK8SApiCoreV1ResourceRequirements
 ### Properties
-* **limits**: [IoK8SApiCoreV1ResourceRequirementsLimits](#iok8sapicorev1resourcerequirementslimits): Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-* **requests**: [IoK8SApiCoreV1ResourceRequirementsRequests](#iok8sapicorev1resourcerequirementsrequests): Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+* **limits**: [IoK8SApiCoreV1ResourceRequirementsLimits](#iok8sapicorev1resourcerequirementslimits): Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+* **requests**: [IoK8SApiCoreV1ResourceRequirementsRequests](#iok8sapicorev1resourcerequirementsrequests): Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 
 ## IoK8SApiCoreV1ResourceRequirementsLimits
 ### Properties
@@ -1311,29 +1359,29 @@ This format is intended to make it difficult to use these numbers without writin
 
 ## IoK8SApiCoreV1ScaleIOPersistentVolumeSource
 ### Properties
-* **fsType**: string: Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Default is "xfs"
-* **gateway**: string (Required): The host address of the ScaleIO API Gateway.
-* **protectionDomain**: string: The name of the ScaleIO Protection Domain for the configured storage.
-* **readOnly**: bool: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
+* **fsType**: string: fsType is the filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Default is "xfs"
+* **gateway**: string (Required): gateway is the host address of the ScaleIO API Gateway.
+* **protectionDomain**: string: protectionDomain is the name of the ScaleIO Protection Domain for the configured storage.
+* **readOnly**: bool: readOnly defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
 * **secretRef**: [IoK8SApiCoreV1SecretReference](#iok8sapicorev1secretreference) (Required): SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
-* **sslEnabled**: bool: Flag to enable/disable SSL communication with Gateway, default false
-* **storageMode**: string: Indicates whether the storage for a volume should be ThickProvisioned or ThinProvisioned. Default is ThinProvisioned.
-* **storagePool**: string: The ScaleIO Storage Pool associated with the protection domain.
-* **system**: string (Required): The name of the storage system as configured in ScaleIO.
-* **volumeName**: string: The name of a volume already created in the ScaleIO system that is associated with this volume source.
+* **sslEnabled**: bool: sslEnabled is the flag to enable/disable SSL communication with Gateway, default false
+* **storageMode**: string: storageMode indicates whether the storage for a volume should be ThickProvisioned or ThinProvisioned. Default is ThinProvisioned.
+* **storagePool**: string: storagePool is the ScaleIO Storage Pool associated with the protection domain.
+* **system**: string (Required): system is the name of the storage system as configured in ScaleIO.
+* **volumeName**: string: volumeName is the name of a volume already created in the ScaleIO system that is associated with this volume source.
 
 ## IoK8SApiCoreV1ScaleIOVolumeSource
 ### Properties
-* **fsType**: string: Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Default is "xfs".
-* **gateway**: string (Required): The host address of the ScaleIO API Gateway.
-* **protectionDomain**: string: The name of the ScaleIO Protection Domain for the configured storage.
-* **readOnly**: bool: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
+* **fsType**: string: fsType is the filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Default is "xfs".
+* **gateway**: string (Required): gateway is the host address of the ScaleIO API Gateway.
+* **protectionDomain**: string: protectionDomain is the name of the ScaleIO Protection Domain for the configured storage.
+* **readOnly**: bool: readOnly Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
 * **secretRef**: [IoK8SApiCoreV1LocalObjectReference](#iok8sapicorev1localobjectreference) (Required): LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
-* **sslEnabled**: bool: Flag to enable/disable SSL communication with Gateway, default false
-* **storageMode**: string: Indicates whether the storage for a volume should be ThickProvisioned or ThinProvisioned. Default is ThinProvisioned.
-* **storagePool**: string: The ScaleIO Storage Pool associated with the protection domain.
-* **system**: string (Required): The name of the storage system as configured in ScaleIO.
-* **volumeName**: string: The name of a volume already created in the ScaleIO system that is associated with this volume source.
+* **sslEnabled**: bool: sslEnabled Flag enable/disable SSL communication with Gateway, default false
+* **storageMode**: string: storageMode indicates whether the storage for a volume should be ThickProvisioned or ThinProvisioned. Default is ThinProvisioned.
+* **storagePool**: string: storagePool is the ScaleIO Storage Pool associated with the protection domain.
+* **system**: string (Required): system is the name of the storage system as configured in ScaleIO.
+* **volumeName**: string: volumeName is the name of a volume already created in the ScaleIO system that is associated with this volume source.
 
 ## IoK8SApiCoreV1ScopedResourceSelectorRequirement
 ### Properties
@@ -1370,14 +1418,14 @@ Localhost - a profile defined in a file on the node should be used. RuntimeDefau
 
 ## IoK8SApiCoreV1SecretProjection
 ### Properties
-* **items**: [IoK8SApiCoreV1KeyToPath](#iok8sapicorev1keytopath)[]: If unspecified, each key-value pair in the Data field of the referenced Secret will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the Secret, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
+* **items**: [IoK8SApiCoreV1KeyToPath](#iok8sapicorev1keytopath)[]: items if unspecified, each key-value pair in the Data field of the referenced Secret will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the Secret, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
 * **name**: string: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-* **optional**: bool: Specify whether the Secret or its key must be defined
+* **optional**: bool: optional field specify whether the Secret or its key must be defined
 
 ## IoK8SApiCoreV1SecretReference
 ### Properties
-* **name**: string: Name is unique within a namespace to reference a secret resource.
-* **namespace**: string: Namespace defines the space within which the secret name must be unique.
+* **name**: string: name is unique within a namespace to reference a secret resource.
+* **namespace**: string: namespace defines the space within which the secret name must be unique.
 
 ## IoK8SApiCoreV1SecretStringData
 ### Properties
@@ -1386,21 +1434,21 @@ Localhost - a profile defined in a file on the node should be used. RuntimeDefau
 
 ## IoK8SApiCoreV1SecretVolumeSource
 ### Properties
-* **defaultMode**: int: Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
-* **items**: [IoK8SApiCoreV1KeyToPath](#iok8sapicorev1keytopath)[]: If unspecified, each key-value pair in the Data field of the referenced Secret will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the Secret, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
-* **optional**: bool: Specify whether the Secret or its keys must be defined
-* **secretName**: string: Name of the secret in the pod's namespace to use. More info: https://kubernetes.io/docs/concepts/storage/volumes#secret
+* **defaultMode**: int: defaultMode is Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+* **items**: [IoK8SApiCoreV1KeyToPath](#iok8sapicorev1keytopath)[]: items If unspecified, each key-value pair in the Data field of the referenced Secret will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the Secret, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
+* **optional**: bool: optional field specify whether the Secret or its keys must be defined
+* **secretName**: string: secretName is the name of the secret in the pod's namespace to use. More info: https://kubernetes.io/docs/concepts/storage/volumes#secret
 
 ## IoK8SApiCoreV1SecurityContext
 ### Properties
-* **allowPrivilegeEscalation**: bool: AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN
+* **allowPrivilegeEscalation**: bool: AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN Note that this field cannot be set when spec.os.name is windows.
 * **capabilities**: [IoK8SApiCoreV1Capabilities](#iok8sapicorev1capabilities): Adds and removes POSIX capabilities from running containers.
-* **privileged**: bool: Run container in privileged mode. Processes in privileged containers are essentially equivalent to root on the host. Defaults to false.
-* **procMount**: string: procMount denotes the type of proc mount to use for the containers. The default is DefaultProcMount which uses the container runtime defaults for readonly paths and masked paths. This requires the ProcMountType feature flag to be enabled.
-* **readOnlyRootFilesystem**: bool: Whether this container has a read-only root filesystem. Default is false.
-* **runAsGroup**: int: The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+* **privileged**: bool: Run container in privileged mode. Processes in privileged containers are essentially equivalent to root on the host. Defaults to false. Note that this field cannot be set when spec.os.name is windows.
+* **procMount**: string: procMount denotes the type of proc mount to use for the containers. The default is DefaultProcMount which uses the container runtime defaults for readonly paths and masked paths. This requires the ProcMountType feature flag to be enabled. Note that this field cannot be set when spec.os.name is windows.
+* **readOnlyRootFilesystem**: bool: Whether this container has a read-only root filesystem. Default is false. Note that this field cannot be set when spec.os.name is windows.
+* **runAsGroup**: int: The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. Note that this field cannot be set when spec.os.name is windows.
 * **runAsNonRoot**: bool: Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
-* **runAsUser**: int: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+* **runAsUser**: int: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. Note that this field cannot be set when spec.os.name is windows.
 * **seccompProfile**: [IoK8SApiCoreV1SeccompProfile](#iok8sapicorev1seccompprofile): SeccompProfile defines a pod/container's seccomp profile settings. Only one profile source may be set.
 * **seLinuxOptions**: [IoK8SApiCoreV1SELinuxOptions](#iok8sapicorev1selinuxoptions): SELinuxOptions are the labels to be applied to the container
 * **windowsOptions**: [IoK8SApiCoreV1WindowsSecurityContextOptions](#iok8sapicorev1windowssecuritycontextoptions): WindowsSecurityContextOptions contain Windows-specific options and credentials.
@@ -1414,36 +1462,44 @@ Localhost - a profile defined in a file on the node should be used. RuntimeDefau
 
 ## IoK8SApiCoreV1ServiceAccountTokenProjection
 ### Properties
-* **audience**: string: Audience is the intended audience of the token. A recipient of a token must identify itself with an identifier specified in the audience of the token, and otherwise should reject the token. The audience defaults to the identifier of the apiserver.
-* **expirationSeconds**: int: ExpirationSeconds is the requested duration of validity of the service account token. As the token approaches expiration, the kubelet volume plugin will proactively rotate the service account token. The kubelet will start trying to rotate the token if the token is older than 80 percent of its time to live or if the token is older than 24 hours.Defaults to 1 hour and must be at least 10 minutes.
-* **path**: string (Required): Path is the path relative to the mount point of the file to project the token into.
+* **audience**: string: audience is the intended audience of the token. A recipient of a token must identify itself with an identifier specified in the audience of the token, and otherwise should reject the token. The audience defaults to the identifier of the apiserver.
+* **expirationSeconds**: int: expirationSeconds is the requested duration of validity of the service account token. As the token approaches expiration, the kubelet volume plugin will proactively rotate the service account token. The kubelet will start trying to rotate the token if the token is older than 80 percent of its time to live or if the token is older than 24 hours.Defaults to 1 hour and must be at least 10 minutes.
+* **path**: string (Required): path is the path relative to the mount point of the file to project the token into.
 
 ## IoK8SApiCoreV1ServicePort
 ### Properties
-* **appProtocol**: string: The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. This is a beta field that is guarded by the ServiceAppProtocol feature gate and enabled by default.
+* **appProtocol**: string: The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and https://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol.
 * **name**: string: The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
-* **nodePort**: int: The port on each node on which this service is exposed when type=NodePort or LoadBalancer. Usually assigned by the system. If specified, it will be allocated to the service if unused or else creation of the service will fail. Default is to auto-allocate a port if the ServiceType of this Service requires one. More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+* **nodePort**: int: The port on each node on which this service is exposed when type is NodePort or LoadBalancer.  Usually assigned by the system. If a value is specified, in-range, and not in use it will be used, otherwise the operation will fail.  If not specified, a port will be allocated if this Service requires one.  If this field is specified when creating a Service which does not need it, creation will fail. This field will be wiped when updating a Service to no longer need it (e.g. changing type from NodePort to ClusterIP). More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
 * **port**: int (Required): The port that will be exposed by this service.
 * **protocol**: string: The IP protocol for this port. Supports "TCP", "UDP", and "SCTP". Default is TCP.
 * **targetPort**: string: IntOrString is a type that can hold an int32 or a string.  When used in JSON or YAML marshalling and unmarshalling, it produces or consumes the inner type.  This allows you to have, for example, a JSON field that can accept a name or number.
 
 ## IoK8SApiCoreV1ServiceSpec
 ### Properties
-* **clusterIP**: string: clusterIP is the IP address of the service and is usually assigned randomly by the master. If an address is specified manually and is not in use by others, it will be allocated to the service; otherwise, creation of the service will fail. This field can not be changed through updates. Valid values are "None", empty string (""), or a valid IP address. "None" can be specified for headless services when proxying is not required. Only applies to types ClusterIP, NodePort, and LoadBalancer. Ignored if type is ExternalName. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+* **allocateLoadBalancerNodePorts**: bool: allocateLoadBalancerNodePorts defines if NodePorts will be automatically allocated for services with type LoadBalancer.  Default is "true". It may be set to "false" if the cluster load-balancer does not rely on NodePorts.  If the caller requests specific NodePorts (by specifying a value), those requests will be respected, regardless of this field. This field may only be set for services with type LoadBalancer and will be cleared if the type is changed to any other type.
+* **clusterIP**: string: clusterIP is the IP address of the service and is usually assigned randomly. If an address is specified manually, is in-range (as per system configuration), and is not in use, it will be allocated to the service; otherwise creation of the service will fail. This field may not be changed through updates unless the type field is also being changed to ExternalName (which requires this field to be blank) or the type field is being changed from ExternalName (in which case this field may optionally be specified, as describe above).  Valid values are "None", empty string (""), or a valid IP address. Setting this to "None" makes a "headless service" (no virtual IP), which is useful when direct endpoint connections are preferred and proxying is not required.  Only applies to types ClusterIP, NodePort, and LoadBalancer. If this field is specified when creating a Service of type ExternalName, creation will fail. This field will be wiped when updating a Service to type ExternalName. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+* **clusterIPs**: string[]: ClusterIPs is a list of IP addresses assigned to this service, and are usually assigned randomly.  If an address is specified manually, is in-range (as per system configuration), and is not in use, it will be allocated to the service; otherwise creation of the service will fail. This field may not be changed through updates unless the type field is also being changed to ExternalName (which requires this field to be empty) or the type field is being changed from ExternalName (in which case this field may optionally be specified, as describe above).  Valid values are "None", empty string (""), or a valid IP address.  Setting this to "None" makes a "headless service" (no virtual IP), which is useful when direct endpoint connections are preferred and proxying is not required.  Only applies to types ClusterIP, NodePort, and LoadBalancer. If this field is specified when creating a Service of type ExternalName, creation will fail. This field will be wiped when updating a Service to type ExternalName.  If this field is not specified, it will be initialized from the clusterIP field.  If this field is specified, clients must ensure that clusterIPs[0] and clusterIP have the same value.
+
+This field may hold a maximum of two entries (dual-stack IPs, in either order). These IPs must correspond to the values of the ipFamilies field. Both clusterIPs and ipFamilies are governed by the ipFamilyPolicy field. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
 * **externalIPs**: string[]: externalIPs is a list of IP addresses for which nodes in the cluster will also accept traffic for this service.  These IPs are not managed by Kubernetes.  The user is responsible for ensuring that traffic arrives at a node with this IP.  A common example is external load-balancers that are not part of the Kubernetes system.
-* **externalName**: string: externalName is the external reference that kubedns or equivalent will return as a CNAME record for this service. No proxying will be involved. Must be a valid RFC-1123 hostname (https://tools.ietf.org/html/rfc1123) and requires Type to be ExternalName.
-* **externalTrafficPolicy**: string: externalTrafficPolicy denotes if this Service desires to route external traffic to node-local or cluster-wide endpoints. "Local" preserves the client source IP and avoids a second hop for LoadBalancer and Nodeport type services, but risks potentially imbalanced traffic spreading. "Cluster" obscures the client source IP and may cause a second hop to another node, but should have good overall load-spreading.
-* **healthCheckNodePort**: int: healthCheckNodePort specifies the healthcheck nodePort for the service. If not specified, HealthCheckNodePort is created by the service api backend with the allocated nodePort. Will use user-specified nodePort value if specified by the client. Only effects when Type is set to LoadBalancer and ExternalTrafficPolicy is set to Local.
-* **ipFamily**: string: ipFamily specifies whether this Service has a preference for a particular IP family (e.g. IPv4 vs. IPv6) when the IPv6DualStack feature gate is enabled. In a dual-stack cluster, you can specify ipFamily when creating a ClusterIP Service to determine whether the controller will allocate an IPv4 or IPv6 IP for it, and you can specify ipFamily when creating a headless Service to determine whether it will have IPv4 or IPv6 Endpoints. In either case, if you do not specify an ipFamily explicitly, it will default to the cluster's primary IP family. This field is part of an alpha feature, and you should not make any assumptions about its semantics other than those described above. In particular, you should not assume that it can (or cannot) be changed after creation time; that it can only have the values "IPv4" and "IPv6"; or that its current value on a given Service correctly reflects the current state of that Service. (For ClusterIP Services, look at clusterIP to see if the Service is IPv4 or IPv6. For headless Services, look at the endpoints, which may be dual-stack in the future. For ExternalName Services, ipFamily has no meaning, but it may be set to an irrelevant value anyway.)
-* **loadBalancerIP**: string: Only applies to Service Type: LoadBalancer LoadBalancer will get created with the IP specified in this field. This feature depends on whether the underlying cloud-provider supports specifying the loadBalancerIP when a load balancer is created. This field will be ignored if the cloud-provider does not support the feature.
-* **loadBalancerSourceRanges**: string[]: If specified and supported by the platform, this will restrict traffic through the cloud-provider load-balancer will be restricted to the specified client IPs. This field will be ignored if the cloud-provider does not support the feature." More info: https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/
+* **externalName**: string: externalName is the external reference that discovery mechanisms will return as an alias for this service (e.g. a DNS CNAME record). No proxying will be involved.  Must be a lowercase RFC-1123 hostname (https://tools.ietf.org/html/rfc1123) and requires `type` to be "ExternalName".
+* **externalTrafficPolicy**: string: externalTrafficPolicy describes how nodes distribute service traffic they receive on one of the Service's "externally-facing" addresses (NodePorts, ExternalIPs, and LoadBalancer IPs). If set to "Local", the proxy will configure the service in a way that assumes that external load balancers will take care of balancing the service traffic between nodes, and so each node will deliver traffic only to the node-local endpoints of the service, without masquerading the client source IP. (Traffic mistakenly sent to a node with no endpoints will be dropped.) The default value, "Cluster", uses the standard behavior of routing to all endpoints evenly (possibly modified by topology and other features). Note that traffic sent to an External IP or LoadBalancer IP from within the cluster will always get "Cluster" semantics, but clients sending to a NodePort from within the cluster may need to take traffic policy into account when picking a node.
+* **healthCheckNodePort**: int: healthCheckNodePort specifies the healthcheck nodePort for the service. This only applies when type is set to LoadBalancer and externalTrafficPolicy is set to Local. If a value is specified, is in-range, and is not in use, it will be used.  If not specified, a value will be automatically allocated.  External systems (e.g. load-balancers) can use this port to determine if a given node holds endpoints for this service or not.  If this field is specified when creating a Service which does not need it, creation will fail. This field will be wiped when updating a Service to no longer need it (e.g. changing type). This field cannot be updated once set.
+* **internalTrafficPolicy**: string: InternalTrafficPolicy describes how nodes distribute service traffic they receive on the ClusterIP. If set to "Local", the proxy will assume that pods only want to talk to endpoints of the service on the same node as the pod, dropping the traffic if there are no local endpoints. The default value, "Cluster", uses the standard behavior of routing to all endpoints evenly (possibly modified by topology and other features).
+* **ipFamilies**: string[]: IPFamilies is a list of IP families (e.g. IPv4, IPv6) assigned to this service. This field is usually assigned automatically based on cluster configuration and the ipFamilyPolicy field. If this field is specified manually, the requested family is available in the cluster, and ipFamilyPolicy allows it, it will be used; otherwise creation of the service will fail. This field is conditionally mutable: it allows for adding or removing a secondary IP family, but it does not allow changing the primary IP family of the Service. Valid values are "IPv4" and "IPv6".  This field only applies to Services of types ClusterIP, NodePort, and LoadBalancer, and does apply to "headless" services. This field will be wiped when updating a Service to type ExternalName.
+
+This field may hold a maximum of two entries (dual-stack families, in either order).  These families must correspond to the values of the clusterIPs field, if specified. Both clusterIPs and ipFamilies are governed by the ipFamilyPolicy field.
+* **ipFamilyPolicy**: string: IPFamilyPolicy represents the dual-stack-ness requested or required by this Service. If there is no value provided, then this field will be set to SingleStack. Services can be "SingleStack" (a single IP family), "PreferDualStack" (two IP families on dual-stack configured clusters or a single IP family on single-stack clusters), or "RequireDualStack" (two IP families on dual-stack configured clusters, otherwise fail). The ipFamilies and clusterIPs fields depend on the value of this field. This field will be wiped when updating a service to type ExternalName.
+* **loadBalancerClass**: string: loadBalancerClass is the class of the load balancer implementation this Service belongs to. If specified, the value of this field must be a label-style identifier, with an optional prefix, e.g. "internal-vip" or "example.com/internal-vip". Unprefixed names are reserved for end-users. This field can only be set when the Service type is 'LoadBalancer'. If not set, the default load balancer implementation is used, today this is typically done through the cloud provider integration, but should apply for any default implementation. If set, it is assumed that a load balancer implementation is watching for Services with a matching class. Any default load balancer implementation (e.g. cloud providers) should ignore Services that set this field. This field can only be set when creating or updating a Service to type 'LoadBalancer'. Once set, it can not be changed. This field will be wiped when a service is updated to a non 'LoadBalancer' type.
+* **loadBalancerIP**: string: Only applies to Service Type: LoadBalancer. This feature depends on whether the underlying cloud-provider supports specifying the loadBalancerIP when a load balancer is created. This field will be ignored if the cloud-provider does not support the feature. Deprecated: This field was under-specified and its meaning varies across implementations, and it cannot support dual-stack. As of Kubernetes v1.24, users are encouraged to use implementation-specific annotations when available. This field may be removed in a future API version.
+* **loadBalancerSourceRanges**: string[]: If specified and supported by the platform, this will restrict traffic through the cloud-provider load-balancer will be restricted to the specified client IPs. This field will be ignored if the cloud-provider does not support the feature." More info: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/
 * **ports**: [IoK8SApiCoreV1ServicePort](#iok8sapicorev1serviceport)[]: The list of ports that are exposed by this service. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
 * **publishNotReadyAddresses**: bool: publishNotReadyAddresses indicates that any agent which deals with endpoints for this Service should disregard any indications of ready/not-ready. The primary use case for setting this field is for a StatefulSet's Headless Service to propagate SRV DNS records for its Pods for the purpose of peer discovery. The Kubernetes controllers that generate Endpoints and EndpointSlice resources for Services interpret this to mean that all endpoints are considered "ready" even if the Pods themselves are not. Agents which consume only Kubernetes generated endpoints through the Endpoints or EndpointSlice resources can safely assume this behavior.
 * **selector**: [IoK8SApiCoreV1ServiceSpecSelector](#iok8sapicorev1servicespecselector): Route service traffic to pods with label keys and values matching this selector. If empty or not present, the service is assumed to have an external process managing its endpoints, which Kubernetes will not modify. Only applies to types ClusterIP, NodePort, and LoadBalancer. Ignored if type is ExternalName. More info: https://kubernetes.io/docs/concepts/services-networking/service/
 * **sessionAffinity**: string: Supports "ClientIP" and "None". Used to maintain session affinity. Enable client IP based session affinity. Must be ClientIP or None. Defaults to None. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
 * **sessionAffinityConfig**: [IoK8SApiCoreV1SessionAffinityConfig](#iok8sapicorev1sessionaffinityconfig): SessionAffinityConfig represents the configurations of session affinity.
-* **topologyKeys**: string[]: topologyKeys is a preference-order list of topology keys which implementations of services should use to preferentially sort endpoints when accessing this Service, it can not be used at the same time as externalTrafficPolicy=Local. Topology keys must be valid label keys and at most 16 keys may be specified. Endpoints are chosen based on the first topology key with available backends. If this field is specified and all entries have no backends that match the topology of the client, the service has no backends for that client and connections should fail. The special value "*" may be used to mean "any topology". This catch-all value, if used, only makes sense as the last value in the list. If this is not specified or empty, no topology constraints will be applied.
-* **type**: string: type determines how the Service is exposed. Defaults to ClusterIP. Valid options are ExternalName, ClusterIP, NodePort, and LoadBalancer. "ExternalName" maps to the specified externalName. "ClusterIP" allocates a cluster-internal IP address for load-balancing to endpoints. Endpoints are determined by the selector or if that is not specified, by manual construction of an Endpoints object. If clusterIP is "None", no virtual IP is allocated and the endpoints are published as a set of endpoints rather than a stable IP. "NodePort" builds on ClusterIP and allocates a port on every node which routes to the clusterIP. "LoadBalancer" builds on NodePort and creates an external load-balancer (if supported in the current cloud) which routes to the clusterIP. More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+* **type**: string: type determines how the Service is exposed. Defaults to ClusterIP. Valid options are ExternalName, ClusterIP, NodePort, and LoadBalancer. "ClusterIP" allocates a cluster-internal IP address for load-balancing to endpoints. Endpoints are determined by the selector or if that is not specified, by manual construction of an Endpoints object or EndpointSlice objects. If clusterIP is "None", no virtual IP is allocated and the endpoints are published as a set of endpoints rather than a virtual IP. "NodePort" builds on ClusterIP and allocates a port on every node which routes to the same endpoints as the clusterIP. "LoadBalancer" builds on NodePort and creates an external load-balancer (if supported in the current cloud) which routes to the same endpoints as the clusterIP. "ExternalName" aliases this service to the specified externalName. Several other fields do not apply to ExternalName services. More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
 
 ## IoK8SApiCoreV1ServiceSpecSelector
 ### Properties
@@ -1452,6 +1508,7 @@ Localhost - a profile defined in a file on the node should be used. RuntimeDefau
 
 ## IoK8SApiCoreV1ServiceStatus
 ### Properties
+* **conditions**: [IoK8SApimachineryPkgApisMetaV1Condition](#iok8sapimachinerypkgapismetav1condition)[]: Current service state
 * **loadBalancer**: [IoK8SApiCoreV1LoadBalancerStatus](#iok8sapicorev1loadbalancerstatus): LoadBalancerStatus represents the status of a load-balancer.
 
 ## IoK8SApiCoreV1SessionAffinityConfig
@@ -1460,19 +1517,19 @@ Localhost - a profile defined in a file on the node should be used. RuntimeDefau
 
 ## IoK8SApiCoreV1StorageOSPersistentVolumeSource
 ### Properties
-* **fsType**: string: Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
-* **readOnly**: bool: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
+* **fsType**: string: fsType is the filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
+* **readOnly**: bool: readOnly defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
 * **secretRef**: [IoK8SApiCoreV1ObjectReference](#iok8sapicorev1objectreference): ObjectReference contains enough information to let you inspect or modify the referred object.
-* **volumeName**: string: VolumeName is the human-readable name of the StorageOS volume.  Volume names are only unique within a namespace.
-* **volumeNamespace**: string: VolumeNamespace specifies the scope of the volume within StorageOS.  If no namespace is specified then the Pod's namespace will be used.  This allows the Kubernetes name scoping to be mirrored within StorageOS for tighter integration. Set VolumeName to any name to override the default behaviour. Set to "default" if you are not using namespaces within StorageOS. Namespaces that do not pre-exist within StorageOS will be created.
+* **volumeName**: string: volumeName is the human-readable name of the StorageOS volume.  Volume names are only unique within a namespace.
+* **volumeNamespace**: string: volumeNamespace specifies the scope of the volume within StorageOS.  If no namespace is specified then the Pod's namespace will be used.  This allows the Kubernetes name scoping to be mirrored within StorageOS for tighter integration. Set VolumeName to any name to override the default behaviour. Set to "default" if you are not using namespaces within StorageOS. Namespaces that do not pre-exist within StorageOS will be created.
 
 ## IoK8SApiCoreV1StorageOSVolumeSource
 ### Properties
-* **fsType**: string: Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
-* **readOnly**: bool: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
+* **fsType**: string: fsType is the filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
+* **readOnly**: bool: readOnly defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
 * **secretRef**: [IoK8SApiCoreV1LocalObjectReference](#iok8sapicorev1localobjectreference): LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
-* **volumeName**: string: VolumeName is the human-readable name of the StorageOS volume.  Volume names are only unique within a namespace.
-* **volumeNamespace**: string: VolumeNamespace specifies the scope of the volume within StorageOS.  If no namespace is specified then the Pod's namespace will be used.  This allows the Kubernetes name scoping to be mirrored within StorageOS for tighter integration. Set VolumeName to any name to override the default behaviour. Set to "default" if you are not using namespaces within StorageOS. Namespaces that do not pre-exist within StorageOS will be created.
+* **volumeName**: string: volumeName is the human-readable name of the StorageOS volume.  Volume names are only unique within a namespace.
+* **volumeNamespace**: string: volumeNamespace specifies the scope of the volume within StorageOS.  If no namespace is specified then the Pod's namespace will be used.  This allows the Kubernetes name scoping to be mirrored within StorageOS for tighter integration. Set VolumeName to any name to override the default behaviour. Set to "default" if you are not using namespaces within StorageOS. Namespaces that do not pre-exist within StorageOS will be created.
 
 ## IoK8SApiCoreV1Sysctl
 ### Properties
@@ -1502,12 +1559,24 @@ Localhost - a profile defined in a file on the node should be used. RuntimeDefau
 ## IoK8SApiCoreV1TopologySpreadConstraint
 ### Properties
 * **labelSelector**: [IoK8SApimachineryPkgApisMetaV1LabelSelector](#iok8sapimachinerypkgapismetav1labelselector): A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
-* **maxSkew**: int (Required): MaxSkew describes the degree to which pods may be unevenly distributed. When `whenUnsatisfiable=DoNotSchedule`, it is the maximum permitted difference between the number of matching pods in the target topology and the global minimum. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 1/1/0: | zone1 | zone2 | zone3 | |   P   |   P   |       | - if MaxSkew is 1, incoming pod can only be scheduled to zone3 to become 1/1/1; scheduling it onto zone1(zone2) would make the ActualSkew(2-0) on zone1(zone2) violate MaxSkew(1). - if MaxSkew is 2, incoming pod can be scheduled onto any zone. When `whenUnsatisfiable=ScheduleAnyway`, it is used to give higher precedence to topologies that satisfy it. It's a required field. Default value is 1 and 0 is not allowed.
-* **topologyKey**: string (Required): TopologyKey is the key of node labels. Nodes that have a label with this key and identical values are considered to be in the same topology. We consider each <key, value> as a "bucket", and try to put balanced number of pods into each bucket. It's a required field.
+* **matchLabelKeys**: string[]: MatchLabelKeys is a set of pod label keys to select the pods over which spreading will be calculated. The keys are used to lookup values from the incoming pod labels, those key-value labels are ANDed with labelSelector to select the group of existing pods over which spreading will be calculated for the incoming pod. Keys that don't exist in the incoming pod labels will be ignored. A null or empty list means only match against labelSelector.
+* **maxSkew**: int (Required): MaxSkew describes the degree to which pods may be unevenly distributed. When `whenUnsatisfiable=DoNotSchedule`, it is the maximum permitted difference between the number of matching pods in the target topology and the global minimum. The global minimum is the minimum number of matching pods in an eligible domain or zero if the number of eligible domains is less than MinDomains. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 2/2/1: In this case, the global minimum is 1. | zone1 | zone2 | zone3 | |  P P  |  P P  |   P   | - if MaxSkew is 1, incoming pod can only be scheduled to zone3 to become 2/2/2; scheduling it onto zone1(zone2) would make the ActualSkew(3-1) on zone1(zone2) violate MaxSkew(1). - if MaxSkew is 2, incoming pod can be scheduled onto any zone. When `whenUnsatisfiable=ScheduleAnyway`, it is used to give higher precedence to topologies that satisfy it. It's a required field. Default value is 1 and 0 is not allowed.
+* **minDomains**: int: MinDomains indicates a minimum number of eligible domains. When the number of eligible domains with matching topology keys is less than minDomains, Pod Topology Spread treats "global minimum" as 0, and then the calculation of Skew is performed. And when the number of eligible domains with matching topology keys equals or greater than minDomains, this value has no effect on scheduling. As a result, when the number of eligible domains is less than minDomains, scheduler won't schedule more than maxSkew Pods to those domains. If value is nil, the constraint behaves as if MinDomains is equal to 1. Valid values are integers greater than 0. When value is not nil, WhenUnsatisfiable must be DoNotSchedule.
+
+For example, in a 3-zone cluster, MaxSkew is set to 2, MinDomains is set to 5 and pods with the same labelSelector spread as 2/2/2: | zone1 | zone2 | zone3 | |  P P  |  P P  |  P P  | The number of domains is less than 5(MinDomains), so "global minimum" is treated as 0. In this situation, new pod with the same labelSelector cannot be scheduled, because computed skew will be 3(3 - 0) if new Pod is scheduled to any of the three zones, it will violate MaxSkew.
+
+This is a beta field and requires the MinDomainsInPodTopologySpread feature gate to be enabled (enabled by default).
+* **nodeAffinityPolicy**: string: NodeAffinityPolicy indicates how we will treat Pod's nodeAffinity/nodeSelector when calculating pod topology spread skew. Options are: - Honor: only nodes matching nodeAffinity/nodeSelector are included in the calculations. - Ignore: nodeAffinity/nodeSelector are ignored. All nodes are included in the calculations.
+
+If this value is nil, the behavior is equivalent to the Honor policy. This is a alpha-level feature enabled by the NodeInclusionPolicyInPodTopologySpread feature flag.
+* **nodeTaintsPolicy**: string: NodeTaintsPolicy indicates how we will treat node taints when calculating pod topology spread skew. Options are: - Honor: nodes without taints, along with tainted nodes for which the incoming pod has a toleration, are included. - Ignore: node taints are ignored. All nodes are included.
+
+If this value is nil, the behavior is equivalent to the Ignore policy. This is a alpha-level feature enabled by the NodeInclusionPolicyInPodTopologySpread feature flag.
+* **topologyKey**: string (Required): TopologyKey is the key of node labels. Nodes that have a label with this key and identical values are considered to be in the same topology. We consider each <key, value> as a "bucket", and try to put balanced number of pods into each bucket. We define a domain as a particular instance of a topology. Also, we define an eligible domain as a domain whose nodes meet the requirements of nodeAffinityPolicy and nodeTaintsPolicy. e.g. If TopologyKey is "kubernetes.io/hostname", each Node is a domain of that topology. And, if TopologyKey is "topology.kubernetes.io/zone", each zone is a domain of that topology. It's a required field.
 * **whenUnsatisfiable**: string (Required): WhenUnsatisfiable indicates how to deal with a pod if it doesn't satisfy the spread constraint. - DoNotSchedule (default) tells the scheduler not to schedule it. - ScheduleAnyway tells the scheduler to schedule the pod in any location,
   but giving higher precedence to topologies that would help reduce the
   skew.
-A constraint is considered "Unsatisfiable" for an incoming pod if and only if every possible node assigment for that pod would violate "MaxSkew" on some topology. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 3/1/1: | zone1 | zone2 | zone3 | | P P P |   P   |   P   | If WhenUnsatisfiable is set to DoNotSchedule, incoming pod can only be scheduled to zone2(zone3) to become 3/2/1(3/1/2) as ActualSkew(2-1) on zone2(zone3) satisfies MaxSkew(1). In other words, the cluster can still be imbalanced, but scheduler won't make it *more* imbalanced. It's a required field.
+A constraint is considered "Unsatisfiable" for an incoming pod if and only if every possible node assignment for that pod would violate "MaxSkew" on some topology. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 3/1/1: | zone1 | zone2 | zone3 | | P P P |   P   |   P   | If WhenUnsatisfiable is set to DoNotSchedule, incoming pod can only be scheduled to zone2(zone3) to become 3/2/1(3/1/2) as ActualSkew(2-1) on zone2(zone3) satisfies MaxSkew(1). In other words, the cluster can still be imbalanced, but scheduler won't make it *more* imbalanced. It's a required field.
 
 ## IoK8SApiCoreV1TypedLocalObjectReference
 ### Properties
@@ -1543,7 +1612,7 @@ DEPRECATED: GitRepo is deprecated. To provision a container with a git repo, mou
 * **glusterfs**: [IoK8SApiCoreV1GlusterfsVolumeSource](#iok8sapicorev1glusterfsvolumesource): Represents a Glusterfs mount that lasts the lifetime of a pod. Glusterfs volumes do not support ownership management or SELinux relabeling.
 * **hostPath**: [IoK8SApiCoreV1HostPathVolumeSource](#iok8sapicorev1hostpathvolumesource): Represents a host path mapped into a pod. Host path volumes do not support ownership management or SELinux relabeling.
 * **iscsi**: [IoK8SApiCoreV1IscsiVolumeSource](#iok8sapicorev1iscsivolumesource): Represents an ISCSI disk. ISCSI volumes can only be mounted as read/write once. ISCSI volumes support ownership management and SELinux relabeling.
-* **name**: string (Required): Volume's name. Must be a DNS_LABEL and unique within the pod. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+* **name**: string (Required): name of the volume. Must be a DNS_LABEL and unique within the pod. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
 * **nfs**: [IoK8SApiCoreV1NFSVolumeSource](#iok8sapicorev1nfsvolumesource): Represents an NFS mount that lasts the lifetime of a pod. NFS volumes do not support ownership management or SELinux relabeling.
 * **persistentVolumeClaim**: [IoK8SApiCoreV1PersistentVolumeClaimVolumeSource](#iok8sapicorev1persistentvolumeclaimvolumesource): PersistentVolumeClaimVolumeSource references the user's PVC in the same namespace. This volume finds the bound PV and mounts that volume for the pod. A PersistentVolumeClaimVolumeSource is, essentially, a wrapper around another type of volume that is owned by someone else (the system).
 * **photonPersistentDisk**: [IoK8SApiCoreV1PhotonPersistentDiskVolumeSource](#iok8sapicorev1photonpersistentdiskvolumesource): Represents a Photon Controller persistent disk resource.
@@ -1589,10 +1658,10 @@ The contents of the target Secret's Data field will be presented in a projected 
 
 ## IoK8SApiCoreV1VsphereVirtualDiskVolumeSource
 ### Properties
-* **fsType**: string: Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
-* **storagePolicyID**: string: Storage Policy Based Management (SPBM) profile ID associated with the StoragePolicyName.
-* **storagePolicyName**: string: Storage Policy Based Management (SPBM) profile name.
-* **volumePath**: string (Required): Path that identifies vSphere volume vmdk
+* **fsType**: string: fsType is filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
+* **storagePolicyID**: string: storagePolicyID is the storage Policy Based Management (SPBM) profile ID associated with the StoragePolicyName.
+* **storagePolicyName**: string: storagePolicyName is the storage Policy Based Management (SPBM) profile name.
+* **volumePath**: string (Required): volumePath is the path that identifies vSphere volume vmdk
 
 ## IoK8SApiCoreV1WeightedPodAffinityTerm
 ### Properties
@@ -1603,7 +1672,17 @@ The contents of the target Secret's Data field will be presented in a projected 
 ### Properties
 * **gmsaCredentialSpec**: string: GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.
 * **gmsaCredentialSpecName**: string: GMSACredentialSpecName is the name of the GMSA credential spec to use.
+* **hostProcess**: bool: HostProcess determines if a container should be run as a 'Host Process' container. This field is alpha-level and will only be honored by components that enable the WindowsHostProcessContainers feature flag. Setting this field without the feature flag will result in errors when validating the Pod. All of a Pod's containers must have the same effective HostProcess value (it is not allowed to have a mix of HostProcess containers and non-HostProcess containers).  In addition, if HostProcess is true then HostNetwork must also be set to true.
 * **runAsUserName**: string: The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+
+## IoK8SApimachineryPkgApisMetaV1Condition
+### Properties
+* **lastTransitionTime**: string (Required): Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.
+* **message**: string (Required): message is a human readable message indicating details about the transition. This may be an empty string.
+* **observedGeneration**: int: observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
+* **reason**: string (Required): reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
+* **status**: string (Required): status of the condition, one of True, False, Unknown.
+* **type**: string (Required): type of condition in CamelCase or in foo.example.com/CamelCase.
 
 ## IoK8SApimachineryPkgApisMetaV1LabelSelector
 ### Properties
@@ -1628,19 +1707,19 @@ The contents of the target Secret's Data field will be presented in a projected 
 * **fieldsV1**: any: Any object
 * **manager**: string: Manager is an identifier of the workflow managing these fields.
 * **operation**: string: Operation is the type of operation which lead to this ManagedFieldsEntry being created. The only valid values for this field are 'Apply' and 'Update'.
+* **subresource**: string: Subresource is the name of the subresource used to update that object, or empty string if the object was updated through the main resource. The value of this field is used to distinguish between managers, even if they share the same name. For example, a status update will be distinct from a regular update using the same manager name. Note that the APIVersion field is not related to the Subresource field and it always corresponds to the version of the main resource.
 * **time**: string: Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.
 
 ## IoK8SApimachineryPkgApisMetaV1ObjectMeta
 ### Properties
 * **annotations**: [IoK8SApimachineryPkgApisMetaV1ObjectMetaAnnotations](#iok8sapimachinerypkgapismetav1objectmetaannotations): Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations
-* **clusterName**: string: The name of the cluster which the object belongs to. This is used to distinguish resources with same name and namespace in different clusters. This field is not set anywhere right now and apiserver is going to ignore it if set in create or update request.
 * **creationTimestamp**: string: Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.
 * **deletionGracePeriodSeconds**: int: Number of seconds allowed for this object to gracefully terminate before it will be removed from the system. Only set when deletionTimestamp is also set. May only be shortened. Read-only.
 * **deletionTimestamp**: string: Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.
 * **finalizers**: string[]: Must be empty before the object is deleted from the registry. Each entry is an identifier for the responsible component that will remove the entry from the list. If the deletionTimestamp of the object is non-nil, entries in this list can only be removed. Finalizers may be processed and removed in any order.  Order is NOT enforced because it introduces significant risk of stuck finalizers. finalizers is a shared field, any actor with permission can reorder it. If the finalizer list is processed in order, then this can lead to a situation in which the component responsible for the first finalizer in the list is waiting for a signal (field value, external system, or other) produced by a component responsible for a finalizer later in the list, resulting in a deadlock. Without enforced ordering finalizers are free to order amongst themselves and are not vulnerable to ordering changes in the list.
 * **generateName**: string: GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.
 
-If this field is specified and the generated name exists, the server will NOT return a 409 - instead, it will either return 201 Created or 500 with Reason ServerTimeout indicating a unique name could not be found in the time allotted, and the client should retry (optionally after the time indicated in the Retry-After header).
+If this field is specified and the generated name exists, the server will return a 409.
 
 Applied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency
 * **generation**: int: A sequence number representing a specific generation of the desired state. Populated by the system. Read-only.
@@ -1654,9 +1733,7 @@ Must be a DNS_LABEL. Cannot be updated. More info: http://kubernetes.io/docs/use
 * **resourceVersion**: string: An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.
 
 Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
-* **selfLink**: string: SelfLink is a URL representing this object. Populated by the system. Read-only.
-
-DEPRECATED Kubernetes will stop propagating this field in 1.20 release and the field is planned to be removed in 1.21 release.
+* **selfLink**: string: Deprecated: selfLink is a legacy read-only field that is no longer populated by the system.
 * **uid**: string: UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.
 
 Populated by the system. Read-only. More info: http://kubernetes.io/docs/user-guide/identifiers#uids
@@ -1674,7 +1751,7 @@ Populated by the system. Read-only. More info: http://kubernetes.io/docs/user-gu
 ## IoK8SApimachineryPkgApisMetaV1OwnerReference
 ### Properties
 * **apiVersion**: string (Required): API version of the referent.
-* **blockOwnerDeletion**: bool: If true, AND if the owner has the "foregroundDeletion" finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. Defaults to false. To set this field, a user needs "delete" permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.
+* **blockOwnerDeletion**: bool: If true, AND if the owner has the "foregroundDeletion" finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs "delete" permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.
 * **controller**: bool: If true, this reference points to the managing controller.
 * **kind**: string (Required): Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 * **name**: string (Required): Name of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#names
