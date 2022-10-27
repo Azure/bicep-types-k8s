@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/Azure/bicep-types-k8s/blob/main/README.md",
   "devDependencies": {
-    "@autorest/core": "3.9.2",
+    "@autorest/core": "3.9.3",
     "@autorest/modelerfour": "^4.24.3",
     "@ts-common/commonmark-to-markdown": "^2.0.0",
     "@types/async": "^3.2.15",
