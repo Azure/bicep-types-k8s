@@ -5,9 +5,9 @@ import { TypeBuilder } from './typebuilder';
 import { Channel } from '@autorest/extension-base';
 import { Dictionary } from 'lodash';
 import { getFullyQualifiedType, ProviderDefinition, ResourceDefinition } from './resources';
-import { DiscriminatedObjectType, ObjectProperty, ObjectType, ResourceFlags, ResourceType, TypeBaseKind, TypeReference } from 'bicep-types';
+import { DiscriminatedObjectType, ObjectTypeProperty, ObjectType, ResourceFlags, ResourceType, TypeBaseKind, TypeReference } from 'bicep-types';
 
-export type TypeCallback = (definition: ResourceDefinition, properties: Dictionary<ObjectProperty>) => void;
+export type TypeCallback = (definition: ResourceDefinition, properties: Dictionary<ObjectTypeProperty>) => void;
 
 export abstract class SchemaConverter {
     abstract Convert(builder: TypeBuilder, provider: ProviderDefinition, fullyQualifiedType: string, definitions: ResourceDefinition[]): ResourceType | null;
@@ -72,7 +72,7 @@ export abstract class SchemaConverter {
         function processResourceBody(fullyQualifiedType: string, definition: ResourceDefinition) {
             const { descriptor, schema, } = definition;
 
-            const resourceProperties: Dictionary<ObjectProperty> = {};
+            const resourceProperties: Dictionary<ObjectTypeProperty> = {};
 
             // Call the initialization callback before merging in properties form the schema. This allows the
             // provider to 'own' the definition of critical properties.
@@ -87,7 +87,7 @@ export abstract class SchemaConverter {
                 if (propertyDefinition !== undefined) {
                     const description = (putProperty?.schema, getProperty?.schema)?.language.default?.description;
                     const flags = builder.parsePropertyFlags(putProperty, getProperty);
-                    resourceProperties[propertyName] = builder.createObjectProperty(propertyDefinition, flags, description);
+                    resourceProperties[propertyName] = builder.createObjectTypeProperty(propertyDefinition, flags, description);
                 }
             }
 
