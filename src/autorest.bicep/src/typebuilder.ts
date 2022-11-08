@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Channel, AutorestExtensionHost } from "@autorest/extension-base";
-import { ArrayType, BuiltInTypeKind, DiscriminatedObjectType, ObjectProperty, ObjectPropertyFlags, ObjectType, StringLiteralType, TypeBaseKind, TypeFactory, TypeReference, UnionType } from "bicep-types";
+import { ArrayType, BuiltInTypeKind, DiscriminatedObjectType, ObjectTypeProperty, ObjectTypePropertyFlags, ObjectType, StringLiteralType, TypeBaseKind, TypeFactory, TypeReference, UnionType } from "bicep-types";
 import { Dictionary, flatMap, keyBy, keys, uniq } from 'lodash';
 import { getSerializedName } from "./resources";
 import { Schema, ObjectSchema, DictionarySchema, ChoiceSchema, SealedChoiceSchema, ConstantSchema, ArraySchema, PrimitiveSchema, AnySchema, Property, SchemaType, StringSchema } from "@autorest/codemodel";
@@ -83,18 +83,18 @@ export class TypeBuilder {
     }
 
     parsePropertyFlags(putProperty: Property | undefined, getProperty: Property | undefined) {
-        let flags = ObjectPropertyFlags.None;
+        let flags = ObjectTypePropertyFlags.None;
 
         if (putProperty && putProperty.required) {
-            flags |= ObjectPropertyFlags.Required;
+            flags |= ObjectTypePropertyFlags.Required;
         }
 
         if (!putProperty || putProperty.readOnly) {
-            flags |= ObjectPropertyFlags.ReadOnly;
+            flags |= ObjectTypePropertyFlags.ReadOnly;
         }
 
         if (!getProperty) {
-            flags |= ObjectPropertyFlags.WriteOnly;
+            flags |= ObjectTypePropertyFlags.WriteOnly;
         }
 
         return flags;
@@ -129,7 +129,7 @@ export class TypeBuilder {
         }
     }
 
-    createObject(definitionName: string, schema: ObjectSchema, properties: Dictionary<ObjectProperty>, additionalProperties?: TypeReference) {
+    createObject(definitionName: string, schema: ObjectSchema, properties: Dictionary<ObjectTypeProperty>, additionalProperties?: TypeReference) {
         if (schema.discriminator) {
             return this.factory.addDiscriminatedObjectType(
                 definitionName,
@@ -233,9 +233,9 @@ export class TypeBuilder {
             discriminatedObjectType.Elements[combinedSubType.discriminatorValue] = objectTypeRef;
 
             const description = (putSchema ?? getSchema)?.discriminator?.property.language.default.description;
-            objectType.Properties[discriminatedObjectType.Discriminator] = this.createObjectProperty(
+            objectType.Properties[discriminatedObjectType.Discriminator] = this.createObjectTypeProperty(
                 this.factory.addStringLiteralType(combinedSubType.discriminatorValue),
-                ObjectPropertyFlags.Required,
+                ObjectTypePropertyFlags.Required,
                 description);
         }
     }
@@ -260,7 +260,7 @@ export class TypeBuilder {
             }
         }
 
-        const definitionProperties: Dictionary<ObjectProperty> = {};
+        const definitionProperties: Dictionary<ObjectTypeProperty> = {};
         const definition = this.createObject(definitionName, combinedSchema, definitionProperties, additionalProperties);
         if (includeBaseProperties) {
             // cache the definition so that it can be re-used
@@ -272,7 +272,7 @@ export class TypeBuilder {
             if (propertyDefinition !== undefined) {
                 const description = (putProperty?.schema, getProperty?.schema)?.language.default?.description;
                 const flags = this.parsePropertyFlags(putProperty, getProperty);
-                definitionProperties[propertyName] = this.createObjectProperty(propertyDefinition, flags, description);
+                definitionProperties[propertyName] = this.createObjectTypeProperty(propertyDefinition, flags, description);
             }
         }
 
@@ -329,7 +329,7 @@ export class TypeBuilder {
         return this.factory.addArrayType(itemType);
     }
 
-    createObjectProperty(type: TypeReference, flags: ObjectPropertyFlags, description?: string): ObjectProperty {
+    createObjectTypeProperty(type: TypeReference, flags: ObjectTypePropertyFlags, description?: string): ObjectTypeProperty {
         return { Type: type, Flags: flags, Description: description?.trim() || undefined };
     }
 }

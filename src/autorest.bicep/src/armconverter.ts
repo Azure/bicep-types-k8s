@@ -6,7 +6,7 @@ import { Dictionary } from "lodash";
 import { SchemaConverter } from "./converter";
 import { ProviderDefinition, ResourceDefinition } from "./resources";
 import { TypeBuilder } from "./typebuilder";
-import { BuiltInTypeKind, ObjectProperty, ObjectPropertyFlags, ResourceType, StringLiteralType, TypeReference } from "bicep-types";
+import { BuiltInTypeKind, ObjectTypeProperty, ObjectTypePropertyFlags, ResourceType, StringLiteralType, TypeReference } from "bicep-types";
 
 export class ARMConverter extends SchemaConverter {
     Convert(builder: TypeBuilder, provider: ProviderDefinition, fullyQualifiedType: string, definitions: ResourceDefinition[]): ResourceType | null {
@@ -26,15 +26,15 @@ export class ARMConverter extends SchemaConverter {
             }
         }
 
-        function initializeResource(definition: ResourceDefinition, properties: Dictionary<ObjectProperty>) {
+        function initializeResource(definition: ResourceDefinition, properties: Dictionary<ObjectTypeProperty>) {
             const type = builder.factory.addStringLiteralType(fullyQualifiedType);
-            properties[`id`] = builder.createObjectProperty(builder.factory.lookupBuiltInType(BuiltInTypeKind.String), ObjectPropertyFlags.ReadOnly | ObjectPropertyFlags.DeployTimeConstant, 'The resource id');
-            properties[`type`] = builder.createObjectProperty(type, ObjectPropertyFlags.ReadOnly | ObjectPropertyFlags.DeployTimeConstant, 'The resource type');
-            properties[`apiVersion`] = builder.createObjectProperty(builder.factory.addStringLiteralType(provider.apiVersion), ObjectPropertyFlags.ReadOnly | ObjectPropertyFlags.DeployTimeConstant, 'The resource api version');
+            properties[`id`] = builder.createObjectTypeProperty(builder.factory.lookupBuiltInType(BuiltInTypeKind.String), ObjectTypePropertyFlags.ReadOnly | ObjectTypePropertyFlags.DeployTimeConstant, 'The resource id');
+            properties[`type`] = builder.createObjectTypeProperty(type, ObjectTypePropertyFlags.ReadOnly | ObjectTypePropertyFlags.DeployTimeConstant, 'The resource type');
+            properties[`apiVersion`] = builder.createObjectTypeProperty(builder.factory.addStringLiteralType(provider.apiVersion), ObjectTypePropertyFlags.ReadOnly | ObjectTypePropertyFlags.DeployTimeConstant, 'The resource api version');
             
             const name = nameType(definition)
             if (name !== undefined) {
-                properties[`name`] = builder.createObjectProperty(name, ObjectPropertyFlags.Required | ObjectPropertyFlags.DeployTimeConstant, 'The resource name');
+                properties[`name`] = builder.createObjectTypeProperty(name, ObjectTypePropertyFlags.Required | ObjectTypePropertyFlags.DeployTimeConstant, 'The resource name');
             }
         }
 
