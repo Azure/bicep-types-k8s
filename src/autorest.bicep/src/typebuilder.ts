@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Channel, AutorestExtensionHost } from "@autorest/extension-base";
-import { ArrayType, BuiltInTypeKind, DiscriminatedObjectType, ObjectTypeProperty, ObjectTypePropertyFlags, ObjectType, StringLiteralType, TypeBaseKind, TypeFactory, TypeReference, UnionType } from "bicep-types";
+import { BuiltInTypeKind, DiscriminatedObjectType, ObjectTypeProperty, ObjectTypePropertyFlags, TypeBaseKind, TypeFactory, TypeReference } from "bicep-types";
 import { Dictionary, flatMap, keyBy, keys, uniq } from 'lodash';
 import { getSerializedName } from "./resources";
 import { Schema, ObjectSchema, DictionarySchema, ChoiceSchema, SealedChoiceSchema, ConstantSchema, ArraySchema, PrimitiveSchema, AnySchema, Property, SchemaType, StringSchema } from "@autorest/codemodel";
