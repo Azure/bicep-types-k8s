@@ -5,7 +5,7 @@ import { TypeBuilder } from './typebuilder';
 import { Channel } from '@autorest/extension-base';
 import { Dictionary } from 'lodash';
 import { getFullyQualifiedType, ProviderDefinition, ResourceDefinition } from './resources';
-import { DiscriminatedObjectType, ObjectTypeProperty, ObjectType, ResourceFlags, ResourceType, TypeBaseKind, TypeReference } from 'bicep-types';
+import { DiscriminatedObjectType, ObjectTypeProperty, ResourceFlags, ResourceType, TypeBaseKind, TypeReference } from 'bicep-types';
 
 export type TypeCallback = (definition: ResourceDefinition, properties: Dictionary<ObjectTypeProperty>) => void;
 
