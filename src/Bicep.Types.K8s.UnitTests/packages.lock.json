@@ -39,9 +39,9 @@
       },
       "MSTest.TestAdapter": {
         "type": "Direct",
-        "requested": "[3.0.2, )",
-        "resolved": "3.0.2",
-        "contentHash": "K1hhtevCzbogylmAnCluV/M1/Ajr5EKfxWq3nv+iYxt+gHLN4gSqT6B3tPnNqUbE4aWT1aUHagcRMnARt45NzQ=="
+        "requested": "[3.1.1, )",
+        "resolved": "3.1.1",
+        "contentHash": "kMvdO5dhrUR3o1qk0fzS0St0prlKyMQAfz1ChVAUdGGobTU5ehR60szOFto0+Q7rFG5iXMvTlVIthXM9EcNYnw=="
       },
       "MSTest.TestFramework": {
         "type": "Direct",
