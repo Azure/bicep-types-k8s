@@ -32,7 +32,7 @@
     "@types/node": "^20.8.7",
     "@types/yargs": "^17.0.29",
     "@typescript-eslint/eslint-plugin": "^6.8.0",
-    "@typescript-eslint/parser": "^6.7.5",
+    "@typescript-eslint/parser": "^6.8.0",
     "async": "^3.2.4",
     "autorest": "^3.6.3",
     "bicep-types": "file:../../bicep-types/src/bicep-types",
