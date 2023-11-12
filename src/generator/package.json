@@ -28,7 +28,7 @@
     "@autorest/modelerfour": "^4.26.2",
     "@ts-common/commonmark-to-markdown": "^2.0.0",
     "@types/async": "^3.2.23",
-    "@types/js-yaml": "^4.0.8",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.8.7",
     "@types/yargs": "^17.0.31",
     "@typescript-eslint/eslint-plugin": "^6.8.0",
