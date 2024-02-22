@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Channel, AutorestExtensionHost } from "@autorest/extension-base";
-import { BuiltInTypeKind, DiscriminatedObjectType, ObjectTypeProperty, ObjectTypePropertyFlags, TypeBaseKind, TypeFactory, TypeReference } from "bicep-types";
+import { DiscriminatedObjectType, ObjectTypeProperty, ObjectTypePropertyFlags, TypeBaseKind, TypeFactory, TypeReference } from "bicep-types";
 import { Dictionary, flatMap, keyBy, keys, uniq } from 'lodash';
 import { getSerializedName } from "./resources";
 import { Schema, ObjectSchema, DictionarySchema, ChoiceSchema, SealedChoiceSchema, ConstantSchema, ArraySchema, PrimitiveSchema, AnySchema, Property, SchemaType, StringSchema } from "@autorest/codemodel";
@@ -75,11 +75,11 @@ export class TypeBuilder {
 
         // The 'any' type
         if (combinedSchema instanceof AnySchema) {
-            return this.factory.lookupBuiltInType(BuiltInTypeKind.Any);
+            return this.factory.addAnyType();
         }
 
         this.logWarning(`Unrecognized property type: ${combinedSchema.type}. Returning 'any'.`);
-        return this.factory.lookupBuiltInType(BuiltInTypeKind.Any);
+        return this.factory.addAnyType();
     }
 
     parsePropertyFlags(putProperty: Property | undefined, getProperty: Property | undefined) {
@@ -105,15 +105,15 @@ export class TypeBuilder {
 
         switch (combinedSchema.type) {
             case SchemaType.Boolean:
-                return this.factory.lookupBuiltInType(BuiltInTypeKind.Bool);
+                return this.factory.addBooleanType();
             case SchemaType.Integer:
             case SchemaType.Number:
             case SchemaType.UnixTime:
-                return this.factory.lookupBuiltInType(BuiltInTypeKind.Int);
+                return this.factory.addIntegerType();
             case SchemaType.Object:
-                return this.factory.lookupBuiltInType(BuiltInTypeKind.Any);
+                return this.factory.addAnyType();
             case SchemaType.ByteArray:
-                return this.factory.lookupBuiltInType(BuiltInTypeKind.Array);
+                return this.factory.addArrayType(this.factory.addAnyType());
             case SchemaType.Uri:
             case SchemaType.Date:
             case SchemaType.DateTime:
@@ -122,10 +122,10 @@ export class TypeBuilder {
             case SchemaType.Uuid:
             case SchemaType.Duration:
             case SchemaType.Credential:
-                return this.factory.lookupBuiltInType(BuiltInTypeKind.String);
+                return this.factory.addStringType();
             default:
                 this.logWarning(`Unrecognized known property type: "${combinedSchema.type}"`);
-                return this.factory.lookupBuiltInType(BuiltInTypeKind.Any);
+                return this.factory.addAnyType();
         }
     }
 
@@ -225,15 +225,15 @@ export class TypeBuilder {
 
             const objectTypeRef = this.parseObjectType(putSubType, getSubType, false);
             const objectType = this.factory.lookupType(objectTypeRef);
-            if (objectType.Type !== TypeBaseKind.ObjectType) {
-                this.logWarning(`Found unexpected element of discriminated type '${discriminatedObjectType.Name}'`)
+            if (objectType.type !== TypeBaseKind.ObjectType) {
+                this.logWarning(`Found unexpected element of discriminated type '${discriminatedObjectType.name}'`)
                 continue;
             }
 
-            discriminatedObjectType.Elements[combinedSubType.discriminatorValue] = objectTypeRef;
+            discriminatedObjectType.elements[combinedSubType.discriminatorValue] = objectTypeRef;
 
             const description = (putSchema ?? getSchema)?.discriminator?.property.language.default.description;
-            objectType.Properties[discriminatedObjectType.Discriminator] = this.createObjectTypeProperty(
+            objectType.properties[discriminatedObjectType.discriminator] = this.createObjectTypeProperty(
                 this.factory.addStringLiteralType(combinedSubType.discriminatorValue),
                 ObjectTypePropertyFlags.Required,
                 description);
@@ -323,13 +323,13 @@ export class TypeBuilder {
     parseArrayType(putSchema: ArraySchema | undefined, getSchema: ArraySchema | undefined) {
         const itemType = this.parseType(putSchema?.elementType, getSchema?.elementType);
         if (itemType === undefined) {
-            return this.factory.lookupBuiltInType(BuiltInTypeKind.Array);
+            return this.factory.addArrayType(this.factory.addAnyType());
         }
 
         return this.factory.addArrayType(itemType);
     }
 
     createObjectTypeProperty(type: TypeReference, flags: ObjectTypePropertyFlags, description?: string): ObjectTypeProperty {
-        return { Type: type, Flags: flags, Description: description?.trim() || undefined };
+        return { type: type, flags: flags, description: description?.trim() || undefined };
     }
 }
