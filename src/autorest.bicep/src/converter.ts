@@ -114,11 +114,11 @@ export abstract class SchemaConverter {
         }
 
         return {
-            Type: TypeBaseKind.ResourceType,
-            Name: `${fullyQualifiedType}@${result.descriptor.apiVersion}`,
-            ScopeType: result.descriptor.scopeType,
-            Body: result.bodyType,
-            Flags: ResourceFlags.None,
+            type: TypeBaseKind.ResourceType,
+            name: `${fullyQualifiedType}@${result.descriptor.apiVersion}`,
+            scopeType: result.descriptor.scopeType,
+            body: result.bodyType,
+            flags: ResourceFlags.None,
         };
     }
 }

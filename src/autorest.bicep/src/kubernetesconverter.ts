@@ -6,7 +6,7 @@ import { SchemaConverter } from "./converter";
 import { KubernetesDescriptor } from "./kubernetes";
 import { ProviderDefinition, ResourceDefinition } from "./resources";
 import { TypeBuilder } from "./typebuilder";
-import { BuiltInTypeKind, ObjectTypeProperty, ObjectTypePropertyFlags, ResourceType, TypeReference } from "bicep-types";
+import { ObjectTypeProperty, ObjectTypePropertyFlags, ResourceType, TypeReference } from "bicep-types";
 
 export class KubernetesConverter extends SchemaConverter {
     Convert(builder: TypeBuilder, provider: ProviderDefinition, fullyQualifiedType: string, definitions: ResourceDefinition[]): ResourceType | null {
@@ -33,24 +33,24 @@ export class KubernetesConverter extends SchemaConverter {
             const properties: Dictionary<ObjectTypeProperty> = {};
 
             properties[`name`] = builder.createObjectTypeProperty(
-                builder.factory.lookupBuiltInType(BuiltInTypeKind.String), 
+                builder.factory.addStringType(),
                 ObjectTypePropertyFlags.DeployTimeConstant | ObjectTypePropertyFlags.Required, 
                 `The name of the resource.`);
 
             if (namespaced) {
                 properties[`namespace`] = builder.createObjectTypeProperty(
-                    builder.factory.lookupBuiltInType(BuiltInTypeKind.String), 
+                    builder.factory.addStringType(),
                     ObjectTypePropertyFlags.DeployTimeConstant, 
                     `The namespace of the resource.`);
             }
 
             properties[`labels`] = builder.createObjectTypeProperty(
-                builder.factory.addObjectType(`labels`, {}, builder.factory.lookupBuiltInType(BuiltInTypeKind.String)),
+                builder.factory.addObjectType(`labels`, {}, builder.factory.addStringType()),
                 ObjectTypePropertyFlags.None,
                 `The labels for the resource.`);
 
             properties[`annotations`] = builder.createObjectTypeProperty(
-                builder.factory.addObjectType(`annotations`, {}, builder.factory.lookupBuiltInType(BuiltInTypeKind.String)),
+                builder.factory.addObjectType(`annotations`, {}, builder.factory.addStringType()),
                 ObjectTypePropertyFlags.None,
                 `The annotations for the resource.`);
 
