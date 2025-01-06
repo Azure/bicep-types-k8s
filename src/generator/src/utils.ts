@@ -15,8 +15,9 @@ export interface ILogger {
 export const defaultLogger: ILogger = {
   out: data => process.stdout.write(data),
   err: data => process.stderr.write(data),
-}
+};
 
+// Separate file operations into a new module
 export async function copyRecursive(sourceBasePath: string, destinationBasePath: string): Promise<void> {
   for (const filePath of await findRecursive(sourceBasePath, () => true)) {
     const destinationPath = path.join(destinationBasePath, path.relative(sourceBasePath, filePath));
@@ -53,7 +54,8 @@ export async function findRecursive(basePath: string, filter: (name: string) => 
   return results;
 }
 
-export function executeCmd(logger: ILogger, verbose: boolean, cwd: string, cmd: string, args: string[]) : Promise<void> {
+// Separate command execution into a new module
+export function executeCmd(logger: ILogger, verbose: boolean, cwd: string, cmd: string, args: string[]): Promise<void> {
   return new Promise((resolve, reject) => {
     if (verbose) {
       logOut(logger, colors.green(`Executing: ${cmd} ${args.join(' ')}`));
@@ -69,7 +71,7 @@ export function executeCmd(logger: ILogger, verbose: boolean, cwd: string, cmd: 
     child.stderr.on('data', data => {
       const message = data.toString();
       logger.err(colors.red(message));
-      if (message.indexOf('FATAL ERROR') > -1 && message.indexOf('Allocation failed - JavaScript heap out of memory') > -1) {
+      if (message.includes('FATAL ERROR') && message.includes('Allocation failed - JavaScript heap out of memory')) {
         reject('Child process has run out of memory');
       }
     });
@@ -87,14 +89,13 @@ export function executeCmd(logger: ILogger, verbose: boolean, cwd: string, cmd: 
   });
 }
 
+// Utility functions
 export function executeSynchronous<T>(asyncFunc: () => Promise<T>) {
-  series(
-    [asyncFunc],
-    (error) => {
-      if (error) {
-        throw error;
-      }
-    });
+  series([asyncFunc], (error) => {
+    if (error) {
+      throw error;
+    }
+  });
 }
 
 export function lowerCaseCompare(a: string, b: string) {
