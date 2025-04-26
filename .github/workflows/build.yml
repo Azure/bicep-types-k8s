@@ -87,12 +87,6 @@ jobs:
         with:
           node-version: 16.x
       
-      - name: Build bicep-types dependency
-        run: |
-          npm ci
-          npm run build
-        working-directory: bicep-types/src/bicep-types
-      
       - name: Install
         run: npm ci
         working-directory: ./src/generator
@@ -101,8 +95,8 @@ jobs:
         run: npm run lint
         working-directory: ./src/generator
 
-      - name: Build
-        run: npm run build
+      - name: Check Types
+        run: npm run check-types
         working-directory: ./src/generator
 
       - name: Perform CodeQL Analysis

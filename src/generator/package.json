@@ -7,6 +7,7 @@
     "build:autorest.bicep": "npm ci --prefix ../autorest.bicep && npm run build --prefix ../autorest.bicep",
     "postinstall": "npm run build:bicep-types && npm run build:autorest.bicep",
     "generate": "ts-node src/main",
+    "check-types": "tsc --noEmit",
     "lint": "eslint src --ext ts",
     "lint:fix": "eslint src --ext ts --fix"
   },
