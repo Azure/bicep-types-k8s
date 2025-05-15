@@ -15,10 +15,10 @@ import { generateTypes } from "./autorest";
 // Kubernetes GitHub repo and MAR.
 const tags = [
   "v1.33.0",
-  "v1.32.4",
-  "v1.31.8",
-  "v1.30.12"
-  // TODO: Add more releases.
+  "v1.32.0",
+  "v1.31.0",
+  "v1.30.0",
+  "v1.29.0",
 ];
 
 async function parseArgs() : Promise<{ logLevel: LogLevel, waitForDebugger: boolean }> {
