@@ -38,10 +38,10 @@ export async function generateTypes(tags: string[], waitForDebugger: boolean, su
       readmePath,
     ];
 
-  summaryLogger.debug(`Invoking AutoRest with ${autoRestArgs.join(' ')}`);
+  summaryLogger.info(`Invoking AutoRest with ${autoRestArgs.join(' ')}`);
   await invokeAutoRest(autoRestArgs, autorestLogger);
 
-  summaryLogger.debug(`Invoking AutoRest with ${autoRestArgs.join(' ')}`);
+  summaryLogger.info(`Invoking AutoRest with ${autoRestArgs.join(' ')}`);
   autoRestArgs = [...commonArgs, '--clear-temp', '--allow-no-input'];
   return await invokeAutoRest(autoRestArgs, autorestLogger);
 }
