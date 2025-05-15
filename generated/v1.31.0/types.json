@@ -1,0 +1,29 @@
+[
+  {
+    "$type": "StringType",
+    "sensitive": true
+  },
+  {
+    "$type": "StringType"
+  },
+  {
+    "$type": "ObjectType",
+    "name": "KubernetesExtensionConfig",
+    "properties": {
+      "kubeconfig": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 1,
+        "description": "Base64 encoded kubeconfig file content."
+      },
+      "namespace": {
+        "type": {
+          "$ref": "#/1"
+        },
+        "flags": 0,
+        "description": "The namespace to use for all Kubernetes objects within the module. If not set, the namespace within the kubeconfig file will be used."
+      }
+    }
+  }
+]

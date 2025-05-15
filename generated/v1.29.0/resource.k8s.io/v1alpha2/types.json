@@ -1,0 +1,1056 @@
+[
+  {
+    "$type": "StringLiteralType",
+    "value": "PodSchedulingContext"
+  },
+  {
+    "$type": "StringLiteralType",
+    "value": "resource.k8s.io/v1alpha2"
+  },
+  {
+    "$type": "StringType"
+  },
+  {
+    "$type": "ObjectType",
+    "name": "labels",
+    "properties": {},
+    "additionalProperties": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "annotations",
+    "properties": {},
+    "additionalProperties": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "metadata",
+    "properties": {
+      "name": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 9,
+        "description": "The name of the resource."
+      },
+      "labels": {
+        "type": {
+          "$ref": "#/3"
+        },
+        "flags": 0,
+        "description": "The labels for the resource."
+      },
+      "annotations": {
+        "type": {
+          "$ref": "#/4"
+        },
+        "flags": 0,
+        "description": "The annotations for the resource."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiResourceV1Alpha2PodSchedulingContextSpec",
+    "properties": {
+      "potentialNodes": {
+        "type": {
+          "$ref": "#/7"
+        },
+        "flags": 0,
+        "description": "PotentialNodes lists nodes where the Pod might be able to run.\n\nThe size of this field is limited to 128. This is large enough for many clusters. Larger clusters may need more attempts to find a node that suits all pending resources. This may get increased in the future, but not reduced."
+      },
+      "selectedNode": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "SelectedNode is the node for which allocation of ResourceClaims that are referenced by the Pod and that use \"WaitForFirstConsumer\" allocation is to be attempted."
+      }
+    }
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiResourceV1Alpha2PodSchedulingContextStatus",
+    "properties": {
+      "resourceClaims": {
+        "type": {
+          "$ref": "#/11"
+        },
+        "flags": 0,
+        "description": "ResourceClaims describes resource availability for each pod.spec.resourceClaim entry where the corresponding ResourceClaim uses \"WaitForFirstConsumer\" allocation mode."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiResourceV1Alpha2ResourceClaimSchedulingStatus",
+    "properties": {
+      "name": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "Name matches the pod.spec.resourceClaims[*].Name field."
+      },
+      "unsuitableNodes": {
+        "type": {
+          "$ref": "#/10"
+        },
+        "flags": 0,
+        "description": "UnsuitableNodes lists nodes that the ResourceClaim cannot be allocated for.\n\nThe size of this field is limited to 128, the same as for PodSchedulingSpec.PotentialNodes. This may get increased in the future, but not reduced."
+      }
+    }
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/9"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "resource.k8s.io/PodSchedulingContext",
+    "properties": {
+      "kind": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 10,
+        "description": "The resource kind."
+      },
+      "apiVersion": {
+        "type": {
+          "$ref": "#/1"
+        },
+        "flags": 10,
+        "description": "The api version."
+      },
+      "metadata": {
+        "type": {
+          "$ref": "#/5"
+        },
+        "flags": 1,
+        "description": "The resource metadata."
+      },
+      "spec": {
+        "type": {
+          "$ref": "#/6"
+        },
+        "flags": 1,
+        "description": "PodSchedulingContextSpec describes where resources for the Pod are needed."
+      },
+      "status": {
+        "type": {
+          "$ref": "#/8"
+        },
+        "flags": 0,
+        "description": "PodSchedulingContextStatus describes where resources for the Pod can be allocated."
+      }
+    }
+  },
+  {
+    "$type": "ResourceType",
+    "name": "resource.k8s.io/PodSchedulingContext@v1alpha2",
+    "scopeType": 0,
+    "body": {
+      "$ref": "#/12"
+    },
+    "flags": 0
+  },
+  {
+    "$type": "StringLiteralType",
+    "value": "ResourceClaim"
+  },
+  {
+    "$type": "StringLiteralType",
+    "value": "resource.k8s.io/v1alpha2"
+  },
+  {
+    "$type": "ObjectType",
+    "name": "labels",
+    "properties": {},
+    "additionalProperties": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "annotations",
+    "properties": {},
+    "additionalProperties": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "metadata",
+    "properties": {
+      "name": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 9,
+        "description": "The name of the resource."
+      },
+      "labels": {
+        "type": {
+          "$ref": "#/16"
+        },
+        "flags": 0,
+        "description": "The labels for the resource."
+      },
+      "annotations": {
+        "type": {
+          "$ref": "#/17"
+        },
+        "flags": 0,
+        "description": "The annotations for the resource."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiResourceV1Alpha2ResourceClaimSpec",
+    "properties": {
+      "allocationMode": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "Allocation can start immediately or when a Pod wants to use the resource. \"WaitForFirstConsumer\" is the default."
+      },
+      "parametersRef": {
+        "type": {
+          "$ref": "#/20"
+        },
+        "flags": 0,
+        "description": "ResourceClaimParametersReference contains enough information to let you locate the parameters for a ResourceClaim. The object must be in the same namespace as the ResourceClaim."
+      },
+      "resourceClassName": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "ResourceClassName references the driver and additional parameters via the name of a ResourceClass that was created as part of the driver deployment."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiResourceV1Alpha2ResourceClaimParametersReference",
+    "properties": {
+      "apiGroup": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "APIGroup is the group for the resource being referenced. It is empty for the core API. This matches the group in the APIVersion that is used when creating the resources."
+      },
+      "kind": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "Kind is the type of resource being referenced. This is the same value as in the parameter object's metadata, for example \"ConfigMap\"."
+      },
+      "name": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "Name is the name of resource being referenced."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiResourceV1Alpha2ResourceClaimStatus",
+    "properties": {
+      "allocation": {
+        "type": {
+          "$ref": "#/22"
+        },
+        "flags": 0,
+        "description": "AllocationResult contains attributes of an allocated resource."
+      },
+      "deallocationRequested": {
+        "type": {
+          "$ref": "#/32"
+        },
+        "flags": 0,
+        "description": "DeallocationRequested indicates that a ResourceClaim is to be deallocated.\n\nThe driver then must deallocate this claim and reset the field together with clearing the Allocation field.\n\nWhile DeallocationRequested is set, no new consumers may be added to ReservedFor."
+      },
+      "driverName": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "DriverName is a copy of the driver name from the ResourceClass at the time when allocation started."
+      },
+      "reservedFor": {
+        "type": {
+          "$ref": "#/34"
+        },
+        "flags": 0,
+        "description": "ReservedFor indicates which entities are currently allowed to use the claim. A Pod which references a ResourceClaim which is not reserved for that Pod will not be started.\n\nThere can be at most 32 such reservations. This may get increased in the future, but not reduced."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiResourceV1Alpha2AllocationResult",
+    "properties": {
+      "availableOnNodes": {
+        "type": {
+          "$ref": "#/23"
+        },
+        "flags": 0,
+        "description": "A node selector represents the union of the results of one or more label queries over a set of nodes; that is, it represents the OR of the selectors represented by the node selector terms."
+      },
+      "resourceHandles": {
+        "type": {
+          "$ref": "#/31"
+        },
+        "flags": 0,
+        "description": "ResourceHandles contain the state associated with an allocation that should be maintained throughout the lifetime of a claim. Each ResourceHandle contains data that should be passed to a specific kubelet plugin once it lands on a node. This data is returned by the driver after a successful allocation and is opaque to Kubernetes. Driver documentation may explain to users how to interpret this data if needed.\n\nSetting this field is optional. It has a maximum size of 32 entries. If null (or empty), it is assumed this allocation will be processed by a single kubelet plugin with no ResourceHandle data attached. The name of the kubelet plugin invoked will match the DriverName set in the ResourceClaimStatus this AllocationResult is embedded in."
+      },
+      "shareable": {
+        "type": {
+          "$ref": "#/32"
+        },
+        "flags": 0,
+        "description": "Shareable determines whether the resource supports more than one consumer at a time."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiCoreV1NodeSelector",
+    "properties": {
+      "nodeSelectorTerms": {
+        "type": {
+          "$ref": "#/29"
+        },
+        "flags": 1,
+        "description": "Required. A list of node selector terms. The terms are ORed."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiCoreV1NodeSelectorTerm",
+    "properties": {
+      "matchExpressions": {
+        "type": {
+          "$ref": "#/27"
+        },
+        "flags": 0,
+        "description": "A list of node selector requirements by node's labels."
+      },
+      "matchFields": {
+        "type": {
+          "$ref": "#/28"
+        },
+        "flags": 0,
+        "description": "A list of node selector requirements by node's fields."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiCoreV1NodeSelectorRequirement",
+    "properties": {
+      "key": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "The label key that the selector applies to."
+      },
+      "operator": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt."
+      },
+      "values": {
+        "type": {
+          "$ref": "#/26"
+        },
+        "flags": 0,
+        "description": "An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch."
+      }
+    }
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/25"
+    }
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/25"
+    }
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/24"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiResourceV1Alpha2ResourceHandle",
+    "properties": {
+      "data": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "Data contains the opaque data associated with this ResourceHandle. It is set by the controller component of the resource driver whose name matches the DriverName set in the ResourceClaimStatus this ResourceHandle is embedded in. It is set at allocation time and is intended for processing by the kubelet plugin whose name matches the DriverName set in this ResourceHandle.\n\nThe maximum size of this field is 16KiB. This may get increased in the future, but not reduced."
+      },
+      "driverName": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "DriverName specifies the name of the resource driver whose kubelet plugin should be invoked to process this ResourceHandle's data once it lands on a node. This may differ from the DriverName set in ResourceClaimStatus this ResourceHandle is embedded in."
+      }
+    }
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/30"
+    }
+  },
+  {
+    "$type": "BooleanType"
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiResourceV1Alpha2ResourceClaimConsumerReference",
+    "properties": {
+      "apiGroup": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "APIGroup is the group for the resource being referenced. It is empty for the core API. This matches the group in the APIVersion that is used when creating the resources."
+      },
+      "name": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "Name is the name of resource being referenced."
+      },
+      "resource": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "Resource is the type of resource being referenced, for example \"pods\"."
+      },
+      "uid": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "UID identifies exactly one incarnation of the resource."
+      }
+    }
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/33"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "resource.k8s.io/ResourceClaim",
+    "properties": {
+      "kind": {
+        "type": {
+          "$ref": "#/14"
+        },
+        "flags": 10,
+        "description": "The resource kind."
+      },
+      "apiVersion": {
+        "type": {
+          "$ref": "#/15"
+        },
+        "flags": 10,
+        "description": "The api version."
+      },
+      "metadata": {
+        "type": {
+          "$ref": "#/18"
+        },
+        "flags": 1,
+        "description": "The resource metadata."
+      },
+      "spec": {
+        "type": {
+          "$ref": "#/19"
+        },
+        "flags": 1,
+        "description": "ResourceClaimSpec defines how a resource is to be allocated."
+      },
+      "status": {
+        "type": {
+          "$ref": "#/21"
+        },
+        "flags": 0,
+        "description": "ResourceClaimStatus tracks whether the resource has been allocated and what the resulting attributes are."
+      }
+    }
+  },
+  {
+    "$type": "ResourceType",
+    "name": "resource.k8s.io/ResourceClaim@v1alpha2",
+    "scopeType": 0,
+    "body": {
+      "$ref": "#/35"
+    },
+    "flags": 0
+  },
+  {
+    "$type": "StringLiteralType",
+    "value": "ResourceClaimTemplate"
+  },
+  {
+    "$type": "StringLiteralType",
+    "value": "resource.k8s.io/v1alpha2"
+  },
+  {
+    "$type": "ObjectType",
+    "name": "labels",
+    "properties": {},
+    "additionalProperties": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "annotations",
+    "properties": {},
+    "additionalProperties": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "metadata",
+    "properties": {
+      "name": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 9,
+        "description": "The name of the resource."
+      },
+      "labels": {
+        "type": {
+          "$ref": "#/39"
+        },
+        "flags": 0,
+        "description": "The labels for the resource."
+      },
+      "annotations": {
+        "type": {
+          "$ref": "#/40"
+        },
+        "flags": 0,
+        "description": "The annotations for the resource."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiResourceV1Alpha2ResourceClaimTemplateSpec",
+    "properties": {
+      "metadata": {
+        "type": {
+          "$ref": "#/43"
+        },
+        "flags": 0,
+        "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
+      },
+      "spec": {
+        "type": {
+          "$ref": "#/19"
+        },
+        "flags": 1,
+        "description": "ResourceClaimSpec defines how a resource is to be allocated."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApimachineryPkgApisMetaV1ObjectMeta",
+    "properties": {
+      "annotations": {
+        "type": {
+          "$ref": "#/44"
+        },
+        "flags": 0,
+        "description": "Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations"
+      },
+      "creationTimestamp": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers."
+      },
+      "deletionGracePeriodSeconds": {
+        "type": {
+          "$ref": "#/45"
+        },
+        "flags": 0,
+        "description": "Number of seconds allowed for this object to gracefully terminate before it will be removed from the system. Only set when deletionTimestamp is also set. May only be shortened. Read-only."
+      },
+      "deletionTimestamp": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers."
+      },
+      "finalizers": {
+        "type": {
+          "$ref": "#/46"
+        },
+        "flags": 0,
+        "description": "Must be empty before the object is deleted from the registry. Each entry is an identifier for the responsible component that will remove the entry from the list. If the deletionTimestamp of the object is non-nil, entries in this list can only be removed. Finalizers may be processed and removed in any order.  Order is NOT enforced because it introduces significant risk of stuck finalizers. finalizers is a shared field, any actor with permission can reorder it. If the finalizer list is processed in order, then this can lead to a situation in which the component responsible for the first finalizer in the list is waiting for a signal (field value, external system, or other) produced by a component responsible for a finalizer later in the list, resulting in a deadlock. Without enforced ordering finalizers are free to order amongst themselves and are not vulnerable to ordering changes in the list."
+      },
+      "generateName": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.\n\nIf this field is specified and the generated name exists, the server will return a 409.\n\nApplied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency"
+      },
+      "generation": {
+        "type": {
+          "$ref": "#/45"
+        },
+        "flags": 0,
+        "description": "A sequence number representing a specific generation of the desired state. Populated by the system. Read-only."
+      },
+      "labels": {
+        "type": {
+          "$ref": "#/47"
+        },
+        "flags": 0,
+        "description": "Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels"
+      },
+      "managedFields": {
+        "type": {
+          "$ref": "#/50"
+        },
+        "flags": 0,
+        "description": "ManagedFields maps workflow-id and version to the set of fields that are managed by that workflow. This is mostly for internal housekeeping, and users typically shouldn't need to set or understand this field. A workflow can be the user's name, a controller's name, or the name of a specific apply path like \"ci-cd\". The set of fields is always in the version that the workflow used when modifying the object."
+      },
+      "name": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names"
+      },
+      "namespace": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the \"default\" namespace, but \"default\" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.\n\nMust be a DNS_LABEL. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces"
+      },
+      "ownerReferences": {
+        "type": {
+          "$ref": "#/52"
+        },
+        "flags": 0,
+        "description": "List of objects depended by this object. If ALL objects in the list have been deleted, this object will be garbage collected. If this object is managed by a controller, then an entry in this list will point to this controller, with the controller field set to true. There cannot be more than one managing controller."
+      },
+      "resourceVersion": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.\n\nPopulated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency"
+      },
+      "selfLink": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "Deprecated: selfLink is a legacy read-only field that is no longer populated by the system."
+      },
+      "uid": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.\n\nPopulated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids"
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApimachineryPkgApisMetaV1ObjectMetaAnnotations",
+    "properties": {},
+    "additionalProperties": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "IntegerType"
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApimachineryPkgApisMetaV1ObjectMetaLabels",
+    "properties": {},
+    "additionalProperties": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApimachineryPkgApisMetaV1ManagedFieldsEntry",
+    "properties": {
+      "apiVersion": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "APIVersion defines the version of this resource that this field set applies to. The format is \"group/version\" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted."
+      },
+      "fieldsType": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "FieldsType is the discriminator for the different fields format and version. There is currently only one possible value: \"FieldsV1\""
+      },
+      "fieldsV1": {
+        "type": {
+          "$ref": "#/49"
+        },
+        "flags": 0,
+        "description": "Any object"
+      },
+      "manager": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "Manager is an identifier of the workflow managing these fields."
+      },
+      "operation": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "Operation is the type of operation which lead to this ManagedFieldsEntry being created. The only valid values for this field are 'Apply' and 'Update'."
+      },
+      "subresource": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "Subresource is the name of the subresource used to update that object, or empty string if the object was updated through the main resource. The value of this field is used to distinguish between managers, even if they share the same name. For example, a status update will be distinct from a regular update using the same manager name. Note that the APIVersion field is not related to the Subresource field and it always corresponds to the version of the main resource."
+      },
+      "time": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers."
+      }
+    }
+  },
+  {
+    "$type": "AnyType"
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/48"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApimachineryPkgApisMetaV1OwnerReference",
+    "properties": {
+      "apiVersion": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "API version of the referent."
+      },
+      "blockOwnerDeletion": {
+        "type": {
+          "$ref": "#/32"
+        },
+        "flags": 0,
+        "description": "If true, AND if the owner has the \"foregroundDeletion\" finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs \"delete\" permission of the owner, otherwise 422 (Unprocessable Entity) will be returned."
+      },
+      "controller": {
+        "type": {
+          "$ref": "#/32"
+        },
+        "flags": 0,
+        "description": "If true, this reference points to the managing controller."
+      },
+      "kind": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
+      },
+      "name": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names"
+      },
+      "uid": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids"
+      }
+    }
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/51"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "resource.k8s.io/ResourceClaimTemplate",
+    "properties": {
+      "kind": {
+        "type": {
+          "$ref": "#/37"
+        },
+        "flags": 10,
+        "description": "The resource kind."
+      },
+      "apiVersion": {
+        "type": {
+          "$ref": "#/38"
+        },
+        "flags": 10,
+        "description": "The api version."
+      },
+      "metadata": {
+        "type": {
+          "$ref": "#/41"
+        },
+        "flags": 1,
+        "description": "The resource metadata."
+      },
+      "spec": {
+        "type": {
+          "$ref": "#/42"
+        },
+        "flags": 1,
+        "description": "ResourceClaimTemplateSpec contains the metadata and fields for a ResourceClaim."
+      }
+    }
+  },
+  {
+    "$type": "ResourceType",
+    "name": "resource.k8s.io/ResourceClaimTemplate@v1alpha2",
+    "scopeType": 0,
+    "body": {
+      "$ref": "#/53"
+    },
+    "flags": 0
+  },
+  {
+    "$type": "StringLiteralType",
+    "value": "ResourceClass"
+  },
+  {
+    "$type": "StringLiteralType",
+    "value": "resource.k8s.io/v1alpha2"
+  },
+  {
+    "$type": "ObjectType",
+    "name": "labels",
+    "properties": {},
+    "additionalProperties": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "annotations",
+    "properties": {},
+    "additionalProperties": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "metadata",
+    "properties": {
+      "name": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 9,
+        "description": "The name of the resource."
+      },
+      "labels": {
+        "type": {
+          "$ref": "#/57"
+        },
+        "flags": 0,
+        "description": "The labels for the resource."
+      },
+      "annotations": {
+        "type": {
+          "$ref": "#/58"
+        },
+        "flags": 0,
+        "description": "The annotations for the resource."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiResourceV1Alpha2ResourceClassParametersReference",
+    "properties": {
+      "apiGroup": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "APIGroup is the group for the resource being referenced. It is empty for the core API. This matches the group in the APIVersion that is used when creating the resources."
+      },
+      "kind": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "Kind is the type of resource being referenced. This is the same value as in the parameter object's metadata."
+      },
+      "name": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "Name is the name of resource being referenced."
+      },
+      "namespace": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "Namespace that contains the referenced resource. Must be empty for cluster-scoped resources and non-empty for namespaced resources."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "resource.k8s.io/ResourceClass",
+    "properties": {
+      "kind": {
+        "type": {
+          "$ref": "#/55"
+        },
+        "flags": 10,
+        "description": "The resource kind."
+      },
+      "apiVersion": {
+        "type": {
+          "$ref": "#/56"
+        },
+        "flags": 10,
+        "description": "The api version."
+      },
+      "metadata": {
+        "type": {
+          "$ref": "#/59"
+        },
+        "flags": 1,
+        "description": "The resource metadata."
+      },
+      "driverName": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "DriverName defines the name of the dynamic resource driver that is used for allocation of a ResourceClaim that uses this class.\n\nResource drivers have a unique name in forward domain order (acme.example.com)."
+      },
+      "parametersRef": {
+        "type": {
+          "$ref": "#/60"
+        },
+        "flags": 0,
+        "description": "ResourceClassParametersReference contains enough information to let you locate the parameters for a ResourceClass."
+      },
+      "suitableNodes": {
+        "type": {
+          "$ref": "#/23"
+        },
+        "flags": 0,
+        "description": "A node selector represents the union of the results of one or more label queries over a set of nodes; that is, it represents the OR of the selectors represented by the node selector terms."
+      }
+    }
+  },
+  {
+    "$type": "ResourceType",
+    "name": "resource.k8s.io/ResourceClass@v1alpha2",
+    "scopeType": 0,
+    "body": {
+      "$ref": "#/61"
+    },
+    "flags": 0
+  }
+]

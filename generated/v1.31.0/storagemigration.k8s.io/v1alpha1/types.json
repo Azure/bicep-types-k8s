@@ -1,0 +1,220 @@
+[
+  {
+    "$type": "StringLiteralType",
+    "value": "StorageVersionMigration"
+  },
+  {
+    "$type": "StringLiteralType",
+    "value": "storagemigration.k8s.io/v1alpha1"
+  },
+  {
+    "$type": "StringType"
+  },
+  {
+    "$type": "ObjectType",
+    "name": "labels",
+    "properties": {},
+    "additionalProperties": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "annotations",
+    "properties": {},
+    "additionalProperties": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "metadata",
+    "properties": {
+      "name": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 9,
+        "description": "The name of the resource."
+      },
+      "labels": {
+        "type": {
+          "$ref": "#/3"
+        },
+        "flags": 0,
+        "description": "The labels for the resource."
+      },
+      "annotations": {
+        "type": {
+          "$ref": "#/4"
+        },
+        "flags": 0,
+        "description": "The annotations for the resource."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiStoragemigrationV1Alpha1StorageVersionMigrationSpec",
+    "properties": {
+      "continueToken": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "The token used in the list options to get the next chunk of objects to migrate. When the .status.conditions indicates the migration is \"Running\", users can use this token to check the progress of the migration."
+      },
+      "resource": {
+        "type": {
+          "$ref": "#/7"
+        },
+        "flags": 1,
+        "description": "The names of the group, the version, and the resource."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiStoragemigrationV1Alpha1GroupVersionResource",
+    "properties": {
+      "group": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "The name of the group."
+      },
+      "resource": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "The name of the resource."
+      },
+      "version": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "The name of the version."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiStoragemigrationV1Alpha1StorageVersionMigrationStatus",
+    "properties": {
+      "conditions": {
+        "type": {
+          "$ref": "#/10"
+        },
+        "flags": 0,
+        "description": "The latest available observations of the migration's current state."
+      },
+      "resourceVersion": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "ResourceVersion to compare with the GC cache for performing the migration. This is the current resource version of given group, version and resource when kube-controller-manager first observes this StorageVersionMigration resource."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiStoragemigrationV1Alpha1MigrationCondition",
+    "properties": {
+      "lastUpdateTime": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers."
+      },
+      "message": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "A human readable message indicating details about the transition."
+      },
+      "reason": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "The reason for the condition's last transition."
+      },
+      "status": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "Status of the condition, one of True, False, Unknown."
+      },
+      "type": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "Type of the condition."
+      }
+    }
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/9"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "storagemigration.k8s.io/StorageVersionMigration",
+    "properties": {
+      "kind": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 10,
+        "description": "The resource kind."
+      },
+      "apiVersion": {
+        "type": {
+          "$ref": "#/1"
+        },
+        "flags": 10,
+        "description": "The api version."
+      },
+      "metadata": {
+        "type": {
+          "$ref": "#/5"
+        },
+        "flags": 1,
+        "description": "The resource metadata."
+      },
+      "spec": {
+        "type": {
+          "$ref": "#/6"
+        },
+        "flags": 0,
+        "description": "Spec of the storage version migration."
+      },
+      "status": {
+        "type": {
+          "$ref": "#/8"
+        },
+        "flags": 0,
+        "description": "Status of the storage version migration."
+      }
+    }
+  },
+  {
+    "$type": "ResourceType",
+    "name": "storagemigration.k8s.io/StorageVersionMigration@v1alpha1",
+    "scopeType": 0,
+    "body": {
+      "$ref": "#/11"
+    },
+    "flags": 0
+  }
+]
