@@ -3,44 +3,50 @@
 import path from "path";
 import os from "os";
 import yaml from "js-yaml";
-import { logger } from "./logging";
 import { spawn } from "child_process";
 import { resolveInputPath, resolveOutputPath } from "./paths";
 import { writeFile } from "./utils/io";
 import { rm } from "fs/promises";
+import { createLogger, Logger } from "./logging";
 
 const rootDir = `${__dirname}/../../../`;
 const extensionDir = path.resolve(`${rootDir}/src/autorest.bicep/`);
 const readmePath = resolveInputPath("readme.md");
 const autorestBinary = os.platform() === 'win32' ? 'autorest.cmd' : 'autorest';
 
-export async function generateTypes(tags: string[], waitForDebugger: boolean) {
+export async function generateTypes(tags: string[], waitForDebugger: boolean, summaryLogger: Logger) {
+  summaryLogger.info("Clearing output directories...");
   const outputDirs = await clearOutputDirs(tags);
+
+  summaryLogger.info("Generating AutoRest README configuration...");
   await generateAutoRestReadme(tags, outputDirs);
 
-  let autoRestParams = [
-    `--use=@autorest/modelerfour`,
-    `--use=${extensionDir}`,
-    '--bicep',
-    `--level=${logger.level}`,
-    `--multiapi`,
-    '--title=none',
-    // This is necessary to avoid failures such as "ERROR: Semantic violation: Discriminator must be a required property." blocking type generation.
-    // In an ideal world, we'd raise issues in https://github.com/Azure/azure-rest-api-specs and force RP teams to fix them, but this isn't very practical
-    // as new validations are added continuously, and there's often quite a lag before teams will fix them - we don't want to be blocked by this in generating types.
-    `--skip-semantics-validation`,
-    readmePath,
-  ];
+  const autorestLogger = createLogger(resolveOutputPath(`autorest.log`), summaryLogger.level);
+  const commonArgs = waitForDebugger ? ['--bicep.debugger', `--level=${autorestLogger.level}`] : [`--level=${autorestLogger.level}`];
+  let autoRestArgs = [
+      ...commonArgs,
+      `--use=@autorest/modelerfour`,
+      `--use=${extensionDir}`,
+      '--bicep',
+      `--level=${autorestLogger.level}`,
+      `--multiapi`,
+      '--title=none',
+      // This is necessary to avoid failures such as "ERROR: Semantic violation: Discriminator must be a required property." blocking type generation.
+      // In an ideal world, we'd raise issues in https://github.com/Azure/azure-rest-api-specs and force RP teams to fix them, but this isn't very practical
+      // as new validations are added continuously, and there's often quite a lag before teams will fix them - we don't want to be blocked by this in generating types.
+      `--skip-semantics-validation`,
+      readmePath,
+    ];
 
-  autoRestParams = applyCommonAutoRestParameters(autoRestParams, waitForDebugger);
+  summaryLogger.debug(`Invoking AutoRest with ${autoRestArgs.join(' ')}`);
+  await invokeAutoRest(autoRestArgs, autorestLogger);
 
-  await invokeAutoRest(autoRestParams);
-  await clearAutorestTempDir(waitForDebugger);
+  summaryLogger.debug(`Invoking AutoRest with ${autoRestArgs.join(' ')}`);
+  autoRestArgs = [...commonArgs, '--clear-temp', '--allow-no-input'];
+  return await invokeAutoRest(autoRestArgs, autorestLogger);
 }
 
 export async function generateAutoRestReadme(tags: string[], outputDirs: string[]) {
-  logger.info("Generating AutoRest README configuration...");
-
   let readmeText = `##Bicep
 
 ### Bicep multi-api
@@ -65,8 +71,6 @@ ${yaml.dump({
 }
 
 async function clearOutputDirs(tags: string[]) {
-  logger.info("Clearing output directories...");
-
   const outputDirs = tags.map(resolveOutputPath);
 
   for (const outputDir of outputDirs) {
@@ -76,27 +80,8 @@ async function clearOutputDirs(tags: string[]) {
   return outputDirs;
 }
 
-async function clearAutorestTempDir(waitForDebugger: boolean) {
-  const autoRestParams = applyCommonAutoRestParameters(['--clear-temp', '--allow-no-input'], waitForDebugger);
-
-  return await invokeAutoRest(autoRestParams);
-}
-
-function applyCommonAutoRestParameters(autoRestParams: string[], waitForDebugger: boolean) {
-  autoRestParams = autoRestParams.concat([`--level=${logger.level}`])
-
-  if (waitForDebugger) {
-    autoRestParams = autoRestParams.concat([
-      `--bicep.debugger`,
-    ]);
-  }
-
-  return autoRestParams;
-}
-
-function invokeAutoRest(args: string[]) : Promise<void> {
+function invokeAutoRest(args: string[], autoRestLogger: Logger) : Promise<void> {
   return new Promise((resolve, reject) => {
-    logger.debug(`Invoking AutoRest with ${args.join(' ')}`);
 
     const child = spawn(autorestBinary, args, {
       cwd: __dirname,
@@ -104,10 +89,10 @@ function invokeAutoRest(args: string[]) : Promise<void> {
       shell: true,
     });
 
-    child.stdout.on('data', data => logger.info(data.toString()));
+    child.stdout.on('data', data => autoRestLogger.info(data.toString()));
     child.stderr.on('data', data => {
       const message = data.toString();
-      logger.error(message);
+      autoRestLogger.error(message);
       if (message.indexOf('FATAL ERROR') > -1 && message.indexOf('Allocation failed - JavaScript heap out of memory') > -1) {
         reject('Child process has run out of memory');
       }

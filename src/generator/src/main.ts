@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import yargs from "yargs";
-import { LogLevel, logLevels, setupLogger } from "./logging";
+import { LogLevel, logLevels, createLogger } from "./logging";
 import { resolveOutputPath } from "./paths";
 import { buildTypeIndexes } from "./type-index";
-import { getCompactTimestamp } from "./utils/datetime";
 import { prepareSwaggerFiles } from "./swagger";
 import { generateTypes } from "./autorest";
 
@@ -22,20 +21,26 @@ const tags = [
   // TODO: Add more releases.
 ];
 
-(async () => {
+async function parseArgs() : Promise<{ logLevel: LogLevel, waitForDebugger: boolean }> {
   const args = await yargs
     .strict()
     .option("log-level", { type: "string", default: "information", choices: Object.keys(logLevels) })
     .option("wait-for-debugger", { type: "boolean", default: false, desc: "Wait for a C# debugger to be attached before running the Autorest extension" })
     .parseAsync();
 
-  const logFilePath = resolveOutputPath(`generation${getCompactTimestamp()}.log`);
   const logLevel = args["log-level"] as LogLevel;
   const waitForDebugger = args["wait-for-debugger"];
 
-  setupLogger(logFilePath, logLevel);
+  return { logLevel, waitForDebugger };
+}
 
-  await prepareSwaggerFiles(tags);
-  await generateTypes(tags, waitForDebugger);
-  await buildTypeIndexes(tags);
+(async () => {
+  const { logLevel, waitForDebugger } = await parseArgs();
+  const summaryLogger = createLogger(resolveOutputPath(`summary.log`), logLevel);
+
+  summaryLogger.info(`Starting Kubernetes types generation for ${tags.join(", ")}...`);
+
+  await prepareSwaggerFiles(tags, summaryLogger);
+  await generateTypes(tags, waitForDebugger, summaryLogger);
+  await buildTypeIndexes(tags, summaryLogger);
 })();

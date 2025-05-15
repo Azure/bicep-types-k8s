@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import { downloadFile, writeFile } from "./utils/io";
-import { logger } from "./logging";
 import { resolveInputPath } from "./paths";
+import { Logger } from "./logging";
 
 interface SwaggerDoc {
   paths: Record<string, Path>;
@@ -28,7 +28,7 @@ interface Definition {
   properties?: Record<string, unknown>;
 }
 
-function preprocessSwagger(swaggerText: string) {
+function preprocessSwagger(swaggerText: string, summaryLogger: Logger) {
   const swaggerDoc = JSON.parse(swaggerText) as SwaggerDoc;
 
   for (const pathKey in swaggerDoc.paths) {
@@ -52,10 +52,10 @@ function preprocessSwagger(swaggerText: string) {
       const kind = operation['x-kubernetes-group-version-kind']?.kind;
 
       const groupVersion = group ? `${group}/${version}` : version;
-      logger.info(`found kubernetes resource operation ${groupVersion} ${kind}`)
+      summaryLogger.info(`found kubernetes resource operation ${groupVersion} ${kind}`)
 
       if (operation.produces !== undefined && operation.produces.length === 1 && operation.produces[0] === '*/*') {
-        logger.info(`fixing-up produces for ${methodKey} ${pathKey}`);
+        summaryLogger.info(`fixing-up produces for ${methodKey} ${pathKey}`);
         operation.produces = ['application/json'];
       }
     }
@@ -68,18 +68,18 @@ function preprocessSwagger(swaggerText: string) {
   return swaggerDoc;
 }
 
-export async function prepareSwaggerFiles(tags: string[]) {
+export async function prepareSwaggerFiles(tags: string[], summaryLogger: Logger) {
   for (const tag of tags) {
-    logger.info(`Downloading Swagger file for Kubernetes release ${tag}...`);
+    summaryLogger.info(`Downloading Swagger file for Kubernetes release ${tag}...`);
     const swaggerUrl = `https://raw.githubusercontent.com/kubernetes/kubernetes/${tag}/api/openapi-spec/swagger.json`;
     const swaggerText = await downloadFile(swaggerUrl);
 
-    logger.info("Preprocessing Swagger file...");
-    const swaggerDoc = preprocessSwagger(swaggerText);
+    summaryLogger.info("Preprocessing Swagger file...");
+    const swaggerDoc = preprocessSwagger(swaggerText, summaryLogger);
 
     const swaggerPath = resolveInputPath(`specs/kubernetes-${tag}.json`);
 
-    logger.info(`Writing Swagger file to ${swaggerPath}...`)
+    summaryLogger.info(`Writing Swagger file to ${swaggerPath}...`)
     await writeFile(swaggerPath, JSON.stringify(swaggerDoc));
   }
 }

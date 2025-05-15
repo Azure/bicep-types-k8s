@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 import path from "path";
 import { buildIndex, CrossFileTypeReference, ObjectTypePropertyFlags, readTypesJson, TypeFactory, TypeFile, TypeSettings, writeIndexJson, writeIndexMarkdown, writeMarkdown, writeTypesJson } from "bicep-types";
-import { logger } from "./logging";
 import { resolveOutputPath } from "./paths";
 import { findFileRecursively, readUtf8File, writeFile } from "./utils/io";
+import { Logger } from "./logging";
 
 const baseSettings: Omit<TypeSettings, "version"> = {
   name: "Kubernetes",
@@ -12,7 +12,7 @@ const baseSettings: Omit<TypeSettings, "version"> = {
   isPreview: true,
 }
 
-async function buildTypeIndex(tag: string) {
+async function buildTypeIndex(tag: string, logger: Logger) {
   logger.info(`Building type index for ${tag}...`);
 
   const baseDir = resolveOutputPath(tag);
@@ -58,11 +58,11 @@ async function buildTypeIndex(tag: string) {
   await writeFile(`${baseDir}/index.md`, writeIndexMarkdown(index));
 }
 
-export async function buildTypeIndexes(tags: string[]) {
-  logger.info(`Building type indexes...`);
+export async function buildTypeIndexes(tags: string[], summaryLogger: Logger) {
+  summaryLogger.info(`Building type indexes...`);
 
   for (const tag of tags) {
-    await buildTypeIndex(tag);
+    await buildTypeIndex(tag, summaryLogger);
   }
 }
 

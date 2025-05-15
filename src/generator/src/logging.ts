@@ -24,11 +24,7 @@ export interface Logger {
   fatal: (message: string) => void;
 }
 
-let logger: Logger;
-
-export { logger };
-
-export function setupLogger(logFilePath: string, logLevel: LogLevel = "information") {
+export function createLogger(logFilePath: string, logLevel: LogLevel = "information") : Logger {
   const prettyOptions = {
     colorize: false,
     ignore: 'pid,hostname,level',
@@ -73,7 +69,7 @@ export function setupLogger(logFilePath: string, logLevel: LogLevel = "informati
     ])
   );
 
-  logger = {
+  return {
     level: logLevel,
     debug: (message) => pinoLogger.debug(message),
     verbose: (message) => pinoLogger.verbose(message),
