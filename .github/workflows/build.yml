@@ -11,58 +11,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: 'Build'
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-
-    env:
-      # don't print dotnet logo
-      DOTNET_NOLOGO: true
-
-      # disable telemetry (reduces dotnet tool output in logs)
-      DOTNET_CLI_TELEMETRY_OPTOUT: true
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
-        with:
-          languages: csharp
-
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v4
-      
-      - name: Build
-        run: dotnet build --configuration release
-
-      - name: Pack
-        run: dotnet pack --configuration release
-
-      - name: Upload Nuget packages
-        uses: actions/upload-artifact@v4
-        with:
-          name: bicep-types-az-packages
-          path: ./out/*
-          if-no-files-found: error
-
-      - name: Test
-        run: dotnet test --configuration release --collect:"XPlat Code Coverage" --settings ./.github/workflows/codecov.runsettings
-
-      - name: Upload Code Coverage
-        uses: codecov/codecov-action@v5
-        with:
-          flags: dotnet
-
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
-
   build-generator:
     name: 'Build Generator'
     runs-on: ubuntu-latest
@@ -85,7 +33,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 22.x
       
       - name: Install
         run: npm ci
@@ -124,7 +72,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 22.x
       
       - name: Build bicep-types dependency
         run: |
