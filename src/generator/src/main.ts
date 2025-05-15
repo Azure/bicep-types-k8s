@@ -2,24 +2,11 @@
 // Licensed under the MIT License.
 import yargs from "yargs";
 import { LogLevel, logLevels, createLogger } from "./logging";
-import { resolveOutputPath } from "./paths";
+import { resolveInputPath, resolveOutputPath } from "./paths";
 import { buildTypeIndexes } from "./type-index";
 import { prepareSwaggerFiles } from "./swagger";
 import { generateTypes } from "./autorest";
-
-// TODO:
-// Currently, we're using a hard-coded list of tags.
-// Once the Kubernetes types are published to MAR,
-// update this script to dynamically determine which
-// tags to generate types for by querying both the
-// Kubernetes GitHub repo and MAR.
-const tags = [
-  "v1.33.0",
-  "v1.32.0",
-  "v1.31.0",
-  "v1.30.0",
-  "v1.29.0",
-];
+import { readUtf8File } from "./utils/io";
 
 async function parseArgs() : Promise<{ logLevel: LogLevel, waitForDebugger: boolean }> {
   const args = await yargs
@@ -34,10 +21,18 @@ async function parseArgs() : Promise<{ logLevel: LogLevel, waitForDebugger: bool
   return { logLevel, waitForDebugger };
 }
 
+async function getTagsToGenerate() {
+  const tagsFilePath = resolveInputPath("tags.txt");
+  const tagsFileContent = await readUtf8File(tagsFilePath);
+
+  return tagsFileContent.split(/\r?\n/);
+}
+
 (async () => {
   const { logLevel, waitForDebugger } = await parseArgs();
   const summaryLogger = createLogger(resolveOutputPath(`summary.log`), logLevel);
 
+  const tags = await getTagsToGenerate();
   summaryLogger.info(`Starting Kubernetes types generation for ${tags.join(", ")}...`);
 
   await prepareSwaggerFiles(tags, summaryLogger);
