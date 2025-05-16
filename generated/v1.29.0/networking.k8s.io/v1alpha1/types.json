@@ -1,0 +1,336 @@
+[
+  {
+    "$type": "StringLiteralType",
+    "value": "IPAddress"
+  },
+  {
+    "$type": "StringLiteralType",
+    "value": "networking.k8s.io/v1alpha1"
+  },
+  {
+    "$type": "StringType"
+  },
+  {
+    "$type": "ObjectType",
+    "name": "labels",
+    "properties": {},
+    "additionalProperties": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "annotations",
+    "properties": {},
+    "additionalProperties": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "metadata",
+    "properties": {
+      "name": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 9,
+        "description": "The name of the resource."
+      },
+      "labels": {
+        "type": {
+          "$ref": "#/3"
+        },
+        "flags": 0,
+        "description": "The labels for the resource."
+      },
+      "annotations": {
+        "type": {
+          "$ref": "#/4"
+        },
+        "flags": 0,
+        "description": "The annotations for the resource."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiNetworkingV1Alpha1IPAddressSpec",
+    "properties": {
+      "parentRef": {
+        "type": {
+          "$ref": "#/7"
+        },
+        "flags": 0,
+        "description": "ParentReference describes a reference to a parent object."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiNetworkingV1Alpha1ParentReference",
+    "properties": {
+      "group": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "Group is the group of the object being referenced."
+      },
+      "name": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "Name is the name of the object being referenced."
+      },
+      "namespace": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "Namespace is the namespace of the object being referenced."
+      },
+      "resource": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 0,
+        "description": "Resource is the resource of the object being referenced."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "networking.k8s.io/IPAddress",
+    "properties": {
+      "kind": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 10,
+        "description": "The resource kind."
+      },
+      "apiVersion": {
+        "type": {
+          "$ref": "#/1"
+        },
+        "flags": 10,
+        "description": "The api version."
+      },
+      "metadata": {
+        "type": {
+          "$ref": "#/5"
+        },
+        "flags": 1,
+        "description": "The resource metadata."
+      },
+      "spec": {
+        "type": {
+          "$ref": "#/6"
+        },
+        "flags": 0,
+        "description": "IPAddressSpec describe the attributes in an IP Address."
+      }
+    }
+  },
+  {
+    "$type": "ResourceType",
+    "name": "networking.k8s.io/IPAddress@v1alpha1",
+    "scopeType": 0,
+    "body": {
+      "$ref": "#/8"
+    },
+    "flags": 0
+  },
+  {
+    "$type": "StringLiteralType",
+    "value": "ServiceCIDR"
+  },
+  {
+    "$type": "StringLiteralType",
+    "value": "networking.k8s.io/v1alpha1"
+  },
+  {
+    "$type": "ObjectType",
+    "name": "labels",
+    "properties": {},
+    "additionalProperties": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "annotations",
+    "properties": {},
+    "additionalProperties": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "metadata",
+    "properties": {
+      "name": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 9,
+        "description": "The name of the resource."
+      },
+      "labels": {
+        "type": {
+          "$ref": "#/12"
+        },
+        "flags": 0,
+        "description": "The labels for the resource."
+      },
+      "annotations": {
+        "type": {
+          "$ref": "#/13"
+        },
+        "flags": 0,
+        "description": "The annotations for the resource."
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiNetworkingV1Alpha1ServiceCidrSpec",
+    "properties": {
+      "cidrs": {
+        "type": {
+          "$ref": "#/16"
+        },
+        "flags": 0,
+        "description": "CIDRs defines the IP blocks in CIDR notation (e.g. \"192.168.0.0/24\" or \"2001:db8::/64\") from which to assign service cluster IPs. Max of two CIDRs is allowed, one of each IP family. This field is immutable."
+      }
+    }
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/2"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApiNetworkingV1Alpha1ServiceCidrStatus",
+    "properties": {
+      "conditions": {
+        "type": {
+          "$ref": "#/20"
+        },
+        "flags": 0,
+        "description": "conditions holds an array of metav1.Condition that describe the state of the ServiceCIDR. Current service state"
+      }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApimachineryPkgApisMetaV1Condition",
+    "properties": {
+      "lastTransitionTime": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers."
+      },
+      "message": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "message is a human readable message indicating details about the transition. This may be an empty string."
+      },
+      "observedGeneration": {
+        "type": {
+          "$ref": "#/19"
+        },
+        "flags": 0,
+        "description": "observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance."
+      },
+      "reason": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty."
+      },
+      "status": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "status of the condition, one of True, False, Unknown."
+      },
+      "type": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 1,
+        "description": "type of condition in CamelCase or in foo.example.com/CamelCase."
+      }
+    }
+  },
+  {
+    "$type": "IntegerType"
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/18"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "networking.k8s.io/ServiceCIDR",
+    "properties": {
+      "kind": {
+        "type": {
+          "$ref": "#/10"
+        },
+        "flags": 10,
+        "description": "The resource kind."
+      },
+      "apiVersion": {
+        "type": {
+          "$ref": "#/11"
+        },
+        "flags": 10,
+        "description": "The api version."
+      },
+      "metadata": {
+        "type": {
+          "$ref": "#/14"
+        },
+        "flags": 1,
+        "description": "The resource metadata."
+      },
+      "spec": {
+        "type": {
+          "$ref": "#/15"
+        },
+        "flags": 0,
+        "description": "ServiceCIDRSpec define the CIDRs the user wants to use for allocating ClusterIPs for Services."
+      },
+      "status": {
+        "type": {
+          "$ref": "#/17"
+        },
+        "flags": 0,
+        "description": "ServiceCIDRStatus describes the current state of the ServiceCIDR."
+      }
+    }
+  },
+  {
+    "$type": "ResourceType",
+    "name": "networking.k8s.io/ServiceCIDR@v1alpha1",
+    "scopeType": 0,
+    "body": {
+      "$ref": "#/21"
+    },
+    "flags": 0
+  }
+]
