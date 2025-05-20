@@ -49,7 +49,7 @@ async function buildTypeIndex(tag: string, logger: Logger) {
   const settings = {
     ...baseSettings,
     version: tag.slice(1), // v1.0.0 => 1.0.0
-    configurationType: new CrossFileTypeReference("type.json", configurationType.index),
+    configurationType: new CrossFileTypeReference("types.json", configurationType.index),
   };
 
   const index = buildIndex(typeFiles, log => logger.info(log), settings);
