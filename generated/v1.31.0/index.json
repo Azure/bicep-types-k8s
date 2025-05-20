@@ -221,7 +221,7 @@
     "isPreview": true,
     "version": "1.31.0",
     "configurationType": {
-      "$ref": "type.json#/2"
+      "$ref": "types.json#/2"
     }
   }
 }
