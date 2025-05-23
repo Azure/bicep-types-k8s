@@ -48,6 +48,11 @@ async function buildTypeIndex(tag: string, logger: Logger) {
       flags: ObjectTypePropertyFlags.Required,
       description: "The type of credential to use. Can be either 'Admin' or 'User'.",
     },
+    managedClusterId: {
+      type: typeFactory.addStringType(),
+      flags: ObjectTypePropertyFlags.Required,
+      description: "The resource ID of the managed Azure Kubernetes Service (AKS) cluster.",
+    },
   });
   const customClusterConfigurationType = typeFactory.addObjectType("KubernetesExtensionCustomClusterConfig", {
     kubeconfig: {

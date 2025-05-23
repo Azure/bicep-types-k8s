@@ -31,6 +31,13 @@
         },
         "flags": 1,
         "description": "The type of credential to use. Can be either 'Admin' or 'User'."
+      },
+      "managedClusterId": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 1,
+        "description": "The resource ID of the managed Azure Kubernetes Service (AKS) cluster."
       }
     }
   },
