@@ -30,17 +30,36 @@ async function buildTypeIndex(tag: string, logger: Logger) {
   }
 
   const typeFactory = new TypeFactory();
-  const configurationType = typeFactory.addObjectType("KubernetesExtensionConfig", {
-    kubeconfig: {
-      type: typeFactory.addStringType(/*sensitive*/ true),
-      flags: ObjectTypePropertyFlags.Required,
-      description: "Base64 encoded kubeconfig file content.",
-    },
+  const commonConfigurationType = {
     namespace: {
       type: typeFactory.addStringType(),
       flags: ObjectTypePropertyFlags.None,
-      description: "The namespace to use for all Kubernetes objects within the module. If not set, the namespace within the kubeconfig file will be used.",
+      description: "The namespace to use for all namespaced Kubernetes objects within the module. If not set, the default namespace within the kubeconfig file will be used.",
+    },
+    context: {
+      type: typeFactory.addStringType(),
+      flags: ObjectTypePropertyFlags.None,
+      description: "The context to use. If not set, the current-context within the kubeconfig file will be used.",
     }
+  };
+  const managedClusterConfigurationType = typeFactory.addObjectType("KubernetesExtensionManagedClusterConfig", {
+    credentialType: {
+      type: typeFactory.addUnionType([typeFactory.addStringLiteralType("Admin"), typeFactory.addStringLiteralType("User")]),
+      flags: ObjectTypePropertyFlags.Required,
+      description: "The type of credential to use. Can be either 'Admin' or 'User'.",
+    },
+  });
+  const customClusterConfigurationType = typeFactory.addObjectType("KubernetesExtensionCustomClusterConfig", {
+    kubeconfig: {
+      type: typeFactory.addStringType(/*sensitive*/ true),
+      flags: ObjectTypePropertyFlags.Required,
+      description: "The contents of a kubeconfig file, encoded in Base64. This is used to authenticate with the target Kubernetes cluster.",
+    },
+  });
+
+  const clusterConfigurationType = typeFactory.addDiscriminatedObjectType("KubernetesExtensionClusterConfig", "clusterType", commonConfigurationType, {
+    "Managed": managedClusterConfigurationType,
+    "Custom": customClusterConfigurationType,
   });
 
   await writeFile(`${baseDir}/types.json`, writeTypesJson(typeFactory.types));
@@ -49,7 +68,7 @@ async function buildTypeIndex(tag: string, logger: Logger) {
   const settings = {
     ...baseSettings,
     version: tag.slice(1), // v1.0.0 => 1.0.0
-    configurationType: new CrossFileTypeReference("types.json", configurationType.index),
+    configurationType: new CrossFileTypeReference("types.json", clusterConfigurationType.index),
   };
 
   const index = buildIndex(typeFiles, log => logger.info(log), settings);
