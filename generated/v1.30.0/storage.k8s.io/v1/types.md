@@ -5,7 +5,7 @@
 ### Properties
 * **apiVersion**: 'storage.k8s.io/v1' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **kind**: 'CSIDriver' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **spec**: [IoK8SApiStorageV1CSIDriverSpec](#iok8sapistoragev1csidriverspec) (Required): CSIDriverSpec is the specification of a CSIDriver.
 
 ## Resource storage.k8s.io/CSINode@v1
@@ -13,7 +13,7 @@
 ### Properties
 * **apiVersion**: 'storage.k8s.io/v1' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **kind**: 'CSINode' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **spec**: [IoK8SApiStorageV1CSINodeSpec](#iok8sapistoragev1csinodespec) (Required): CSINodeSpec holds information about the specification of all CSI drivers installed on a node
 
 ## Resource storage.k8s.io/CSIStorageCapacity@v1
@@ -99,7 +99,7 @@ Note that the quantity will NEVER be internally represented by a floating point 
 Non-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)
 
 This format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation.
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **nodeTopology**: [IoK8SApimachineryPkgApisMetaV1LabelSelector](#iok8sapimachinerypkgapismetav1labelselector): A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
 * **storageClassName**: string (Required): storageClassName represents the name of the StorageClass that the reported capacity applies to. It must meet the same requirements as the name of a StorageClass object (non-empty, DNS subdomain). If that object no longer exists, the CSIStorageCapacity object is obsolete and should be removed by its creator. This field is immutable.
 
@@ -110,7 +110,7 @@ This format is intended to make it difficult to use these numbers without writin
 * **allowVolumeExpansion**: bool: allowVolumeExpansion shows whether the storage class allow volume expand.
 * **apiVersion**: 'storage.k8s.io/v1' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **kind**: 'StorageClass' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **mountOptions**: string[]: mountOptions controls the mountOptions for dynamically provisioned PersistentVolumes of this storage class. e.g. ["ro", "soft"]. Not validated - mount of the PVs will simply fail if one is invalid.
 * **parameters**: [IoK8SApiStorageV1StorageClassParameters](#iok8sapistoragev1storageclassparameters): parameters holds the parameters for the provisioner that should create volumes of this storage class.
 * **provisioner**: string (Required): provisioner indicates the type of the provisioner.
@@ -122,7 +122,7 @@ This format is intended to make it difficult to use these numbers without writin
 ### Properties
 * **apiVersion**: 'storage.k8s.io/v1' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **kind**: 'VolumeAttachment' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **spec**: [IoK8SApiStorageV1VolumeAttachmentSpec](#iok8sapistoragev1volumeattachmentspec) (Required): VolumeAttachmentSpec is the specification of a VolumeAttachment request.
 * **status**: [IoK8SApiStorageV1VolumeAttachmentStatus](#iok8sapistoragev1volumeattachmentstatus): VolumeAttachmentStatus is the status of a VolumeAttachment request.
 

@@ -5,7 +5,7 @@
 ### Properties
 * **apiVersion**: 'apiregistration.k8s.io/v1' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **kind**: 'APIService' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **spec**: [IoK8SKubeAggregatorPkgApisApiregistrationV1APIServiceSpec](#iok8skubeaggregatorpkgapisapiregistrationv1apiservicespec): APIServiceSpec contains information for locating and communicating with a server. Only https is supported, though you are able to disable certificate verification.
 * **status**: [IoK8SKubeAggregatorPkgApisApiregistrationV1APIServiceStatus](#iok8skubeaggregatorpkgapisapiregistrationv1apiservicestatus): APIServiceStatus contains derived information about an API server
 

@@ -326,7 +326,7 @@
         "type": {
           "$ref": "#/7"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       }
     }
@@ -544,7 +544,7 @@
         "type": {
           "$ref": "#/7"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "subsets": {
@@ -684,7 +684,7 @@
         "type": {
           "$ref": "#/7"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "reason": {
@@ -884,7 +884,7 @@
         "type": {
           "$ref": "#/7"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "spec": {
@@ -1337,7 +1337,7 @@
         "type": {
           "$ref": "#/7"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "spec": {
@@ -5846,7 +5846,7 @@
         "type": {
           "$ref": "#/7"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "spec": {
@@ -5924,7 +5924,7 @@
         "type": {
           "$ref": "#/7"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "template": {
@@ -6112,7 +6112,7 @@
         "type": {
           "$ref": "#/7"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "spec": {
@@ -6299,7 +6299,7 @@
         "type": {
           "$ref": "#/7"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "spec": {
@@ -6387,7 +6387,7 @@
         "type": {
           "$ref": "#/7"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "stringData": {
@@ -6471,7 +6471,7 @@
         "type": {
           "$ref": "#/7"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "secrets": {
@@ -6933,7 +6933,7 @@
         "type": {
           "$ref": "#/7"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "spec": {
@@ -7075,7 +7075,7 @@
         "type": {
           "$ref": "#/7"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "spec": {
@@ -7667,7 +7667,7 @@
         "type": {
           "$ref": "#/7"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "spec": {
@@ -8618,7 +8618,7 @@
         "type": {
           "$ref": "#/7"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "spec": {
