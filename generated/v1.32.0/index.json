@@ -1,220 +1,220 @@
 {
   "resources": {
     "admissionregistration.k8s.io/MutatingWebhookConfiguration@v1": {
-      "$ref": "admissionregistration.k8s.io/v1/types.json#/27"
+      "$ref": "admissionregistration.k8s.io/v1/types.json#/33"
     },
     "admissionregistration.k8s.io/ValidatingAdmissionPolicy@v1": {
-      "$ref": "admissionregistration.k8s.io/v1/types.json#/58"
+      "$ref": "admissionregistration.k8s.io/v1/types.json#/61"
     },
     "admissionregistration.k8s.io/ValidatingAdmissionPolicyBinding@v1": {
       "$ref": "admissionregistration.k8s.io/v1/types.json#/68"
     },
     "admissionregistration.k8s.io/ValidatingWebhookConfiguration@v1": {
-      "$ref": "admissionregistration.k8s.io/v1/types.json#/80"
+      "$ref": "admissionregistration.k8s.io/v1/types.json#/77"
     },
     "admissionregistration.k8s.io/MutatingAdmissionPolicy@v1alpha1": {
-      "$ref": "admissionregistration.k8s.io/v1alpha1/types.json#/31"
+      "$ref": "admissionregistration.k8s.io/v1alpha1/types.json#/39"
     },
     "admissionregistration.k8s.io/MutatingAdmissionPolicyBinding@v1alpha1": {
-      "$ref": "admissionregistration.k8s.io/v1alpha1/types.json#/40"
+      "$ref": "admissionregistration.k8s.io/v1alpha1/types.json#/45"
     },
     "admissionregistration.k8s.io/ValidatingAdmissionPolicy@v1beta1": {
-      "$ref": "admissionregistration.k8s.io/v1beta1/types.json#/38"
+      "$ref": "admissionregistration.k8s.io/v1beta1/types.json#/45"
     },
     "admissionregistration.k8s.io/ValidatingAdmissionPolicyBinding@v1beta1": {
-      "$ref": "admissionregistration.k8s.io/v1beta1/types.json#/48"
+      "$ref": "admissionregistration.k8s.io/v1beta1/types.json#/52"
     },
     "apiextensions.k8s.io/CustomResourceDefinition@v1": {
-      "$ref": "apiextensions.k8s.io/v1/types.json#/46"
+      "$ref": "apiextensions.k8s.io/v1/types.json#/51"
     },
     "apiregistration.k8s.io/APIService@v1": {
-      "$ref": "apiregistration.k8s.io/v1/types.json#/15"
+      "$ref": "apiregistration.k8s.io/v1/types.json#/20"
     },
     "apps/ControllerRevision@v1": {
-      "$ref": "apps/v1/types.json#/9"
+      "$ref": "apps/v1/types.json#/15"
     },
     "apps/DaemonSet@v1": {
-      "$ref": "apps/v1/types.json#/208"
+      "$ref": "apps/v1/types.json#/202"
     },
     "apps/Deployment@v1": {
-      "$ref": "apps/v1/types.json#/221"
+      "$ref": "apps/v1/types.json#/212"
     },
     "apps/ReplicaSet@v1": {
-      "$ref": "apps/v1/types.json#/232"
+      "$ref": "apps/v1/types.json#/220"
     },
     "apps/StatefulSet@v1": {
-      "$ref": "apps/v1/types.json#/257"
+      "$ref": "apps/v1/types.json#/242"
     },
     "autoscaling/Scale@v1": {
-      "$ref": "autoscaling/v1/types.json#/10"
+      "$ref": "autoscaling/v1/types.json#/17"
     },
     "autoscaling/HorizontalPodAutoscaler@v1": {
-      "$ref": "autoscaling/v1/types.json#/20"
+      "$ref": "autoscaling/v1/types.json#/24"
     },
     "autoscaling/HorizontalPodAutoscaler@v2": {
-      "$ref": "autoscaling/v2/types.json#/39"
+      "$ref": "autoscaling/v2/types.json#/46"
     },
     "batch/CronJob@v1": {
-      "$ref": "batch/v1/types.json#/211"
+      "$ref": "batch/v1/types.json#/208"
     },
     "batch/Job@v1": {
-      "$ref": "batch/v1/types.json#/224"
+      "$ref": "batch/v1/types.json#/218"
     },
     "certificates.k8s.io/CertificateSigningRequest@v1": {
-      "$ref": "certificates.k8s.io/v1/types.json#/17"
+      "$ref": "certificates.k8s.io/v1/types.json#/23"
     },
     "certificates.k8s.io/ClusterTrustBundle@v1alpha1": {
-      "$ref": "certificates.k8s.io/v1alpha1/types.json#/8"
+      "$ref": "certificates.k8s.io/v1alpha1/types.json#/16"
     },
     "coordination.k8s.io/Lease@v1": {
-      "$ref": "coordination.k8s.io/v1/types.json#/9"
+      "$ref": "coordination.k8s.io/v1/types.json#/16"
     },
     "coordination.k8s.io/LeaseCandidate@v1alpha2": {
-      "$ref": "coordination.k8s.io/v1alpha2/types.json#/8"
+      "$ref": "coordination.k8s.io/v1alpha2/types.json#/16"
     },
     "core/ConfigMap@v1": {
-      "$ref": "core/v1/types.json#/11"
+      "$ref": "core/v1/types.json#/17"
     },
     "core/Endpoints@v1": {
-      "$ref": "core/v1/types.json#/27"
+      "$ref": "core/v1/types.json#/29"
     },
     "core/Event@v1": {
-      "$ref": "core/v1/types.json#/36"
+      "$ref": "core/v1/types.json#/35"
     },
     "core/LimitRange@v1": {
-      "$ref": "core/v1/types.json#/51"
+      "$ref": "core/v1/types.json#/47"
     },
     "core/PersistentVolumeClaim@v1": {
-      "$ref": "core/v1/types.json#/78"
+      "$ref": "core/v1/types.json#/71"
     },
     "core/Pod@v1": {
-      "$ref": "core/v1/types.json#/284"
+      "$ref": "core/v1/types.json#/266"
     },
     "core/PodTemplate@v1": {
-      "$ref": "core/v1/types.json#/292"
+      "$ref": "core/v1/types.json#/271"
     },
     "core/ReplicationController@v1": {
-      "$ref": "core/v1/types.json#/304"
+      "$ref": "core/v1/types.json#/280"
     },
     "core/ResourceQuota@v1": {
-      "$ref": "core/v1/types.json#/321"
+      "$ref": "core/v1/types.json#/294"
     },
     "core/Secret@v1": {
-      "$ref": "core/v1/types.json#/330"
+      "$ref": "core/v1/types.json#/300"
     },
     "core/ServiceAccount@v1": {
-      "$ref": "core/v1/types.json#/339"
+      "$ref": "core/v1/types.json#/306"
     },
     "core/Service@v1": {
-      "$ref": "core/v1/types.json#/364"
+      "$ref": "core/v1/types.json#/328"
     },
     "core/Namespace@v1": {
-      "$ref": "core/v1/types.json#/376"
+      "$ref": "core/v1/types.json#/337"
     },
     "core/Node@v1": {
-      "$ref": "core/v1/types.json#/410"
+      "$ref": "core/v1/types.json#/368"
     },
     "core/PersistentVolume@v1": {
-      "$ref": "core/v1/types.json#/440"
+      "$ref": "core/v1/types.json#/395"
     },
     "discovery.k8s.io/EndpointSlice@v1": {
-      "$ref": "discovery.k8s.io/v1/types.json#/20"
+      "$ref": "discovery.k8s.io/v1/types.json#/26"
     },
     "events.k8s.io/Event@v1": {
-      "$ref": "events.k8s.io/v1/types.json#/11"
+      "$ref": "events.k8s.io/v1/types.json#/18"
     },
     "flowcontrol.apiserver.k8s.io/FlowSchema@v1": {
-      "$ref": "flowcontrol.apiserver.k8s.io/v1/types.json#/32"
+      "$ref": "flowcontrol.apiserver.k8s.io/v1/types.json#/38"
     },
     "flowcontrol.apiserver.k8s.io/PriorityLevelConfiguration@v1": {
-      "$ref": "flowcontrol.apiserver.k8s.io/v1/types.json#/47"
+      "$ref": "flowcontrol.apiserver.k8s.io/v1/types.json#/50"
     },
     "internal.apiserver.k8s.io/StorageVersion@v1alpha1": {
-      "$ref": "internal.apiserver.k8s.io/v1alpha1/types.json#/16"
+      "$ref": "internal.apiserver.k8s.io/v1alpha1/types.json#/22"
     },
     "networking.k8s.io/IngressClass@v1": {
-      "$ref": "networking.k8s.io/v1/types.json#/9"
+      "$ref": "networking.k8s.io/v1/types.json#/17"
     },
     "networking.k8s.io/Ingress@v1": {
-      "$ref": "networking.k8s.io/v1/types.json#/36"
+      "$ref": "networking.k8s.io/v1/types.json#/40"
     },
     "networking.k8s.io/NetworkPolicy@v1": {
-      "$ref": "networking.k8s.io/v1/types.json#/62"
+      "$ref": "networking.k8s.io/v1/types.json#/63"
     },
     "networking.k8s.io/IPAddress@v1beta1": {
-      "$ref": "networking.k8s.io/v1beta1/types.json#/9"
+      "$ref": "networking.k8s.io/v1beta1/types.json#/17"
     },
     "networking.k8s.io/ServiceCIDR@v1beta1": {
-      "$ref": "networking.k8s.io/v1beta1/types.json#/22"
+      "$ref": "networking.k8s.io/v1beta1/types.json#/26"
     },
     "node.k8s.io/RuntimeClass@v1": {
-      "$ref": "node.k8s.io/v1/types.json#/14"
+      "$ref": "node.k8s.io/v1/types.json#/21"
     },
     "policy/PodDisruptionBudget@v1": {
-      "$ref": "policy/v1/types.json#/18"
+      "$ref": "policy/v1/types.json#/25"
     },
     "rbac.authorization.k8s.io/ClusterRoleBinding@v1": {
-      "$ref": "rbac.authorization.k8s.io/v1/types.json#/10"
+      "$ref": "rbac.authorization.k8s.io/v1/types.json#/18"
     },
     "rbac.authorization.k8s.io/ClusterRole@v1": {
-      "$ref": "rbac.authorization.k8s.io/v1/types.json#/31"
+      "$ref": "rbac.authorization.k8s.io/v1/types.json#/36"
     },
     "rbac.authorization.k8s.io/RoleBinding@v1": {
-      "$ref": "rbac.authorization.k8s.io/v1/types.json#/39"
+      "$ref": "rbac.authorization.k8s.io/v1/types.json#/41"
     },
     "rbac.authorization.k8s.io/Role@v1": {
-      "$ref": "rbac.authorization.k8s.io/v1/types.json#/47"
+      "$ref": "rbac.authorization.k8s.io/v1/types.json#/46"
     },
     "resource.k8s.io/DeviceClass@v1alpha3": {
-      "$ref": "resource.k8s.io/v1alpha3/types.json#/15"
+      "$ref": "resource.k8s.io/v1alpha3/types.json#/22"
     },
     "resource.k8s.io/ResourceClaim@v1alpha3": {
-      "$ref": "resource.k8s.io/v1alpha3/types.json#/58"
+      "$ref": "resource.k8s.io/v1alpha3/types.json#/60"
     },
     "resource.k8s.io/ResourceClaimTemplate@v1alpha3": {
-      "$ref": "resource.k8s.io/v1alpha3/types.json#/74"
+      "$ref": "resource.k8s.io/v1alpha3/types.json#/65"
     },
     "resource.k8s.io/ResourceSlice@v1alpha3": {
-      "$ref": "resource.k8s.io/v1alpha3/types.json#/89"
+      "$ref": "resource.k8s.io/v1alpha3/types.json#/77"
     },
     "resource.k8s.io/DeviceClass@v1beta1": {
-      "$ref": "resource.k8s.io/v1beta1/types.json#/15"
+      "$ref": "resource.k8s.io/v1beta1/types.json#/22"
     },
     "resource.k8s.io/ResourceClaim@v1beta1": {
-      "$ref": "resource.k8s.io/v1beta1/types.json#/58"
+      "$ref": "resource.k8s.io/v1beta1/types.json#/60"
     },
     "resource.k8s.io/ResourceClaimTemplate@v1beta1": {
-      "$ref": "resource.k8s.io/v1beta1/types.json#/74"
+      "$ref": "resource.k8s.io/v1beta1/types.json#/65"
     },
     "resource.k8s.io/ResourceSlice@v1beta1": {
-      "$ref": "resource.k8s.io/v1beta1/types.json#/90"
+      "$ref": "resource.k8s.io/v1beta1/types.json#/78"
     },
     "scheduling.k8s.io/PriorityClass@v1": {
-      "$ref": "scheduling.k8s.io/v1/types.json#/9"
+      "$ref": "scheduling.k8s.io/v1/types.json#/15"
     },
     "storage.k8s.io/CSIDriver@v1": {
-      "$ref": "storage.k8s.io/v1/types.json#/13"
+      "$ref": "storage.k8s.io/v1/types.json#/19"
     },
     "storage.k8s.io/CSINode@v1": {
-      "$ref": "storage.k8s.io/v1/types.json#/25"
+      "$ref": "storage.k8s.io/v1/types.json#/28"
     },
     "storage.k8s.io/CSIStorageCapacity@v1": {
       "$ref": "storage.k8s.io/v1/types.json#/37"
     },
     "storage.k8s.io/StorageClass@v1": {
-      "$ref": "storage.k8s.io/v1/types.json#/51"
+      "$ref": "storage.k8s.io/v1/types.json#/48"
     },
     "storage.k8s.io/VolumeAttachment@v1": {
-      "$ref": "storage.k8s.io/v1/types.json#/106"
+      "$ref": "storage.k8s.io/v1/types.json#/100"
     },
     "storage.k8s.io/VolumeAttributesClass@v1alpha1": {
-      "$ref": "storage.k8s.io/v1alpha1/types.json#/8"
+      "$ref": "storage.k8s.io/v1alpha1/types.json#/16"
     },
     "storage.k8s.io/VolumeAttributesClass@v1beta1": {
-      "$ref": "storage.k8s.io/v1beta1/types.json#/8"
+      "$ref": "storage.k8s.io/v1beta1/types.json#/16"
     },
     "storagemigration.k8s.io/StorageVersionMigration@v1alpha1": {
-      "$ref": "storagemigration.k8s.io/v1alpha1/types.json#/12"
+      "$ref": "storagemigration.k8s.io/v1alpha1/types.json#/20"
     }
   },
   "resourceFunctions": {},

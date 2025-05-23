@@ -3,72 +3,47 @@
 ## Resource apps/ControllerRevision@v1
 * **Valid Scope(s)**: Unknown
 ### Properties
-* **apiVersion**: 'apps/v1' (ReadOnly, DeployTimeConstant): The api version.
+* **apiVersion**: 'apps/v1' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **data**: any: Any object
-* **kind**: 'ControllerRevision' (ReadOnly, DeployTimeConstant): The resource kind.
-* **metadata**: [metadata](#metadata) (Required): The resource metadata.
+* **kind**: 'ControllerRevision' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **revision**: int (Required): Revision indicates the revision of the state represented by Data.
 
 ## Resource apps/DaemonSet@v1
 * **Valid Scope(s)**: Unknown
 ### Properties
-* **apiVersion**: 'apps/v1' (ReadOnly, DeployTimeConstant): The api version.
-* **kind**: 'DaemonSet' (ReadOnly, DeployTimeConstant): The resource kind.
-* **metadata**: [metadata](#metadata) (Required): The resource metadata.
+* **apiVersion**: 'apps/v1' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+* **kind**: 'DaemonSet' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **spec**: [IoK8SApiAppsV1DaemonSetSpec](#iok8sapiappsv1daemonsetspec): DaemonSetSpec is the specification of a daemon set.
 * **status**: [IoK8SApiAppsV1DaemonSetStatus](#iok8sapiappsv1daemonsetstatus): DaemonSetStatus represents the current status of a daemon set.
 
 ## Resource apps/Deployment@v1
 * **Valid Scope(s)**: Unknown
 ### Properties
-* **apiVersion**: 'apps/v1' (ReadOnly, DeployTimeConstant): The api version.
-* **kind**: 'Deployment' (ReadOnly, DeployTimeConstant): The resource kind.
-* **metadata**: [metadata](#metadata) (Required): The resource metadata.
+* **apiVersion**: 'apps/v1' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+* **kind**: 'Deployment' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **spec**: [IoK8SApiAppsV1DeploymentSpec](#iok8sapiappsv1deploymentspec): DeploymentSpec is the specification of the desired behavior of the Deployment.
 * **status**: [IoK8SApiAppsV1DeploymentStatus](#iok8sapiappsv1deploymentstatus): DeploymentStatus is the most recently observed status of the Deployment.
 
 ## Resource apps/ReplicaSet@v1
 * **Valid Scope(s)**: Unknown
 ### Properties
-* **apiVersion**: 'apps/v1' (ReadOnly, DeployTimeConstant): The api version.
-* **kind**: 'ReplicaSet' (ReadOnly, DeployTimeConstant): The resource kind.
-* **metadata**: [metadata](#metadata) (Required): The resource metadata.
+* **apiVersion**: 'apps/v1' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+* **kind**: 'ReplicaSet' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **spec**: [IoK8SApiAppsV1ReplicaSetSpec](#iok8sapiappsv1replicasetspec): ReplicaSetSpec is the specification of a ReplicaSet.
 * **status**: [IoK8SApiAppsV1ReplicaSetStatus](#iok8sapiappsv1replicasetstatus): ReplicaSetStatus represents the current status of a ReplicaSet.
 
 ## Resource apps/StatefulSet@v1
 * **Valid Scope(s)**: Unknown
 ### Properties
-* **apiVersion**: 'apps/v1' (ReadOnly, DeployTimeConstant): The api version.
-* **kind**: 'StatefulSet' (ReadOnly, DeployTimeConstant): The resource kind.
-* **metadata**: [metadata](#metadata) (Required): The resource metadata.
+* **apiVersion**: 'apps/v1' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+* **kind**: 'StatefulSet' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **spec**: [IoK8SApiAppsV1StatefulSetSpec](#iok8sapiappsv1statefulsetspec): A StatefulSetSpec is the specification of a StatefulSet.
 * **status**: [IoK8SApiAppsV1StatefulSetStatus](#iok8sapiappsv1statefulsetstatus): StatefulSetStatus represents the current state of a StatefulSet.
-
-## annotations
-### Properties
-### Additional Properties
-* **Additional Properties Type**: string
-
-## annotations
-### Properties
-### Additional Properties
-* **Additional Properties Type**: string
-
-## annotations
-### Properties
-### Additional Properties
-* **Additional Properties Type**: string
-
-## annotations
-### Properties
-### Additional Properties
-* **Additional Properties Type**: string
-
-## annotations
-### Properties
-### Additional Properties
-* **Additional Properties Type**: string
 
 ## IoK8SApiAppsV1DaemonSetCondition
 ### Properties
@@ -417,7 +392,9 @@ The serialization format is:
 
 	(Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)
 
-<decimalExponent> ::= "e" <signedNumber> | "E" <signedNumber> ```
+<decimalExponent> ::= "e" <signedNumber> | "E" <signedNumber>
+
+```
 
 No matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.
 
@@ -967,7 +944,9 @@ The serialization format is:
 
 	(Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)
 
-<decimalExponent> ::= "e" <signedNumber> | "E" <signedNumber> ```
+<decimalExponent> ::= "e" <signedNumber> | "E" <signedNumber>
+
+```
 
 No matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.
 
@@ -1288,28 +1267,28 @@ The contents of the target Secret's Data field will be presented in a projected 
 ## IoK8SApimachineryPkgApisMetaV1ObjectMeta
 ### Properties
 * **annotations**: [IoK8SApimachineryPkgApisMetaV1ObjectMetaAnnotations](#iok8sapimachinerypkgapismetav1objectmetaannotations): Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations
-* **creationTimestamp**: string: Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.
-* **deletionGracePeriodSeconds**: int: Number of seconds allowed for this object to gracefully terminate before it will be removed from the system. Only set when deletionTimestamp is also set. May only be shortened. Read-only.
-* **deletionTimestamp**: string: Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.
+* **creationTimestamp**: string (ReadOnly): Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.
+* **deletionGracePeriodSeconds**: int (ReadOnly): Number of seconds allowed for this object to gracefully terminate before it will be removed from the system. Only set when deletionTimestamp is also set. May only be shortened. Read-only.
+* **deletionTimestamp**: string (ReadOnly): Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.
 * **finalizers**: string[]: Must be empty before the object is deleted from the registry. Each entry is an identifier for the responsible component that will remove the entry from the list. If the deletionTimestamp of the object is non-nil, entries in this list can only be removed. Finalizers may be processed and removed in any order.  Order is NOT enforced because it introduces significant risk of stuck finalizers. finalizers is a shared field, any actor with permission can reorder it. If the finalizer list is processed in order, then this can lead to a situation in which the component responsible for the first finalizer in the list is waiting for a signal (field value, external system, or other) produced by a component responsible for a finalizer later in the list, resulting in a deadlock. Without enforced ordering finalizers are free to order amongst themselves and are not vulnerable to ordering changes in the list.
 * **generateName**: string: GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.
 
 If this field is specified and the generated name exists, the server will return a 409.
 
 Applied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency
-* **generation**: int: A sequence number representing a specific generation of the desired state. Populated by the system. Read-only.
+* **generation**: int (ReadOnly): A sequence number representing a specific generation of the desired state. Populated by the system. Read-only.
 * **labels**: [IoK8SApimachineryPkgApisMetaV1ObjectMetaLabels](#iok8sapimachinerypkgapismetav1objectmetalabels): Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels
 * **managedFields**: [IoK8SApimachineryPkgApisMetaV1ManagedFieldsEntry](#iok8sapimachinerypkgapismetav1managedfieldsentry)[]: ManagedFields maps workflow-id and version to the set of fields that are managed by that workflow. This is mostly for internal housekeeping, and users typically shouldn't need to set or understand this field. A workflow can be the user's name, a controller's name, or the name of a specific apply path like "ci-cd". The set of fields is always in the version that the workflow used when modifying the object.
-* **name**: string: Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names
-* **namespace**: string: Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the "default" namespace, but "default" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.
+* **name**: string (Required, DeployTimeConstant, Identifier): Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names
+* **namespace**: string (DeployTimeConstant, Identifier): Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the "default" namespace, but "default" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.
 
 Must be a DNS_LABEL. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces
 * **ownerReferences**: [IoK8SApimachineryPkgApisMetaV1OwnerReference](#iok8sapimachinerypkgapismetav1ownerreference)[]: List of objects depended by this object. If ALL objects in the list have been deleted, this object will be garbage collected. If this object is managed by a controller, then an entry in this list will point to this controller, with the controller field set to true. There cannot be more than one managing controller.
-* **resourceVersion**: string: An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.
+* **resourceVersion**: string (ReadOnly): An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.
 
 Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
-* **selfLink**: string: Deprecated: selfLink is a legacy read-only field that is no longer populated by the system.
-* **uid**: string: UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.
+* **selfLink**: string (ReadOnly): Deprecated: selfLink is a legacy read-only field that is no longer populated by the system.
+* **uid**: string (ReadOnly): UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.
 
 Populated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids
 
@@ -1331,59 +1310,4 @@ Populated by the system. Read-only. More info: https://kubernetes.io/docs/concep
 * **kind**: string (Required): Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 * **name**: string (Required): Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names
 * **uid**: string (Required): UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids
-
-## labels
-### Properties
-### Additional Properties
-* **Additional Properties Type**: string
-
-## labels
-### Properties
-### Additional Properties
-* **Additional Properties Type**: string
-
-## labels
-### Properties
-### Additional Properties
-* **Additional Properties Type**: string
-
-## labels
-### Properties
-### Additional Properties
-* **Additional Properties Type**: string
-
-## labels
-### Properties
-### Additional Properties
-* **Additional Properties Type**: string
-
-## metadata
-### Properties
-* **annotations**: [annotations](#annotations): The annotations for the resource.
-* **labels**: [labels](#labels): The labels for the resource.
-* **name**: string (Required, DeployTimeConstant): The name of the resource.
-
-## metadata
-### Properties
-* **annotations**: [annotations](#annotations): The annotations for the resource.
-* **labels**: [labels](#labels): The labels for the resource.
-* **name**: string (Required, DeployTimeConstant): The name of the resource.
-
-## metadata
-### Properties
-* **annotations**: [annotations](#annotations): The annotations for the resource.
-* **labels**: [labels](#labels): The labels for the resource.
-* **name**: string (Required, DeployTimeConstant): The name of the resource.
-
-## metadata
-### Properties
-* **annotations**: [annotations](#annotations): The annotations for the resource.
-* **labels**: [labels](#labels): The labels for the resource.
-* **name**: string (Required, DeployTimeConstant): The name of the resource.
-
-## metadata
-### Properties
-* **annotations**: [annotations](#annotations): The annotations for the resource.
-* **labels**: [labels](#labels): The labels for the resource.
-* **name**: string (Required, DeployTimeConstant): The name of the resource.
 

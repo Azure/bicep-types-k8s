@@ -140,8 +140,8 @@ function resolveSchema(kind: Kind): ObjectSchema | null {
     }
 
     for (const response of kind.get.responses) {
-        if (response.protocol.http instanceof HttpResponse && 
-            response instanceof SchemaResponse && 
+        if (response.protocol.http instanceof HttpResponse &&
+            response instanceof SchemaResponse &&
             response.schema instanceof ObjectSchema) {
           return response.schema;
         }
@@ -156,7 +156,8 @@ function isNamespaced(kind: Kind): boolean {
     }
 
     for (const parameter of kind.get.parameters) {
-        if (parameter.language.default.name === 'namespace') {
+        // AutoRest somehow converts the name to Pascal case, so we need to convert it to lower case.
+        if (parameter.language.default.name.toLowerCase() === 'namespace') {
             return true;
         }
     }
