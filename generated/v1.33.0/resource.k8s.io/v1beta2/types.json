@@ -1,56 +1,270 @@
 [
   {
-    "$type": "StringLiteralType",
-    "value": "DeviceClass"
+    "$type": "StringType"
   },
   {
     "$type": "StringLiteralType",
     "value": "resource.k8s.io/v1beta2"
   },
   {
-    "$type": "StringType"
+    "$type": "StringLiteralType",
+    "value": "DeviceClass"
   },
   {
     "$type": "ObjectType",
-    "name": "labels",
-    "properties": {},
-    "additionalProperties": {
-      "$ref": "#/2"
-    }
-  },
-  {
-    "$type": "ObjectType",
-    "name": "annotations",
-    "properties": {},
-    "additionalProperties": {
-      "$ref": "#/2"
-    }
-  },
-  {
-    "$type": "ObjectType",
-    "name": "metadata",
+    "name": "IoK8SApimachineryPkgApisMetaV1ObjectMeta",
     "properties": {
-      "name": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 9,
-        "description": "The name of the resource."
-      },
-      "labels": {
-        "type": {
-          "$ref": "#/3"
-        },
-        "flags": 0,
-        "description": "The labels for the resource."
-      },
       "annotations": {
         "type": {
           "$ref": "#/4"
         },
         "flags": 0,
-        "description": "The annotations for the resource."
+        "description": "Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations"
+      },
+      "creationTimestamp": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 2,
+        "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers."
+      },
+      "deletionGracePeriodSeconds": {
+        "type": {
+          "$ref": "#/5"
+        },
+        "flags": 2,
+        "description": "Number of seconds allowed for this object to gracefully terminate before it will be removed from the system. Only set when deletionTimestamp is also set. May only be shortened. Read-only."
+      },
+      "deletionTimestamp": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 2,
+        "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers."
+      },
+      "finalizers": {
+        "type": {
+          "$ref": "#/6"
+        },
+        "flags": 0,
+        "description": "Must be empty before the object is deleted from the registry. Each entry is an identifier for the responsible component that will remove the entry from the list. If the deletionTimestamp of the object is non-nil, entries in this list can only be removed. Finalizers may be processed and removed in any order.  Order is NOT enforced because it introduces significant risk of stuck finalizers. finalizers is a shared field, any actor with permission can reorder it. If the finalizer list is processed in order, then this can lead to a situation in which the component responsible for the first finalizer in the list is waiting for a signal (field value, external system, or other) produced by a component responsible for a finalizer later in the list, resulting in a deadlock. Without enforced ordering finalizers are free to order amongst themselves and are not vulnerable to ordering changes in the list."
+      },
+      "generateName": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 0,
+        "description": "GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.\n\nIf this field is specified and the generated name exists, the server will return a 409.\n\nApplied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency"
+      },
+      "generation": {
+        "type": {
+          "$ref": "#/5"
+        },
+        "flags": 2,
+        "description": "A sequence number representing a specific generation of the desired state. Populated by the system. Read-only."
+      },
+      "labels": {
+        "type": {
+          "$ref": "#/7"
+        },
+        "flags": 0,
+        "description": "Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels"
+      },
+      "managedFields": {
+        "type": {
+          "$ref": "#/10"
+        },
+        "flags": 0,
+        "description": "ManagedFields maps workflow-id and version to the set of fields that are managed by that workflow. This is mostly for internal housekeeping, and users typically shouldn't need to set or understand this field. A workflow can be the user's name, a controller's name, or the name of a specific apply path like \"ci-cd\". The set of fields is always in the version that the workflow used when modifying the object."
+      },
+      "name": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 25,
+        "description": "Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names"
+      },
+      "namespace": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 24,
+        "description": "Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the \"default\" namespace, but \"default\" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.\n\nMust be a DNS_LABEL. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces"
+      },
+      "ownerReferences": {
+        "type": {
+          "$ref": "#/13"
+        },
+        "flags": 0,
+        "description": "List of objects depended by this object. If ALL objects in the list have been deleted, this object will be garbage collected. If this object is managed by a controller, then an entry in this list will point to this controller, with the controller field set to true. There cannot be more than one managing controller."
+      },
+      "resourceVersion": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 2,
+        "description": "An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.\n\nPopulated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency"
+      },
+      "selfLink": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 2,
+        "description": "Deprecated: selfLink is a legacy read-only field that is no longer populated by the system."
+      },
+      "uid": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 2,
+        "description": "UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.\n\nPopulated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids"
       }
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApimachineryPkgApisMetaV1ObjectMetaAnnotations",
+    "properties": {},
+    "additionalProperties": {
+      "$ref": "#/0"
+    }
+  },
+  {
+    "$type": "IntegerType"
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/0"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApimachineryPkgApisMetaV1ObjectMetaLabels",
+    "properties": {},
+    "additionalProperties": {
+      "$ref": "#/0"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApimachineryPkgApisMetaV1ManagedFieldsEntry",
+    "properties": {
+      "apiVersion": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 0,
+        "description": "APIVersion defines the version of this resource that this field set applies to. The format is \"group/version\" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted."
+      },
+      "fieldsType": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 0,
+        "description": "FieldsType is the discriminator for the different fields format and version. There is currently only one possible value: \"FieldsV1\""
+      },
+      "fieldsV1": {
+        "type": {
+          "$ref": "#/9"
+        },
+        "flags": 0,
+        "description": "Any object"
+      },
+      "manager": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 0,
+        "description": "Manager is an identifier of the workflow managing these fields."
+      },
+      "operation": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 0,
+        "description": "Operation is the type of operation which lead to this ManagedFieldsEntry being created. The only valid values for this field are 'Apply' and 'Update'."
+      },
+      "subresource": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 0,
+        "description": "Subresource is the name of the subresource used to update that object, or empty string if the object was updated through the main resource. The value of this field is used to distinguish between managers, even if they share the same name. For example, a status update will be distinct from a regular update using the same manager name. Note that the APIVersion field is not related to the Subresource field and it always corresponds to the version of the main resource."
+      },
+      "time": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 0,
+        "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers."
+      }
+    }
+  },
+  {
+    "$type": "AnyType"
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/8"
+    }
+  },
+  {
+    "$type": "ObjectType",
+    "name": "IoK8SApimachineryPkgApisMetaV1OwnerReference",
+    "properties": {
+      "apiVersion": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 1,
+        "description": "API version of the referent."
+      },
+      "blockOwnerDeletion": {
+        "type": {
+          "$ref": "#/12"
+        },
+        "flags": 0,
+        "description": "If true, AND if the owner has the \"foregroundDeletion\" finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs \"delete\" permission of the owner, otherwise 422 (Unprocessable Entity) will be returned."
+      },
+      "controller": {
+        "type": {
+          "$ref": "#/12"
+        },
+        "flags": 0,
+        "description": "If true, this reference points to the managing controller."
+      },
+      "kind": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 1,
+        "description": "Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
+      },
+      "name": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 1,
+        "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names"
+      },
+      "uid": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 1,
+        "description": "UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids"
+      }
+    }
+  },
+  {
+    "$type": "BooleanType"
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/11"
     }
   },
   {
@@ -59,14 +273,14 @@
     "properties": {
       "config": {
         "type": {
-          "$ref": "#/10"
+          "$ref": "#/17"
         },
         "flags": 0,
         "description": "Config defines configuration parameters that apply to each device that is claimed via this class. Some classses may potentially be satisfied by multiple drivers, so each instance of a vendor configuration applies to exactly one driver.\n\nThey are passed to the driver, but are not considered while allocating the claim."
       },
       "selectors": {
         "type": {
-          "$ref": "#/13"
+          "$ref": "#/20"
         },
         "flags": 0,
         "description": "Each selector must be satisfied by a device which is claimed via this class."
@@ -79,7 +293,7 @@
     "properties": {
       "opaque": {
         "type": {
-          "$ref": "#/8"
+          "$ref": "#/16"
         },
         "flags": 0,
         "description": "OpaqueDeviceConfiguration contains configuration parameters for a driver in a format defined by the driver vendor."
@@ -92,7 +306,7 @@
     "properties": {
       "driver": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "Driver is used to determine which kubelet plugin needs to be passed these configuration parameters.\n\nAn admission policy provided by the driver developer could use this to decide whether it needs to validate them.\n\nMust be a DNS subdomain and should end with a DNS domain owned by the vendor of the driver."
@@ -107,12 +321,9 @@
     }
   },
   {
-    "$type": "AnyType"
-  },
-  {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/7"
+      "$ref": "#/15"
     }
   },
   {
@@ -121,7 +332,7 @@
     "properties": {
       "cel": {
         "type": {
-          "$ref": "#/12"
+          "$ref": "#/19"
         },
         "flags": 0,
         "description": "CELDeviceSelector contains a CEL expression for selecting a device."
@@ -134,7 +345,7 @@
     "properties": {
       "expression": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "Expression is a CEL expression which evaluates a single device. It must evaluate to true when the device under consideration satisfies the desired criteria, and false when it does not. Any other result is an error and causes allocation of devices to abort.\n\nThe expression's input is an object named \"device\", which carries the following properties:\n - driver (string): the name of the driver which defines this device.\n - attributes (map[string]object): the device's attributes, grouped by prefix\n   (e.g. device.attributes[\"dra.example.com\"] evaluates to an object with all\n   of the attributes which were prefixed by \"dra.example.com\".\n - capacity (map[string]object): the device's capacities, grouped by prefix.\n\nExample: Consider a device with driver=\"dra.example.com\", which exposes two attributes named \"model\" and \"ext.example.com/family\" and which exposes one capacity named \"modules\". This input to this expression would have the following fields:\n\n    device.driver\n    device.attributes[\"dra.example.com\"].model\n    device.attributes[\"ext.example.com\"].family\n    device.capacity[\"dra.example.com\"].modules\n\nThe device.driver field can be used to check for a specific driver, either as a high-level precondition (i.e. you only want to consider devices from this driver) or as part of a multi-clause expression that is meant to consider devices from different drivers.\n\nThe value type of each attribute is defined by the device definition, and users who write these expressions must consult the documentation for their specific drivers. The value type of each capacity is Quantity.\n\nIf an unknown prefix is used as a lookup in either device.attributes or device.capacity, an empty map will be returned. Any reference to an unknown field will cause an evaluation error and allocation to abort.\n\nA robust expression should check for the existence of attributes before referencing them.\n\nFor ease of use, the cel.bind() function is enabled, and can be used to simplify expressions that access multiple attributes with the same domain. For example:\n\n    cel.bind(dra, device.attributes[\"dra.example.com\"], dra.someBool && dra.anotherBool)\n\nThe length of the expression must be smaller or equal to 10 Ki. The cost of evaluating it is also limited based on the estimated number of logical steps."
@@ -144,37 +355,37 @@
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/11"
+      "$ref": "#/18"
     }
   },
   {
     "$type": "ObjectType",
     "name": "resource.k8s.io/DeviceClass",
     "properties": {
-      "kind": {
-        "type": {
-          "$ref": "#/0"
-        },
-        "flags": 10,
-        "description": "The resource kind."
-      },
       "apiVersion": {
         "type": {
           "$ref": "#/1"
         },
         "flags": 10,
-        "description": "The api version."
+        "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources"
+      },
+      "kind": {
+        "type": {
+          "$ref": "#/2"
+        },
+        "flags": 10,
+        "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
       },
       "metadata": {
         "type": {
-          "$ref": "#/5"
+          "$ref": "#/3"
         },
         "flags": 1,
-        "description": "The resource metadata."
+        "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "spec": {
         "type": {
-          "$ref": "#/6"
+          "$ref": "#/14"
         },
         "flags": 1,
         "description": "DeviceClassSpec is used in a [DeviceClass] to define what can be allocated and how to configure it."
@@ -186,60 +397,17 @@
     "name": "resource.k8s.io/DeviceClass@v1beta2",
     "scopeType": 0,
     "body": {
-      "$ref": "#/14"
+      "$ref": "#/21"
     },
     "flags": 0
-  },
-  {
-    "$type": "StringLiteralType",
-    "value": "ResourceClaim"
   },
   {
     "$type": "StringLiteralType",
     "value": "resource.k8s.io/v1beta2"
   },
   {
-    "$type": "ObjectType",
-    "name": "labels",
-    "properties": {},
-    "additionalProperties": {
-      "$ref": "#/2"
-    }
-  },
-  {
-    "$type": "ObjectType",
-    "name": "annotations",
-    "properties": {},
-    "additionalProperties": {
-      "$ref": "#/2"
-    }
-  },
-  {
-    "$type": "ObjectType",
-    "name": "metadata",
-    "properties": {
-      "name": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 9,
-        "description": "The name of the resource."
-      },
-      "labels": {
-        "type": {
-          "$ref": "#/18"
-        },
-        "flags": 0,
-        "description": "The labels for the resource."
-      },
-      "annotations": {
-        "type": {
-          "$ref": "#/19"
-        },
-        "flags": 0,
-        "description": "The annotations for the resource."
-      }
-    }
+    "$type": "StringLiteralType",
+    "value": "ResourceClaim"
   },
   {
     "$type": "ObjectType",
@@ -247,7 +415,7 @@
     "properties": {
       "devices": {
         "type": {
-          "$ref": "#/22"
+          "$ref": "#/26"
         },
         "flags": 0,
         "description": "DeviceClaim defines how to request devices with a ResourceClaim."
@@ -260,21 +428,21 @@
     "properties": {
       "config": {
         "type": {
-          "$ref": "#/25"
+          "$ref": "#/29"
         },
         "flags": 0,
         "description": "This field holds configuration for multiple potential drivers which could satisfy requests in this claim. It is ignored while allocating the claim."
       },
       "constraints": {
         "type": {
-          "$ref": "#/28"
+          "$ref": "#/32"
         },
         "flags": 0,
         "description": "These constraints must be satisfied by the set of devices that get allocated for the claim."
       },
       "requests": {
         "type": {
-          "$ref": "#/40"
+          "$ref": "#/42"
         },
         "flags": 0,
         "description": "Requests represent individual requests for distinct devices which must all be satisfied. If empty, nothing needs to be allocated."
@@ -287,14 +455,14 @@
     "properties": {
       "opaque": {
         "type": {
-          "$ref": "#/8"
+          "$ref": "#/16"
         },
         "flags": 0,
         "description": "OpaqueDeviceConfiguration contains configuration parameters for a driver in a format defined by the driver vendor."
       },
       "requests": {
         "type": {
-          "$ref": "#/24"
+          "$ref": "#/28"
         },
         "flags": 0,
         "description": "Requests lists the names of requests where the configuration applies. If empty, it applies to all requests.\n\nReferences to subrequests must include the name of the main request and may include the subrequest using the format <main request>[/<subrequest>]. If just the main request is given, the configuration applies to all subrequests."
@@ -304,13 +472,13 @@
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/2"
+      "$ref": "#/0"
     }
   },
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/23"
+      "$ref": "#/27"
     }
   },
   {
@@ -319,14 +487,14 @@
     "properties": {
       "matchAttribute": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 0,
         "description": "MatchAttribute requires that all devices in question have this attribute and that its type and value are the same across those devices.\n\nFor example, if you specified \"dra.example.com/numa\" (a hypothetical example!), then only devices in the same NUMA node will be chosen. A device which does not have that attribute will not be chosen. All devices should use a value of the same type for this attribute because that is part of its specification, but if one device doesn't, then it also will not be chosen.\n\nMust include the domain qualifier."
       },
       "requests": {
         "type": {
-          "$ref": "#/27"
+          "$ref": "#/31"
         },
         "flags": 0,
         "description": "Requests is a list of the one or more requests in this claim which must co-satisfy this constraint. If a request is fulfilled by multiple devices, then all of the devices must satisfy the constraint. If this is not specified, this constraint applies to all requests in this claim.\n\nReferences to subrequests must include the name of the main request and may include the subrequest using the format <main request>[/<subrequest>]. If just the main request is given, the constraint applies to all subrequests."
@@ -336,13 +504,13 @@
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/2"
+      "$ref": "#/0"
     }
   },
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/26"
+      "$ref": "#/30"
     }
   },
   {
@@ -351,21 +519,21 @@
     "properties": {
       "exactly": {
         "type": {
-          "$ref": "#/30"
+          "$ref": "#/34"
         },
         "flags": 0,
         "description": "ExactDeviceRequest is a request for one or more identical devices."
       },
       "firstAvailable": {
         "type": {
-          "$ref": "#/39"
+          "$ref": "#/41"
         },
         "flags": 0,
         "description": "FirstAvailable contains subrequests, of which exactly one will be selected by the scheduler. It tries to satisfy them in the order in which they are listed here. So if there are two entries in the list, the scheduler will only check the second one if it determines that the first one can not be used.\n\nDRA does not yet implement scoring, so the scheduler will select the first set of devices that satisfies all the requests in the claim. And if the requirements can be satisfied on more than one node, other scheduling features will determine which node is chosen. This means that the set of devices allocated to a claim might not be the optimal set available to the cluster. Scoring will be implemented later."
       },
       "name": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "Name can be used to reference this request in a pod.spec.containers[].resources.claims entry and in a constraint of the claim.\n\nReferences using the name in the DeviceRequest will uniquely identify a request when the Exactly field is set. When the FirstAvailable field is set, a reference to the name of the DeviceRequest will match whatever subrequest is chosen by the scheduler.\n\nMust be a DNS label."
@@ -378,42 +546,42 @@
     "properties": {
       "adminAccess": {
         "type": {
-          "$ref": "#/31"
+          "$ref": "#/12"
         },
         "flags": 0,
         "description": "AdminAccess indicates that this is a claim for administrative access to the device(s). Claims with AdminAccess are expected to be used for monitoring or other management services for a device.  They ignore all ordinary claims to the device with respect to access modes and any resource allocations.\n\nThis is an alpha field and requires enabling the DRAAdminAccess feature gate. Admin access is disabled if this field is unset or set to false, otherwise it is enabled."
       },
       "allocationMode": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 0,
         "description": "AllocationMode and its related fields define how devices are allocated to satisfy this request. Supported values are:\n\n- ExactCount: This request is for a specific number of devices.\n  This is the default. The exact number is provided in the\n  count field.\n\n- All: This request is for all of the matching devices in a pool.\n  At least one device must exist on the node for the allocation to succeed.\n  Allocation will fail if some devices are already allocated,\n  unless adminAccess is requested.\n\nIf AllocationMode is not specified, the default mode is ExactCount. If the mode is ExactCount and count is not specified, the default count is one. Any other requests must specify this field.\n\nMore modes may get added in the future. Clients must refuse to handle requests with unknown modes."
       },
       "count": {
         "type": {
-          "$ref": "#/32"
+          "$ref": "#/5"
         },
         "flags": 0,
         "description": "Count is used only when the count mode is \"ExactCount\". Must be greater than zero. If AllocationMode is ExactCount and this field is not specified, the default is one."
       },
       "deviceClassName": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "DeviceClassName references a specific DeviceClass, which can define additional configuration and selectors to be inherited by this request.\n\nA DeviceClassName is required.\n\nAdministrators may use this to restrict which devices may get requested by only installing classes with selectors for permitted devices. If users are free to request anything without restrictions, then administrators can create an empty DeviceClass for users to reference."
       },
       "selectors": {
         "type": {
-          "$ref": "#/33"
+          "$ref": "#/35"
         },
         "flags": 0,
         "description": "Selectors define criteria which must be satisfied by a specific device in order for that device to be considered for this request. All selectors must be satisfied for a device to be considered."
       },
       "tolerations": {
         "type": {
-          "$ref": "#/35"
+          "$ref": "#/37"
         },
         "flags": 0,
         "description": "If specified, the request's tolerations.\n\nTolerations for NoSchedule are required to allocate a device which has a taint with that effect. The same applies to NoExecute.\n\nIn addition, should any of the allocated devices get tainted with NoExecute after allocation and that effect is not tolerated, then all pods consuming the ResourceClaim get deleted to evict them. The scheduler will not let new pods reserve the claim while it has these tainted devices. Once all pods are evicted, the claim will get deallocated.\n\nThe maximum number of tolerations is 16.\n\nThis is an alpha field and requires enabling the DRADeviceTaints feature gate."
@@ -421,15 +589,9 @@
     }
   },
   {
-    "$type": "BooleanType"
-  },
-  {
-    "$type": "IntegerType"
-  },
-  {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/11"
+      "$ref": "#/18"
     }
   },
   {
@@ -438,35 +600,35 @@
     "properties": {
       "effect": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 0,
         "description": "Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule and NoExecute."
       },
       "key": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 0,
         "description": "Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys. Must be a label name."
       },
       "operator": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 0,
         "description": "Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a ResourceClaim can tolerate all taints of a particular category."
       },
       "tolerationSeconds": {
         "type": {
-          "$ref": "#/32"
+          "$ref": "#/5"
         },
         "flags": 0,
         "description": "TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system. If larger than zero, the time when the pod needs to be evicted is calculated as <time when taint was adedd> + <toleration seconds>."
       },
       "value": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 0,
         "description": "Value is the taint value the toleration matches to. If the operator is Exists, the value must be empty, otherwise just a regular string. Must be a label value."
@@ -476,7 +638,7 @@
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/34"
+      "$ref": "#/36"
     }
   },
   {
@@ -485,42 +647,42 @@
     "properties": {
       "allocationMode": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 0,
         "description": "AllocationMode and its related fields define how devices are allocated to satisfy this subrequest. Supported values are:\n\n- ExactCount: This request is for a specific number of devices.\n  This is the default. The exact number is provided in the\n  count field.\n\n- All: This subrequest is for all of the matching devices in a pool.\n  Allocation will fail if some devices are already allocated,\n  unless adminAccess is requested.\n\nIf AllocationMode is not specified, the default mode is ExactCount. If the mode is ExactCount and count is not specified, the default count is one. Any other subrequests must specify this field.\n\nMore modes may get added in the future. Clients must refuse to handle requests with unknown modes."
       },
       "count": {
         "type": {
-          "$ref": "#/32"
+          "$ref": "#/5"
         },
         "flags": 0,
         "description": "Count is used only when the count mode is \"ExactCount\". Must be greater than zero. If AllocationMode is ExactCount and this field is not specified, the default is one."
       },
       "deviceClassName": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "DeviceClassName references a specific DeviceClass, which can define additional configuration and selectors to be inherited by this subrequest.\n\nA class is required. Which classes are available depends on the cluster.\n\nAdministrators may use this to restrict which devices may get requested by only installing classes with selectors for permitted devices. If users are free to request anything without restrictions, then administrators can create an empty DeviceClass for users to reference."
       },
       "name": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "Name can be used to reference this subrequest in the list of constraints or the list of configurations for the claim. References must use the format <main request>/<subrequest>.\n\nMust be a DNS label."
       },
       "selectors": {
         "type": {
-          "$ref": "#/37"
+          "$ref": "#/39"
         },
         "flags": 0,
         "description": "Selectors define criteria which must be satisfied by a specific device in order for that device to be considered for this subrequest. All selectors must be satisfied for a device to be considered."
       },
       "tolerations": {
         "type": {
-          "$ref": "#/38"
+          "$ref": "#/40"
         },
         "flags": 0,
         "description": "If specified, the request's tolerations.\n\nTolerations for NoSchedule are required to allocate a device which has a taint with that effect. The same applies to NoExecute.\n\nIn addition, should any of the allocated devices get tainted with NoExecute after allocation and that effect is not tolerated, then all pods consuming the ResourceClaim get deleted to evict them. The scheduler will not let new pods reserve the claim while it has these tainted devices. Once all pods are evicted, the claim will get deallocated.\n\nThe maximum number of tolerations is 16.\n\nThis is an alpha field and requires enabling the DRADeviceTaints feature gate."
@@ -530,13 +692,7 @@
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/11"
-    }
-  },
-  {
-    "$type": "ArrayType",
-    "itemType": {
-      "$ref": "#/34"
+      "$ref": "#/18"
     }
   },
   {
@@ -548,7 +704,13 @@
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/29"
+      "$ref": "#/38"
+    }
+  },
+  {
+    "$type": "ArrayType",
+    "itemType": {
+      "$ref": "#/33"
     }
   },
   {
@@ -557,21 +719,21 @@
     "properties": {
       "allocation": {
         "type": {
-          "$ref": "#/42"
+          "$ref": "#/44"
         },
         "flags": 0,
         "description": "AllocationResult contains attributes of an allocated resource."
       },
       "devices": {
         "type": {
-          "$ref": "#/62"
+          "$ref": "#/64"
         },
         "flags": 0,
         "description": "Devices contains the status of each device allocated for this claim, as reported by the driver. This can include driver-specific information. Entries are owned by their respective drivers."
       },
       "reservedFor": {
         "type": {
-          "$ref": "#/64"
+          "$ref": "#/66"
         },
         "flags": 0,
         "description": "ReservedFor indicates which entities are currently allowed to use the claim. A Pod which references a ResourceClaim which is not reserved for that Pod will not be started. A claim that is in use or might be in use because it has been reserved must not get deallocated.\n\nIn a cluster with multiple scheduler instances, two pods might get scheduled concurrently by different schedulers. When they reference the same ResourceClaim which already has reached its maximum number of consumers, only one pod can be scheduled.\n\nBoth schedulers try to add their pod to the claim.status.reservedFor field, but only the update that reaches the API server first gets stored. The other one fails with an error and the scheduler which issued it knows that it must put the pod back into the queue, waiting for the ResourceClaim to become usable again.\n\nThere can be at most 256 such reservations. This may get increased in the future, but not reduced."
@@ -584,14 +746,14 @@
     "properties": {
       "devices": {
         "type": {
-          "$ref": "#/43"
+          "$ref": "#/45"
         },
         "flags": 0,
         "description": "DeviceAllocationResult is the result of allocating devices."
       },
       "nodeSelector": {
         "type": {
-          "$ref": "#/50"
+          "$ref": "#/52"
         },
         "flags": 0,
         "description": "A node selector represents the union of the results of one or more label queries over a set of nodes; that is, it represents the OR of the selectors represented by the node selector terms."
@@ -604,14 +766,14 @@
     "properties": {
       "config": {
         "type": {
-          "$ref": "#/46"
+          "$ref": "#/48"
         },
         "flags": 0,
         "description": "This field is a combination of all the claim and class configuration parameters. Drivers can distinguish between those based on a flag.\n\nThis includes configuration parameters for drivers which have no allocated devices in the result because it is up to the drivers which configuration parameters they support. They can silently ignore unknown configuration parameters."
       },
       "results": {
         "type": {
-          "$ref": "#/49"
+          "$ref": "#/51"
         },
         "flags": 0,
         "description": "Results lists all allocated devices."
@@ -624,21 +786,21 @@
     "properties": {
       "opaque": {
         "type": {
-          "$ref": "#/8"
+          "$ref": "#/16"
         },
         "flags": 0,
         "description": "OpaqueDeviceConfiguration contains configuration parameters for a driver in a format defined by the driver vendor."
       },
       "requests": {
         "type": {
-          "$ref": "#/45"
+          "$ref": "#/47"
         },
         "flags": 0,
         "description": "Requests lists the names of requests where the configuration applies. If empty, its applies to all requests.\n\nReferences to subrequests must include the name of the main request and may include the subrequest using the format <main request>[/<subrequest>]. If just the main request is given, the configuration applies to all subrequests."
       },
       "source": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "Source records whether the configuration comes from a class and thus is not something that a normal user would have been able to set or from a claim."
@@ -648,13 +810,13 @@
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/2"
+      "$ref": "#/0"
     }
   },
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/44"
+      "$ref": "#/46"
     }
   },
   {
@@ -663,42 +825,42 @@
     "properties": {
       "adminAccess": {
         "type": {
-          "$ref": "#/31"
+          "$ref": "#/12"
         },
         "flags": 0,
         "description": "AdminAccess indicates that this device was allocated for administrative access. See the corresponding request field for a definition of mode.\n\nThis is an alpha field and requires enabling the DRAAdminAccess feature gate. Admin access is disabled if this field is unset or set to false, otherwise it is enabled."
       },
       "device": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "Device references one device instance via its name in the driver's resource pool. It must be a DNS label."
       },
       "driver": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "Driver specifies the name of the DRA driver whose kubelet plugin should be invoked to process the allocation once the claim is needed on a node.\n\nMust be a DNS subdomain and should end with a DNS domain owned by the vendor of the driver."
       },
       "pool": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "This name together with the driver name and the device name field identify which device was allocated (`<driver name>/<pool name>/<device name>`).\n\nMust not be longer than 253 characters and may contain one or more DNS sub-domains separated by slashes."
       },
       "request": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "Request is the name of the request in the claim which caused this device to be allocated. If it references a subrequest in the firstAvailable list on a DeviceRequest, this field must include both the name of the main request and the subrequest using the format <main request>/<subrequest>.\n\nMultiple devices may have been allocated per request."
       },
       "tolerations": {
         "type": {
-          "$ref": "#/48"
+          "$ref": "#/50"
         },
         "flags": 0,
         "description": "A copy of all tolerations specified in the request at the time when the device got allocated.\n\nThe maximum number of tolerations is 16.\n\nThis is an alpha field and requires enabling the DRADeviceTaints feature gate."
@@ -708,13 +870,13 @@
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/34"
+      "$ref": "#/36"
     }
   },
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/47"
+      "$ref": "#/49"
     }
   },
   {
@@ -723,7 +885,7 @@
     "properties": {
       "nodeSelectorTerms": {
         "type": {
-          "$ref": "#/56"
+          "$ref": "#/58"
         },
         "flags": 1,
         "description": "Required. A list of node selector terms. The terms are ORed."
@@ -736,14 +898,14 @@
     "properties": {
       "matchExpressions": {
         "type": {
-          "$ref": "#/54"
+          "$ref": "#/56"
         },
         "flags": 0,
         "description": "A list of node selector requirements by node's labels."
       },
       "matchFields": {
         "type": {
-          "$ref": "#/55"
+          "$ref": "#/57"
         },
         "flags": 0,
         "description": "A list of node selector requirements by node's fields."
@@ -756,21 +918,21 @@
     "properties": {
       "key": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "The label key that the selector applies to."
       },
       "operator": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt."
       },
       "values": {
         "type": {
-          "$ref": "#/53"
+          "$ref": "#/55"
         },
         "flags": 0,
         "description": "An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch."
@@ -780,25 +942,25 @@
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/2"
+      "$ref": "#/0"
     }
   },
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/52"
+      "$ref": "#/54"
     }
   },
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/52"
+      "$ref": "#/54"
     }
   },
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/51"
+      "$ref": "#/53"
     }
   },
   {
@@ -807,7 +969,7 @@
     "properties": {
       "conditions": {
         "type": {
-          "$ref": "#/59"
+          "$ref": "#/61"
         },
         "flags": 0,
         "description": "Conditions contains the latest observation of the device's state. If the device has been configured according to the class and claim config references, the `Ready` condition should be True.\n\nMust not contain more than 8 entries."
@@ -821,28 +983,28 @@
       },
       "device": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "Device references one device instance via its name in the driver's resource pool. It must be a DNS label."
       },
       "driver": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "Driver specifies the name of the DRA driver whose kubelet plugin should be invoked to process the allocation once the claim is needed on a node.\n\nMust be a DNS subdomain and should end with a DNS domain owned by the vendor of the driver."
       },
       "networkData": {
         "type": {
-          "$ref": "#/60"
+          "$ref": "#/62"
         },
         "flags": 0,
         "description": "NetworkDeviceData provides network-related details for the allocated device. This information may be filled by drivers or other components to configure or identify the device within a network context."
       },
       "pool": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "This name together with the driver name and the device name field identify which device was allocated (`<driver name>/<pool name>/<device name>`).\n\nMust not be longer than 253 characters and may contain one or more DNS sub-domains separated by slashes."
@@ -855,42 +1017,42 @@
     "properties": {
       "lastTransitionTime": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers."
       },
       "message": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "message is a human readable message indicating details about the transition. This may be an empty string."
       },
       "observedGeneration": {
         "type": {
-          "$ref": "#/32"
+          "$ref": "#/5"
         },
         "flags": 0,
         "description": "observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance."
       },
       "reason": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty."
       },
       "status": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "status of the condition, one of True, False, Unknown."
       },
       "type": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "type of condition in CamelCase or in foo.example.com/CamelCase."
@@ -900,7 +1062,7 @@
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/58"
+      "$ref": "#/60"
     }
   },
   {
@@ -909,21 +1071,21 @@
     "properties": {
       "hardwareAddress": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 0,
         "description": "HardwareAddress represents the hardware address (e.g. MAC Address) of the device's network interface.\n\nMust not be longer than 128 characters."
       },
       "interfaceName": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 0,
         "description": "InterfaceName specifies the name of the network interface associated with the allocated device. This might be the name of a physical or virtual network interface being configured in the pod.\n\nMust not be longer than 256 characters."
       },
       "ips": {
         "type": {
-          "$ref": "#/61"
+          "$ref": "#/63"
         },
         "flags": 0,
         "description": "IPs lists the network addresses assigned to the device's network interface. This can include both IPv4 and IPv6 addresses. The IPs are in the CIDR notation, which includes both the address and the associated subnet mask. e.g.: \"192.0.2.5/24\" for IPv4 and \"2001:db8::5/64\" for IPv6."
@@ -933,13 +1095,13 @@
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/2"
+      "$ref": "#/0"
     }
   },
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/57"
+      "$ref": "#/59"
     }
   },
   {
@@ -948,28 +1110,28 @@
     "properties": {
       "apiGroup": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 0,
         "description": "APIGroup is the group for the resource being referenced. It is empty for the core API. This matches the group in the APIVersion that is used when creating the resources."
       },
       "name": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "Name is the name of resource being referenced."
       },
       "resource": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "Resource is the type of resource being referenced, for example \"pods\"."
       },
       "uid": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "UID identifies exactly one incarnation of the resource."
@@ -979,44 +1141,44 @@
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/63"
+      "$ref": "#/65"
     }
   },
   {
     "$type": "ObjectType",
     "name": "resource.k8s.io/ResourceClaim",
     "properties": {
-      "kind": {
-        "type": {
-          "$ref": "#/16"
-        },
-        "flags": 10,
-        "description": "The resource kind."
-      },
       "apiVersion": {
         "type": {
-          "$ref": "#/17"
+          "$ref": "#/23"
         },
         "flags": 10,
-        "description": "The api version."
+        "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources"
+      },
+      "kind": {
+        "type": {
+          "$ref": "#/24"
+        },
+        "flags": 10,
+        "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
       },
       "metadata": {
         "type": {
-          "$ref": "#/20"
+          "$ref": "#/3"
         },
         "flags": 1,
-        "description": "The resource metadata."
+        "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "spec": {
         "type": {
-          "$ref": "#/21"
+          "$ref": "#/25"
         },
         "flags": 1,
         "description": "ResourceClaimSpec defines what is being requested in a ResourceClaim and how to configure it."
       },
       "status": {
         "type": {
-          "$ref": "#/41"
+          "$ref": "#/43"
         },
         "flags": 0,
         "description": "ResourceClaimStatus tracks whether the resource has been allocated and what the result of that was."
@@ -1028,60 +1190,17 @@
     "name": "resource.k8s.io/ResourceClaim@v1beta2",
     "scopeType": 0,
     "body": {
-      "$ref": "#/65"
+      "$ref": "#/67"
     },
     "flags": 0
-  },
-  {
-    "$type": "StringLiteralType",
-    "value": "ResourceClaimTemplate"
   },
   {
     "$type": "StringLiteralType",
     "value": "resource.k8s.io/v1beta2"
   },
   {
-    "$type": "ObjectType",
-    "name": "labels",
-    "properties": {},
-    "additionalProperties": {
-      "$ref": "#/2"
-    }
-  },
-  {
-    "$type": "ObjectType",
-    "name": "annotations",
-    "properties": {},
-    "additionalProperties": {
-      "$ref": "#/2"
-    }
-  },
-  {
-    "$type": "ObjectType",
-    "name": "metadata",
-    "properties": {
-      "name": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 9,
-        "description": "The name of the resource."
-      },
-      "labels": {
-        "type": {
-          "$ref": "#/69"
-        },
-        "flags": 0,
-        "description": "The labels for the resource."
-      },
-      "annotations": {
-        "type": {
-          "$ref": "#/70"
-        },
-        "flags": 0,
-        "description": "The annotations for the resource."
-      }
-    }
+    "$type": "StringLiteralType",
+    "value": "ResourceClaimTemplate"
   },
   {
     "$type": "ObjectType",
@@ -1089,14 +1208,14 @@
     "properties": {
       "metadata": {
         "type": {
-          "$ref": "#/73"
+          "$ref": "#/3"
         },
         "flags": 0,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "spec": {
         "type": {
-          "$ref": "#/21"
+          "$ref": "#/25"
         },
         "flags": 1,
         "description": "ResourceClaimSpec defines what is being requested in a ResourceClaim and how to configure it."
@@ -1105,280 +1224,32 @@
   },
   {
     "$type": "ObjectType",
-    "name": "IoK8SApimachineryPkgApisMetaV1ObjectMeta",
-    "properties": {
-      "annotations": {
-        "type": {
-          "$ref": "#/74"
-        },
-        "flags": 0,
-        "description": "Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations"
-      },
-      "creationTimestamp": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 0,
-        "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers."
-      },
-      "deletionGracePeriodSeconds": {
-        "type": {
-          "$ref": "#/32"
-        },
-        "flags": 0,
-        "description": "Number of seconds allowed for this object to gracefully terminate before it will be removed from the system. Only set when deletionTimestamp is also set. May only be shortened. Read-only."
-      },
-      "deletionTimestamp": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 0,
-        "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers."
-      },
-      "finalizers": {
-        "type": {
-          "$ref": "#/75"
-        },
-        "flags": 0,
-        "description": "Must be empty before the object is deleted from the registry. Each entry is an identifier for the responsible component that will remove the entry from the list. If the deletionTimestamp of the object is non-nil, entries in this list can only be removed. Finalizers may be processed and removed in any order.  Order is NOT enforced because it introduces significant risk of stuck finalizers. finalizers is a shared field, any actor with permission can reorder it. If the finalizer list is processed in order, then this can lead to a situation in which the component responsible for the first finalizer in the list is waiting for a signal (field value, external system, or other) produced by a component responsible for a finalizer later in the list, resulting in a deadlock. Without enforced ordering finalizers are free to order amongst themselves and are not vulnerable to ordering changes in the list."
-      },
-      "generateName": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 0,
-        "description": "GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.\n\nIf this field is specified and the generated name exists, the server will return a 409.\n\nApplied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency"
-      },
-      "generation": {
-        "type": {
-          "$ref": "#/32"
-        },
-        "flags": 0,
-        "description": "A sequence number representing a specific generation of the desired state. Populated by the system. Read-only."
-      },
-      "labels": {
-        "type": {
-          "$ref": "#/76"
-        },
-        "flags": 0,
-        "description": "Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels"
-      },
-      "managedFields": {
-        "type": {
-          "$ref": "#/78"
-        },
-        "flags": 0,
-        "description": "ManagedFields maps workflow-id and version to the set of fields that are managed by that workflow. This is mostly for internal housekeeping, and users typically shouldn't need to set or understand this field. A workflow can be the user's name, a controller's name, or the name of a specific apply path like \"ci-cd\". The set of fields is always in the version that the workflow used when modifying the object."
-      },
-      "name": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 0,
-        "description": "Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names"
-      },
-      "namespace": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 0,
-        "description": "Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the \"default\" namespace, but \"default\" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.\n\nMust be a DNS_LABEL. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces"
-      },
-      "ownerReferences": {
-        "type": {
-          "$ref": "#/80"
-        },
-        "flags": 0,
-        "description": "List of objects depended by this object. If ALL objects in the list have been deleted, this object will be garbage collected. If this object is managed by a controller, then an entry in this list will point to this controller, with the controller field set to true. There cannot be more than one managing controller."
-      },
-      "resourceVersion": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 0,
-        "description": "An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.\n\nPopulated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency"
-      },
-      "selfLink": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 0,
-        "description": "Deprecated: selfLink is a legacy read-only field that is no longer populated by the system."
-      },
-      "uid": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 0,
-        "description": "UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.\n\nPopulated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids"
-      }
-    }
-  },
-  {
-    "$type": "ObjectType",
-    "name": "IoK8SApimachineryPkgApisMetaV1ObjectMetaAnnotations",
-    "properties": {},
-    "additionalProperties": {
-      "$ref": "#/2"
-    }
-  },
-  {
-    "$type": "ArrayType",
-    "itemType": {
-      "$ref": "#/2"
-    }
-  },
-  {
-    "$type": "ObjectType",
-    "name": "IoK8SApimachineryPkgApisMetaV1ObjectMetaLabels",
-    "properties": {},
-    "additionalProperties": {
-      "$ref": "#/2"
-    }
-  },
-  {
-    "$type": "ObjectType",
-    "name": "IoK8SApimachineryPkgApisMetaV1ManagedFieldsEntry",
-    "properties": {
-      "apiVersion": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 0,
-        "description": "APIVersion defines the version of this resource that this field set applies to. The format is \"group/version\" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted."
-      },
-      "fieldsType": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 0,
-        "description": "FieldsType is the discriminator for the different fields format and version. There is currently only one possible value: \"FieldsV1\""
-      },
-      "fieldsV1": {
-        "type": {
-          "$ref": "#/9"
-        },
-        "flags": 0,
-        "description": "Any object"
-      },
-      "manager": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 0,
-        "description": "Manager is an identifier of the workflow managing these fields."
-      },
-      "operation": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 0,
-        "description": "Operation is the type of operation which lead to this ManagedFieldsEntry being created. The only valid values for this field are 'Apply' and 'Update'."
-      },
-      "subresource": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 0,
-        "description": "Subresource is the name of the subresource used to update that object, or empty string if the object was updated through the main resource. The value of this field is used to distinguish between managers, even if they share the same name. For example, a status update will be distinct from a regular update using the same manager name. Note that the APIVersion field is not related to the Subresource field and it always corresponds to the version of the main resource."
-      },
-      "time": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 0,
-        "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers."
-      }
-    }
-  },
-  {
-    "$type": "ArrayType",
-    "itemType": {
-      "$ref": "#/77"
-    }
-  },
-  {
-    "$type": "ObjectType",
-    "name": "IoK8SApimachineryPkgApisMetaV1OwnerReference",
-    "properties": {
-      "apiVersion": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 1,
-        "description": "API version of the referent."
-      },
-      "blockOwnerDeletion": {
-        "type": {
-          "$ref": "#/31"
-        },
-        "flags": 0,
-        "description": "If true, AND if the owner has the \"foregroundDeletion\" finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs \"delete\" permission of the owner, otherwise 422 (Unprocessable Entity) will be returned."
-      },
-      "controller": {
-        "type": {
-          "$ref": "#/31"
-        },
-        "flags": 0,
-        "description": "If true, this reference points to the managing controller."
-      },
-      "kind": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 1,
-        "description": "Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
-      },
-      "name": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 1,
-        "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names"
-      },
-      "uid": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 1,
-        "description": "UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids"
-      }
-    }
-  },
-  {
-    "$type": "ArrayType",
-    "itemType": {
-      "$ref": "#/79"
-    }
-  },
-  {
-    "$type": "ObjectType",
     "name": "resource.k8s.io/ResourceClaimTemplate",
     "properties": {
-      "kind": {
-        "type": {
-          "$ref": "#/67"
-        },
-        "flags": 10,
-        "description": "The resource kind."
-      },
       "apiVersion": {
         "type": {
-          "$ref": "#/68"
+          "$ref": "#/69"
         },
         "flags": 10,
-        "description": "The api version."
+        "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources"
+      },
+      "kind": {
+        "type": {
+          "$ref": "#/70"
+        },
+        "flags": 10,
+        "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
       },
       "metadata": {
         "type": {
-          "$ref": "#/71"
+          "$ref": "#/3"
         },
         "flags": 1,
-        "description": "The resource metadata."
+        "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "spec": {
         "type": {
-          "$ref": "#/72"
+          "$ref": "#/71"
         },
         "flags": 1,
         "description": "ResourceClaimTemplateSpec contains the metadata and fields for a ResourceClaim."
@@ -1390,60 +1261,17 @@
     "name": "resource.k8s.io/ResourceClaimTemplate@v1beta2",
     "scopeType": 0,
     "body": {
-      "$ref": "#/81"
+      "$ref": "#/72"
     },
     "flags": 0
-  },
-  {
-    "$type": "StringLiteralType",
-    "value": "ResourceSlice"
   },
   {
     "$type": "StringLiteralType",
     "value": "resource.k8s.io/v1beta2"
   },
   {
-    "$type": "ObjectType",
-    "name": "labels",
-    "properties": {},
-    "additionalProperties": {
-      "$ref": "#/2"
-    }
-  },
-  {
-    "$type": "ObjectType",
-    "name": "annotations",
-    "properties": {},
-    "additionalProperties": {
-      "$ref": "#/2"
-    }
-  },
-  {
-    "$type": "ObjectType",
-    "name": "metadata",
-    "properties": {
-      "name": {
-        "type": {
-          "$ref": "#/2"
-        },
-        "flags": 9,
-        "description": "The name of the resource."
-      },
-      "labels": {
-        "type": {
-          "$ref": "#/85"
-        },
-        "flags": 0,
-        "description": "The labels for the resource."
-      },
-      "annotations": {
-        "type": {
-          "$ref": "#/86"
-        },
-        "flags": 0,
-        "description": "The annotations for the resource."
-      }
-    }
+    "$type": "StringLiteralType",
+    "value": "ResourceSlice"
   },
   {
     "$type": "ObjectType",
@@ -1451,56 +1279,56 @@
     "properties": {
       "allNodes": {
         "type": {
-          "$ref": "#/31"
+          "$ref": "#/12"
         },
         "flags": 0,
         "description": "AllNodes indicates that all nodes have access to the resources in the pool.\n\nExactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set."
       },
       "devices": {
         "type": {
-          "$ref": "#/100"
+          "$ref": "#/88"
         },
         "flags": 0,
         "description": "Devices lists some or all of the devices in this pool.\n\nMust not have more than 128 entries."
       },
       "driver": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "Driver identifies the DRA driver providing the capacity information. A field selector can be used to list only ResourceSlice objects with a certain driver name.\n\nMust be a DNS subdomain and should end with a DNS domain owned by the vendor of the driver. This field is immutable."
       },
       "nodeName": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 0,
         "description": "NodeName identifies the node which provides the resources in this pool. A field selector can be used to list only ResourceSlice objects belonging to a certain node.\n\nThis field can be used to limit access from nodes to ResourceSlices with the same node name. It also indicates to autoscalers that adding new nodes of the same type as some old node might also make new resources available.\n\nExactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set. This field is immutable."
       },
       "nodeSelector": {
         "type": {
-          "$ref": "#/50"
+          "$ref": "#/52"
         },
         "flags": 0,
         "description": "A node selector represents the union of the results of one or more label queries over a set of nodes; that is, it represents the OR of the selectors represented by the node selector terms."
       },
       "perDeviceNodeSelection": {
         "type": {
-          "$ref": "#/31"
+          "$ref": "#/12"
         },
         "flags": 0,
         "description": "PerDeviceNodeSelection defines whether the access from nodes to resources in the pool is set on the ResourceSlice level or on each device. If it is set to true, every device defined the ResourceSlice must specify this individually.\n\nExactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set."
       },
       "pool": {
         "type": {
-          "$ref": "#/101"
+          "$ref": "#/89"
         },
         "flags": 1,
         "description": "ResourcePool describes the pool that ResourceSlices belong to."
       },
       "sharedCounters": {
         "type": {
-          "$ref": "#/104"
+          "$ref": "#/92"
         },
         "flags": 0,
         "description": "SharedCounters defines a list of counter sets, each of which has a name and a list of counters available.\n\nThe names of the SharedCounters must be unique in the ResourceSlice.\n\nThe maximum number of counters in all sets is 32."
@@ -1513,56 +1341,56 @@
     "properties": {
       "allNodes": {
         "type": {
-          "$ref": "#/31"
+          "$ref": "#/12"
         },
         "flags": 0,
         "description": "AllNodes indicates that all nodes have access to the device.\n\nMust only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set."
       },
       "attributes": {
         "type": {
-          "$ref": "#/91"
+          "$ref": "#/79"
         },
         "flags": 0,
         "description": "Attributes defines the set of attributes for this device. The name of each attribute must be unique in that set.\n\nThe maximum number of attributes and capacities combined is 32."
       },
       "capacity": {
         "type": {
-          "$ref": "#/93"
+          "$ref": "#/81"
         },
         "flags": 0,
         "description": "Capacity defines the set of capacities for this device. The name of each capacity must be unique in that set.\n\nThe maximum number of attributes and capacities combined is 32."
       },
       "consumesCounters": {
         "type": {
-          "$ref": "#/97"
+          "$ref": "#/85"
         },
         "flags": 0,
         "description": "ConsumesCounters defines a list of references to sharedCounters and the set of counters that the device will consume from those counter sets.\n\nThere can only be a single entry per counterSet.\n\nThe total number of device counter consumption entries must be <= 32. In addition, the total number in the entire ResourceSlice must be <= 1024 (for example, 64 devices with 16 counters each)."
       },
       "name": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "Name is unique identifier among all devices managed by the driver in the pool. It must be a DNS label."
       },
       "nodeName": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 0,
         "description": "NodeName identifies the node where the device is available.\n\nMust only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set."
       },
       "nodeSelector": {
         "type": {
-          "$ref": "#/50"
+          "$ref": "#/52"
         },
         "flags": 0,
         "description": "A node selector represents the union of the results of one or more label queries over a set of nodes; that is, it represents the OR of the selectors represented by the node selector terms."
       },
       "taints": {
         "type": {
-          "$ref": "#/99"
+          "$ref": "#/87"
         },
         "flags": 0,
         "description": "If specified, these are the driver-defined taints.\n\nThe maximum number of taints is 4.\n\nThis is an alpha field and requires enabling the DRADeviceTaints feature gate."
@@ -1575,28 +1403,28 @@
     "properties": {
       "bool": {
         "type": {
-          "$ref": "#/31"
+          "$ref": "#/12"
         },
         "flags": 0,
         "description": "BoolValue is a true/false value."
       },
       "int": {
         "type": {
-          "$ref": "#/32"
+          "$ref": "#/5"
         },
         "flags": 0,
         "description": "IntValue is a number."
       },
       "string": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 0,
         "description": "StringValue is a string. Must not be longer than 64 characters."
       },
       "version": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 0,
         "description": "VersionValue is a semantic version according to semver.org spec 2.0.0. Must not be longer than 64 characters."
@@ -1608,7 +1436,7 @@
     "name": "IoK8SApiResourceV1Beta2DeviceAttributes",
     "properties": {},
     "additionalProperties": {
-      "$ref": "#/90"
+      "$ref": "#/78"
     }
   },
   {
@@ -1617,10 +1445,10 @@
     "properties": {
       "value": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
-        "description": "Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.\n\nThe serialization format is:\n\n``` <quantity>        ::= <signedNumber><suffix>\n\n\t(Note that <suffix> may be empty, from the \"\" case in <decimalSI>.)\n\n<digit>           ::= 0 | 1 | ... | 9 <digits>          ::= <digit> | <digit><digits> <number>          ::= <digits> | <digits>.<digits> | <digits>. | .<digits> <sign>            ::= \"+\" | \"-\" <signedNumber>    ::= <number> | <sign><number> <suffix>          ::= <binarySI> | <decimalExponent> | <decimalSI> <binarySI>        ::= Ki | Mi | Gi | Ti | Pi | Ei\n\n\t(International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)\n\n<decimalSI>       ::= m | \"\" | k | M | G | T | P | E\n\n\t(Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)\n\n<decimalExponent> ::= \"e\" <signedNumber> | \"E\" <signedNumber> ```\n\nNo matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.\n\nWhen a Quantity is parsed from a string, it will remember the type of suffix it had, and will use the same type again when it is serialized.\n\nBefore serializing, Quantity will be put in \"canonical form\". This means that Exponent/suffix will be adjusted up or down (with a corresponding increase or decrease in Mantissa) such that:\n\n- No precision is lost - No fractional digits will be emitted - The exponent (or suffix) is as large as possible.\n\nThe sign will be omitted unless the number is negative.\n\nExamples:\n\n- 1.5 will be serialized as \"1500m\" - 1.5Gi will be serialized as \"1536Mi\"\n\nNote that the quantity will NEVER be internally represented by a floating point number. That is the whole point of this exercise.\n\nNon-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)\n\nThis format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation."
+        "description": "Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.\n\nThe serialization format is:\n\n``` <quantity>        ::= <signedNumber><suffix>\n\n\t(Note that <suffix> may be empty, from the \"\" case in <decimalSI>.)\n\n<digit>           ::= 0 | 1 | ... | 9 <digits>          ::= <digit> | <digit><digits> <number>          ::= <digits> | <digits>.<digits> | <digits>. | .<digits> <sign>            ::= \"+\" | \"-\" <signedNumber>    ::= <number> | <sign><number> <suffix>          ::= <binarySI> | <decimalExponent> | <decimalSI> <binarySI>        ::= Ki | Mi | Gi | Ti | Pi | Ei\n\n\t(International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)\n\n<decimalSI>       ::= m | \"\" | k | M | G | T | P | E\n\n\t(Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)\n\n<decimalExponent> ::= \"e\" <signedNumber> | \"E\" <signedNumber>\n\n```\n\nNo matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.\n\nWhen a Quantity is parsed from a string, it will remember the type of suffix it had, and will use the same type again when it is serialized.\n\nBefore serializing, Quantity will be put in \"canonical form\". This means that Exponent/suffix will be adjusted up or down (with a corresponding increase or decrease in Mantissa) such that:\n\n- No precision is lost - No fractional digits will be emitted - The exponent (or suffix) is as large as possible.\n\nThe sign will be omitted unless the number is negative.\n\nExamples:\n\n- 1.5 will be serialized as \"1500m\" - 1.5Gi will be serialized as \"1536Mi\"\n\nNote that the quantity will NEVER be internally represented by a floating point number. That is the whole point of this exercise.\n\nNon-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)\n\nThis format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation."
       }
     }
   },
@@ -1629,7 +1457,7 @@
     "name": "IoK8SApiResourceV1Beta2DeviceCapacity",
     "properties": {},
     "additionalProperties": {
-      "$ref": "#/92"
+      "$ref": "#/80"
     }
   },
   {
@@ -1638,14 +1466,14 @@
     "properties": {
       "counterSet": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "CounterSet is the name of the set from which the counters defined will be consumed."
       },
       "counters": {
         "type": {
-          "$ref": "#/96"
+          "$ref": "#/84"
         },
         "flags": 1,
         "description": "Counters defines the counters that will be consumed by the device.\n\nThe maximum number counters in a device is 32. In addition, the maximum number of all counters in all devices is 1024 (for example, 64 devices with 16 counters each)."
@@ -1658,10 +1486,10 @@
     "properties": {
       "value": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
-        "description": "Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.\n\nThe serialization format is:\n\n``` <quantity>        ::= <signedNumber><suffix>\n\n\t(Note that <suffix> may be empty, from the \"\" case in <decimalSI>.)\n\n<digit>           ::= 0 | 1 | ... | 9 <digits>          ::= <digit> | <digit><digits> <number>          ::= <digits> | <digits>.<digits> | <digits>. | .<digits> <sign>            ::= \"+\" | \"-\" <signedNumber>    ::= <number> | <sign><number> <suffix>          ::= <binarySI> | <decimalExponent> | <decimalSI> <binarySI>        ::= Ki | Mi | Gi | Ti | Pi | Ei\n\n\t(International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)\n\n<decimalSI>       ::= m | \"\" | k | M | G | T | P | E\n\n\t(Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)\n\n<decimalExponent> ::= \"e\" <signedNumber> | \"E\" <signedNumber> ```\n\nNo matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.\n\nWhen a Quantity is parsed from a string, it will remember the type of suffix it had, and will use the same type again when it is serialized.\n\nBefore serializing, Quantity will be put in \"canonical form\". This means that Exponent/suffix will be adjusted up or down (with a corresponding increase or decrease in Mantissa) such that:\n\n- No precision is lost - No fractional digits will be emitted - The exponent (or suffix) is as large as possible.\n\nThe sign will be omitted unless the number is negative.\n\nExamples:\n\n- 1.5 will be serialized as \"1500m\" - 1.5Gi will be serialized as \"1536Mi\"\n\nNote that the quantity will NEVER be internally represented by a floating point number. That is the whole point of this exercise.\n\nNon-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)\n\nThis format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation."
+        "description": "Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.\n\nThe serialization format is:\n\n``` <quantity>        ::= <signedNumber><suffix>\n\n\t(Note that <suffix> may be empty, from the \"\" case in <decimalSI>.)\n\n<digit>           ::= 0 | 1 | ... | 9 <digits>          ::= <digit> | <digit><digits> <number>          ::= <digits> | <digits>.<digits> | <digits>. | .<digits> <sign>            ::= \"+\" | \"-\" <signedNumber>    ::= <number> | <sign><number> <suffix>          ::= <binarySI> | <decimalExponent> | <decimalSI> <binarySI>        ::= Ki | Mi | Gi | Ti | Pi | Ei\n\n\t(International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)\n\n<decimalSI>       ::= m | \"\" | k | M | G | T | P | E\n\n\t(Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)\n\n<decimalExponent> ::= \"e\" <signedNumber> | \"E\" <signedNumber>\n\n```\n\nNo matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.\n\nWhen a Quantity is parsed from a string, it will remember the type of suffix it had, and will use the same type again when it is serialized.\n\nBefore serializing, Quantity will be put in \"canonical form\". This means that Exponent/suffix will be adjusted up or down (with a corresponding increase or decrease in Mantissa) such that:\n\n- No precision is lost - No fractional digits will be emitted - The exponent (or suffix) is as large as possible.\n\nThe sign will be omitted unless the number is negative.\n\nExamples:\n\n- 1.5 will be serialized as \"1500m\" - 1.5Gi will be serialized as \"1536Mi\"\n\nNote that the quantity will NEVER be internally represented by a floating point number. That is the whole point of this exercise.\n\nNon-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)\n\nThis format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation."
       }
     }
   },
@@ -1670,13 +1498,13 @@
     "name": "IoK8SApiResourceV1Beta2DeviceCounterConsumptionCounters",
     "properties": {},
     "additionalProperties": {
-      "$ref": "#/95"
+      "$ref": "#/83"
     }
   },
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/94"
+      "$ref": "#/82"
     }
   },
   {
@@ -1685,28 +1513,28 @@
     "properties": {
       "effect": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "The effect of the taint on claims that do not tolerate the taint and through such claims on the pods using them. Valid effects are NoSchedule and NoExecute. PreferNoSchedule as used for nodes is not valid here."
       },
       "key": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "The taint key to be applied to a device. Must be a label name."
       },
       "timeAdded": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 0,
         "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers."
       },
       "value": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 0,
         "description": "The taint value corresponding to the taint key. Must be a label value."
@@ -1716,13 +1544,13 @@
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/98"
+      "$ref": "#/86"
     }
   },
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/89"
+      "$ref": "#/77"
     }
   },
   {
@@ -1731,21 +1559,21 @@
     "properties": {
       "generation": {
         "type": {
-          "$ref": "#/32"
+          "$ref": "#/5"
         },
         "flags": 1,
         "description": "Generation tracks the change in a pool over time. Whenever a driver changes something about one or more of the resources in a pool, it must change the generation in all ResourceSlices which are part of that pool. Consumers of ResourceSlices should only consider resources from the pool with the highest generation number. The generation may be reset by drivers, which should be fine for consumers, assuming that all ResourceSlices in a pool are updated to match or deleted.\n\nCombined with ResourceSliceCount, this mechanism enables consumers to detect pools which are comprised of multiple ResourceSlices and are in an incomplete state."
       },
       "name": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "Name is used to identify the pool. For node-local devices, this is often the node name, but this is not required.\n\nIt must not be longer than 253 characters and must consist of one or more DNS sub-domains separated by slashes. This field is immutable."
       },
       "resourceSliceCount": {
         "type": {
-          "$ref": "#/32"
+          "$ref": "#/5"
         },
         "flags": 1,
         "description": "ResourceSliceCount is the total number of ResourceSlices in the pool at this generation number. Must be greater than zero.\n\nConsumers can use this to check whether they have seen all ResourceSlices belonging to the same pool."
@@ -1758,14 +1586,14 @@
     "properties": {
       "counters": {
         "type": {
-          "$ref": "#/103"
+          "$ref": "#/91"
         },
         "flags": 1,
         "description": "Counters defines the set of counters for this CounterSet The name of each counter must be unique in that set and must be a DNS label.\n\nThe maximum number of counters in all sets is 32."
       },
       "name": {
         "type": {
-          "$ref": "#/2"
+          "$ref": "#/0"
         },
         "flags": 1,
         "description": "Name defines the name of the counter set. It must be a DNS label."
@@ -1777,43 +1605,43 @@
     "name": "IoK8SApiResourceV1Beta2CounterSetCounters",
     "properties": {},
     "additionalProperties": {
-      "$ref": "#/95"
+      "$ref": "#/83"
     }
   },
   {
     "$type": "ArrayType",
     "itemType": {
-      "$ref": "#/102"
+      "$ref": "#/90"
     }
   },
   {
     "$type": "ObjectType",
     "name": "resource.k8s.io/ResourceSlice",
     "properties": {
-      "kind": {
-        "type": {
-          "$ref": "#/83"
-        },
-        "flags": 10,
-        "description": "The resource kind."
-      },
       "apiVersion": {
         "type": {
-          "$ref": "#/84"
+          "$ref": "#/74"
         },
         "flags": 10,
-        "description": "The api version."
+        "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources"
+      },
+      "kind": {
+        "type": {
+          "$ref": "#/75"
+        },
+        "flags": 10,
+        "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
       },
       "metadata": {
         "type": {
-          "$ref": "#/87"
+          "$ref": "#/3"
         },
         "flags": 1,
-        "description": "The resource metadata."
+        "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "spec": {
         "type": {
-          "$ref": "#/88"
+          "$ref": "#/76"
         },
         "flags": 1,
         "description": "ResourceSliceSpec contains the information published by the driver in one ResourceSlice."
@@ -1825,7 +1653,7 @@
     "name": "resource.k8s.io/ResourceSlice@v1beta2",
     "scopeType": 0,
     "body": {
-      "$ref": "#/105"
+      "$ref": "#/93"
     },
     "flags": 0
   }
