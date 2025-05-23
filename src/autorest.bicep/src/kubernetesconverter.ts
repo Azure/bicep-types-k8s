@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Dictionary } from "lodash";
 import { SchemaConverter } from "./converter";
 import { KubernetesDescriptor } from "./kubernetes";
 import { ProviderDefinition, ResourceDefinition } from "./resources";
 import { TypeBuilder } from "./typebuilder";
-import { ObjectType, ObjectTypeProperty, ObjectTypePropertyFlags, ResourceType, TypeFactory, TypeReference } from "bicep-types";
+import { ObjectType, ObjectTypeProperty, ObjectTypePropertyFlags, ResourceType } from "bicep-types";
 
 export class KubernetesConverter extends SchemaConverter {
     Convert(builder: TypeBuilder, provider: ProviderDefinition, fullyQualifiedType: string, definitions: ResourceDefinition[]): ResourceType | null {
