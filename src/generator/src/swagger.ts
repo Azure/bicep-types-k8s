@@ -29,6 +29,10 @@ interface Definition {
 }
 
 function preprocessSwagger(swaggerText: string, summaryLogger: Logger) {
+  // Some descritption contains markdown code block with ``` at the end without leading new line, causing
+  // the markdown to be rendered incorrectly. This is a workaround to add a new line before the code block.
+  swaggerText = swaggerText.replace(/ ```/gm, "\\n\\n```");
+
   const swaggerDoc = JSON.parse(swaggerText) as SwaggerDoc;
 
   for (const pathKey in swaggerDoc.paths) {

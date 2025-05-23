@@ -6,58 +6,45 @@ import { SchemaConverter } from "./converter";
 import { KubernetesDescriptor } from "./kubernetes";
 import { ProviderDefinition, ResourceDefinition } from "./resources";
 import { TypeBuilder } from "./typebuilder";
-import { ObjectTypeProperty, ObjectTypePropertyFlags, ResourceType, TypeReference } from "bicep-types";
+import { ObjectType, ObjectTypeProperty, ObjectTypePropertyFlags, ResourceType, TypeFactory, TypeReference } from "bicep-types";
 
 export class KubernetesConverter extends SchemaConverter {
     Convert(builder: TypeBuilder, provider: ProviderDefinition, fullyQualifiedType: string, definitions: ResourceDefinition[]): ResourceType | null {
-        function initializeResource(definition: ResourceDefinition, properties: Dictionary<ObjectTypeProperty>) {
+        function patchObjectTypeProperty(definition: ResourceDefinition, propertyName: string, propertyType: ObjectTypeProperty): ObjectTypeProperty {
             const descriptor = definition.descriptor as KubernetesDescriptor;
 
-            properties[`kind`] = builder.createObjectTypeProperty(
-                builder.factory.addStringLiteralType(descriptor.kind), 
-                ObjectTypePropertyFlags.ReadOnly | ObjectTypePropertyFlags.DeployTimeConstant, 
-                'The resource kind.');
-
-            properties[`apiVersion`] = builder.createObjectTypeProperty(
-                builder.factory.addStringLiteralType(gvToApiVersion(descriptor.group, descriptor.version)), 
-                ObjectTypePropertyFlags.ReadOnly | ObjectTypePropertyFlags.DeployTimeConstant, 
-                'The api version.');
-
-            properties[`metadata`] = builder.createObjectTypeProperty(
-                createMetadata(descriptor.namespaced), 
-                ObjectTypePropertyFlags.Required, 
-                'The resource metadata.');
-        }
-
-        function createMetadata(namespaced: boolean): TypeReference {
-            const properties: Dictionary<ObjectTypeProperty> = {};
-
-            properties[`name`] = builder.createObjectTypeProperty(
-                builder.factory.addStringType(),
-                ObjectTypePropertyFlags.DeployTimeConstant | ObjectTypePropertyFlags.Required, 
-                `The name of the resource.`);
-
-            if (namespaced) {
-                properties[`namespace`] = builder.createObjectTypeProperty(
-                    builder.factory.addStringType(),
-                    ObjectTypePropertyFlags.DeployTimeConstant, 
-                    `The namespace of the resource.`);
+            if (propertyName === "kind") {
+                propertyType.type = builder.factory.addStringLiteralType(descriptor.kind);
+                propertyType.flags = ObjectTypePropertyFlags.ReadOnly | ObjectTypePropertyFlags.DeployTimeConstant;
             }
 
-            properties[`labels`] = builder.createObjectTypeProperty(
-                builder.factory.addObjectType(`labels`, {}, builder.factory.addStringType()),
-                ObjectTypePropertyFlags.None,
-                `The labels for the resource.`);
+            if (propertyName === "apiVersion") {
+                propertyType.type = builder.factory.addStringLiteralType(gvToApiVersion(descriptor.group, descriptor.version));
+                propertyType.flags = ObjectTypePropertyFlags.ReadOnly | ObjectTypePropertyFlags.DeployTimeConstant;
+            }
 
-            properties[`annotations`] = builder.createObjectTypeProperty(
-                builder.factory.addObjectType(`annotations`, {}, builder.factory.addStringType()),
-                ObjectTypePropertyFlags.None,
-                `The annotations for the resource.`);
+            if (propertyName === "metadata") {
+                propertyType.flags = ObjectTypePropertyFlags.Required;
+                const metadataObjectType = builder.factory.lookupType(propertyType.type) as ObjectType;
+                metadataObjectType.properties["name"].flags = ObjectTypePropertyFlags.DeployTimeConstant | ObjectTypePropertyFlags.Required | ObjectTypePropertyFlags.Identifier;
 
-            return builder.factory.addObjectType(`metadata`, properties, undefined);
+                if (metadataObjectType.properties["namespace"] !== undefined) {
+                    metadataObjectType.properties["namespace"].flags = ObjectTypePropertyFlags.DeployTimeConstant | ObjectTypePropertyFlags.Identifier;
+                }
+
+                for (const [metadataName, metadataValue] of Object.entries(metadataObjectType.properties)) {
+                    if (metadataName.toLowerCase().includes("timestamp") ||
+                        metadataValue.description?.toLowerCase().includes("read-only") ||
+                        metadataValue.description?.toLowerCase().includes("readonly")) {
+                        metadataValue.flags |= ObjectTypePropertyFlags.ReadOnly;
+                    }
+                }
+            }
+
+            return propertyType;
         }
 
-        return this.process(builder, provider, fullyQualifiedType, definitions, initializeResource);
+        return this.process(builder, provider, fullyQualifiedType, definitions, undefined, patchObjectTypeProperty);
     }
 }
 
