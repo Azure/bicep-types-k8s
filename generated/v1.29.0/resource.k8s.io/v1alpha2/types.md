@@ -5,7 +5,7 @@
 ### Properties
 * **apiVersion**: 'resource.k8s.io/v1alpha2' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **kind**: 'PodSchedulingContext' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **spec**: [IoK8SApiResourceV1Alpha2PodSchedulingContextSpec](#iok8sapiresourcev1alpha2podschedulingcontextspec) (Required): PodSchedulingContextSpec describes where resources for the Pod are needed.
 * **status**: [IoK8SApiResourceV1Alpha2PodSchedulingContextStatus](#iok8sapiresourcev1alpha2podschedulingcontextstatus): PodSchedulingContextStatus describes where resources for the Pod can be allocated.
 
@@ -14,7 +14,7 @@
 ### Properties
 * **apiVersion**: 'resource.k8s.io/v1alpha2' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **kind**: 'ResourceClaim' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **spec**: [IoK8SApiResourceV1Alpha2ResourceClaimSpec](#iok8sapiresourcev1alpha2resourceclaimspec) (Required): ResourceClaimSpec defines how a resource is to be allocated.
 * **status**: [IoK8SApiResourceV1Alpha2ResourceClaimStatus](#iok8sapiresourcev1alpha2resourceclaimstatus): ResourceClaimStatus tracks whether the resource has been allocated and what the resulting attributes are.
 
@@ -23,7 +23,7 @@
 ### Properties
 * **apiVersion**: 'resource.k8s.io/v1alpha2' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **kind**: 'ResourceClaimTemplate' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **spec**: [IoK8SApiResourceV1Alpha2ResourceClaimTemplateSpec](#iok8sapiresourcev1alpha2resourceclaimtemplatespec) (Required): ResourceClaimTemplateSpec contains the metadata and fields for a ResourceClaim.
 
 ## Resource resource.k8s.io/ResourceClass@v1alpha2
@@ -34,7 +34,7 @@
 
 Resource drivers have a unique name in forward domain order (acme.example.com).
 * **kind**: 'ResourceClass' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **parametersRef**: [IoK8SApiResourceV1Alpha2ResourceClassParametersReference](#iok8sapiresourcev1alpha2resourceclassparametersreference): ResourceClassParametersReference contains enough information to let you locate the parameters for a ResourceClass.
 * **suitableNodes**: [IoK8SApiCoreV1NodeSelector](#iok8sapicorev1nodeselector): A node selector represents the union of the results of one or more label queries over a set of nodes; that is, it represents the OR of the selectors represented by the node selector terms.
 

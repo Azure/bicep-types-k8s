@@ -5,7 +5,7 @@
 ### Properties
 * **apiVersion**: 'resource.k8s.io/v1alpha2' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **kind**: 'PodSchedulingContext' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **spec**: [IoK8SApiResourceV1Alpha2PodSchedulingContextSpec](#iok8sapiresourcev1alpha2podschedulingcontextspec) (Required): PodSchedulingContextSpec describes where resources for the Pod are needed.
 * **status**: [IoK8SApiResourceV1Alpha2PodSchedulingContextStatus](#iok8sapiresourcev1alpha2podschedulingcontextstatus): PodSchedulingContextStatus describes where resources for the Pod can be allocated.
 
@@ -14,7 +14,7 @@
 ### Properties
 * **apiVersion**: 'resource.k8s.io/v1alpha2' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **kind**: 'ResourceClaim' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **spec**: [IoK8SApiResourceV1Alpha2ResourceClaimSpec](#iok8sapiresourcev1alpha2resourceclaimspec) (Required): ResourceClaimSpec defines how a resource is to be allocated.
 * **status**: [IoK8SApiResourceV1Alpha2ResourceClaimStatus](#iok8sapiresourcev1alpha2resourceclaimstatus): ResourceClaimStatus tracks whether the resource has been allocated and what the resulting attributes are.
 
@@ -27,7 +27,7 @@
 May be empty, in which case the claim can always be allocated.
 * **generatedFrom**: [IoK8SApiResourceV1Alpha2ResourceClaimParametersReference](#iok8sapiresourcev1alpha2resourceclaimparametersreference): ResourceClaimParametersReference contains enough information to let you locate the parameters for a ResourceClaim. The object must be in the same namespace as the ResourceClaim.
 * **kind**: 'ResourceClaimParameters' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **shareable**: bool: Shareable indicates whether the allocated claim is meant to be shareable by multiple consumers at the same time.
 
 ## Resource resource.k8s.io/ResourceClaimTemplate@v1alpha2
@@ -35,7 +35,7 @@ May be empty, in which case the claim can always be allocated.
 ### Properties
 * **apiVersion**: 'resource.k8s.io/v1alpha2' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **kind**: 'ResourceClaimTemplate' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **spec**: [IoK8SApiResourceV1Alpha2ResourceClaimTemplateSpec](#iok8sapiresourcev1alpha2resourceclaimtemplatespec) (Required): ResourceClaimTemplateSpec contains the metadata and fields for a ResourceClaim.
 
 ## Resource resource.k8s.io/ResourceClass@v1alpha2
@@ -46,7 +46,7 @@ May be empty, in which case the claim can always be allocated.
 
 Resource drivers have a unique name in forward domain order (acme.example.com).
 * **kind**: 'ResourceClass' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **parametersRef**: [IoK8SApiResourceV1Alpha2ResourceClassParametersReference](#iok8sapiresourcev1alpha2resourceclassparametersreference): ResourceClassParametersReference contains enough information to let you locate the parameters for a ResourceClass.
 * **structuredParameters**: bool: If and only if allocation of claims using this class is handled via structured parameters, then StructuredParameters must be set to true.
 * **suitableNodes**: [IoK8SApiCoreV1NodeSelector](#iok8sapicorev1nodeselector): A node selector represents the union of the results of one or more label queries over a set of nodes; that is, it represents the OR of the selectors represented by the node selector terms.
@@ -58,7 +58,7 @@ Resource drivers have a unique name in forward domain order (acme.example.com).
 * **filters**: [IoK8SApiResourceV1Alpha2ResourceFilter](#iok8sapiresourcev1alpha2resourcefilter)[]: Filters describes additional contraints that must be met when using the class.
 * **generatedFrom**: [IoK8SApiResourceV1Alpha2ResourceClassParametersReference](#iok8sapiresourcev1alpha2resourceclassparametersreference): ResourceClassParametersReference contains enough information to let you locate the parameters for a ResourceClass.
 * **kind**: 'ResourceClassParameters' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **vendorParameters**: [IoK8SApiResourceV1Alpha2VendorParameters](#iok8sapiresourcev1alpha2vendorparameters)[]: VendorParameters are arbitrary setup parameters for all claims using this class. They are ignored while allocating the claim. There must not be more than one entry per driver.
 
 ## Resource resource.k8s.io/ResourceSlice@v1alpha2
@@ -67,7 +67,7 @@ Resource drivers have a unique name in forward domain order (acme.example.com).
 * **apiVersion**: 'resource.k8s.io/v1alpha2' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **driverName**: string (Required): DriverName identifies the DRA driver providing the capacity information. A field selector can be used to list only ResourceSlice objects with a certain driver name.
 * **kind**: 'ResourceSlice' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **namedResources**: [IoK8SApiResourceV1Alpha2NamedResources](#iok8sapiresourcev1alpha2namedresources): NamedResourcesResources is used in ResourceModel.
 * **nodeName**: string: NodeName identifies the node which provides the resources if they are local to a node.
 

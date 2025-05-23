@@ -6,7 +6,7 @@
 * **aggregationRule**: [IoK8SApiRbacV1Beta1AggregationRule](#iok8sapirbacv1beta1aggregationrule): AggregationRule describes how to locate ClusterRoles to aggregate into the ClusterRole
 * **apiVersion**: 'rbac.authorization.k8s.io/v1beta1' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **kind**: 'ClusterRole' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **rules**: [IoK8SApiRbacV1Beta1PolicyRule](#iok8sapirbacv1beta1policyrule)[]: Rules holds all the PolicyRules for this ClusterRole
 
 ## Resource rbac.authorization.k8s.io/ClusterRoleBinding@v1beta1
@@ -14,7 +14,7 @@
 ### Properties
 * **apiVersion**: 'rbac.authorization.k8s.io/v1beta1' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **kind**: 'ClusterRoleBinding' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **roleRef**: [IoK8SApiRbacV1Beta1RoleRef](#iok8sapirbacv1beta1roleref) (Required): RoleRef contains information that points to the role being used
 * **subjects**: [IoK8SApiRbacV1Beta1Subject](#iok8sapirbacv1beta1subject)[]: Subjects holds references to the objects the role applies to.
 
@@ -23,7 +23,7 @@
 ### Properties
 * **apiVersion**: 'rbac.authorization.k8s.io/v1beta1' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **kind**: 'Role' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **rules**: [IoK8SApiRbacV1Beta1PolicyRule](#iok8sapirbacv1beta1policyrule)[]: Rules holds all the PolicyRules for this Role
 
 ## Resource rbac.authorization.k8s.io/RoleBinding@v1beta1
@@ -31,7 +31,7 @@
 ### Properties
 * **apiVersion**: 'rbac.authorization.k8s.io/v1beta1' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **kind**: 'RoleBinding' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **roleRef**: [IoK8SApiRbacV1Beta1RoleRef](#iok8sapirbacv1beta1roleref) (Required): RoleRef contains information that points to the role being used
 * **subjects**: [IoK8SApiRbacV1Beta1Subject](#iok8sapirbacv1beta1subject)[]: Subjects holds references to the objects the role applies to.
 

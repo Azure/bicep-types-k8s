@@ -356,7 +356,7 @@
         "type": {
           "$ref": "#/3"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "roleRef": {
@@ -584,7 +584,7 @@
         "type": {
           "$ref": "#/3"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "rules": {
@@ -641,7 +641,7 @@
         "type": {
           "$ref": "#/3"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "roleRef": {
@@ -705,7 +705,7 @@
         "type": {
           "$ref": "#/3"
         },
-        "flags": 1,
+        "flags": 17,
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create."
       },
       "rules": {

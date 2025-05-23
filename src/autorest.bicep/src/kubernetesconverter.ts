@@ -23,7 +23,7 @@ export class KubernetesConverter extends SchemaConverter {
             }
 
             if (propertyName === "metadata") {
-                propertyType.flags = ObjectTypePropertyFlags.Required;
+                propertyType.flags = ObjectTypePropertyFlags.Required | ObjectTypePropertyFlags.Identifier;
                 const metadataObjectType = builder.factory.lookupType(propertyType.type) as ObjectType;
                 metadataObjectType.properties["name"].flags = ObjectTypePropertyFlags.DeployTimeConstant | ObjectTypePropertyFlags.Required | ObjectTypePropertyFlags.Identifier;
 

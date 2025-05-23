@@ -1,28 +1,89 @@
 [
   {
-    "$type": "StringType",
-    "sensitive": true
-  },
-  {
     "$type": "StringType"
   },
   {
+    "$type": "StringLiteralType",
+    "value": "Admin"
+  },
+  {
+    "$type": "StringLiteralType",
+    "value": "User"
+  },
+  {
+    "$type": "UnionType",
+    "elements": [
+      {
+        "$ref": "#/1"
+      },
+      {
+        "$ref": "#/2"
+      }
+    ]
+  },
+  {
     "$type": "ObjectType",
-    "name": "KubernetesExtensionConfig",
+    "name": "KubernetesExtensionManagedClusterConfig",
     "properties": {
-      "kubeconfig": {
+      "credentialType": {
+        "type": {
+          "$ref": "#/3"
+        },
+        "flags": 1,
+        "description": "The type of credential to use. Can be either 'Admin' or 'User'."
+      },
+      "managedClusterId": {
         "type": {
           "$ref": "#/0"
         },
         "flags": 1,
-        "description": "Base64 encoded kubeconfig file content."
-      },
+        "description": "The resource ID of the managed Azure Kubernetes Service (AKS) cluster."
+      }
+    }
+  },
+  {
+    "$type": "StringType",
+    "sensitive": true
+  },
+  {
+    "$type": "ObjectType",
+    "name": "KubernetesExtensionCustomClusterConfig",
+    "properties": {
+      "kubeconfig": {
+        "type": {
+          "$ref": "#/5"
+        },
+        "flags": 1,
+        "description": "The contents of a kubeconfig file, encoded in Base64. This is used to authenticate with the target Kubernetes cluster."
+      }
+    }
+  },
+  {
+    "$type": "DiscriminatedObjectType",
+    "name": "KubernetesExtensionClusterConfig",
+    "discriminator": "clusterType",
+    "baseProperties": {
       "namespace": {
         "type": {
-          "$ref": "#/1"
+          "$ref": "#/0"
         },
         "flags": 0,
-        "description": "The namespace to use for all Kubernetes objects within the module. If not set, the namespace within the kubeconfig file will be used."
+        "description": "The namespace to use for all namespaced Kubernetes objects within the module. If not set, the default namespace within the kubeconfig file will be used."
+      },
+      "context": {
+        "type": {
+          "$ref": "#/0"
+        },
+        "flags": 0,
+        "description": "The context to use. If not set, the current-context within the kubeconfig file will be used."
+      }
+    },
+    "elements": {
+      "Managed": {
+        "$ref": "#/4"
+      },
+      "Custom": {
+        "$ref": "#/6"
       }
     }
   }

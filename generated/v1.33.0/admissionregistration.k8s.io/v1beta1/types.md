@@ -5,7 +5,7 @@
 ### Properties
 * **apiVersion**: 'admissionregistration.k8s.io/v1beta1' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **kind**: 'ValidatingAdmissionPolicy' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **spec**: [IoK8SApiAdmissionregistrationV1Beta1ValidatingAdmissionPolicySpec](#iok8sapiadmissionregistrationv1beta1validatingadmissionpolicyspec): ValidatingAdmissionPolicySpec is the specification of the desired behavior of the AdmissionPolicy.
 * **status**: [IoK8SApiAdmissionregistrationV1Beta1ValidatingAdmissionPolicyStatus](#iok8sapiadmissionregistrationv1beta1validatingadmissionpolicystatus): ValidatingAdmissionPolicyStatus represents the status of an admission validation policy.
 
@@ -14,7 +14,7 @@
 ### Properties
 * **apiVersion**: 'admissionregistration.k8s.io/v1beta1' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 * **kind**: 'ValidatingAdmissionPolicyBinding' (ReadOnly, DeployTimeConstant): Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+* **metadata**: [IoK8SApimachineryPkgApisMetaV1ObjectMeta](#iok8sapimachinerypkgapismetav1objectmeta) (Required, Identifier): ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
 * **spec**: [IoK8SApiAdmissionregistrationV1Beta1ValidatingAdmissionPolicyBindingSpec](#iok8sapiadmissionregistrationv1beta1validatingadmissionpolicybindingspec): ValidatingAdmissionPolicyBindingSpec is the specification of the ValidatingAdmissionPolicyBinding.
 
 ## IoK8SApiAdmissionregistrationV1Beta1AuditAnnotation
