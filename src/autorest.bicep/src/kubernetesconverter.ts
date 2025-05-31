@@ -27,12 +27,16 @@ export class KubernetesConverter extends SchemaConverter {
                 const metadataObjectType = builder.factory.lookupType(propertyType.type) as ObjectType;
                 metadataObjectType.properties["name"].flags = ObjectTypePropertyFlags.DeployTimeConstant | ObjectTypePropertyFlags.Required | ObjectTypePropertyFlags.Identifier;
 
+                // Remove metadata.generateName property, as it is not a good practice to use it in Bicep.
+                delete metadataObjectType.properties["generateName"];
+
                 if (metadataObjectType.properties["namespace"] !== undefined) {
                     metadataObjectType.properties["namespace"].flags = ObjectTypePropertyFlags.DeployTimeConstant | ObjectTypePropertyFlags.Identifier;
                 }
 
                 for (const [metadataName, metadataValue] of Object.entries(metadataObjectType.properties)) {
                     if (metadataName.toLowerCase().includes("timestamp") ||
+                        metadataName.toLowerCase().includes("managedfields") ||
                         metadataValue.description?.toLowerCase().includes("read-only") ||
                         metadataValue.description?.toLowerCase().includes("readonly")) {
                         metadataValue.flags |= ObjectTypePropertyFlags.ReadOnly;
@@ -43,6 +47,7 @@ export class KubernetesConverter extends SchemaConverter {
             return propertyType;
         }
 
+        // Ignore generateName property, as it is not a good practice to use it in Bicep.
         return this.process(builder, provider, fullyQualifiedType, definitions, undefined, patchObjectTypeProperty);
     }
 }
