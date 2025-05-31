@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import path from "path";
-import { buildIndex, CrossFileTypeReference, ObjectTypePropertyFlags, readTypesJson, TypeFactory, TypeFile, TypeSettings, writeIndexJson, writeIndexMarkdown, writeMarkdown, writeTypesJson } from "bicep-types";
+import { buildIndex, CrossFileTypeReference, ObjectTypePropertyFlags, readTypesJson, ResourceFlags, ScopeType, TypeFactory, TypeFile, TypeSettings, writeIndexJson, writeIndexMarkdown, writeMarkdown, writeTypesJson } from "bicep-types";
 import { resolveOutputPath } from "./paths";
 import { findFileRecursively, readUtf8File, writeFile } from "./utils/io";
 import { Logger } from "./logging";
@@ -9,7 +9,195 @@ import { Logger } from "./logging";
 const baseSettings: Omit<TypeSettings, "version"> = {
   name: "Kubernetes",
   isSingleton: true,
-  isPreview: true,
+}
+
+function buildConfigurationType(typeFactory: TypeFactory) {
+  const commonConfigurationType = {
+    namespace: {
+      type: typeFactory.addStringType(),
+      flags: ObjectTypePropertyFlags.None,
+      description: "The namespace to use for all namespaced Kubernetes objects within the module. If not set, the default namespace within the kubeconfig file will be used.",
+    },
+    context: {
+      type: typeFactory.addStringType(),
+      flags: ObjectTypePropertyFlags.None,
+      description: "The context to use. If not set, the current-context within the kubeconfig file will be used.",
+    }
+  };
+  const managedClusterConfigurationType = typeFactory.addObjectType("KubernetesExtensionManagedClusterConfig", {
+    clusterType: {
+      type: typeFactory.addStringLiteralType("Managed"),
+      flags: ObjectTypePropertyFlags.Required,
+      description: "The cluster type to use. Can be either 'Managed' or 'Custom'.",
+    },
+    credentialType: {
+      type: typeFactory.addUnionType([typeFactory.addStringLiteralType("Admin"), typeFactory.addStringLiteralType("User")]),
+      flags: ObjectTypePropertyFlags.Required,
+      description: "The type of credential to use. Can be either 'Admin' or 'User'.",
+    },
+    managedClusterId: {
+      type: typeFactory.addStringType(),
+      flags: ObjectTypePropertyFlags.Required,
+      description: "The resource ID of the managed Azure Kubernetes Service (AKS) cluster.",
+    },
+  });
+  const customClusterConfigurationType = typeFactory.addObjectType("KubernetesExtensionCustomClusterConfig", {
+    clusterType: {
+      type: typeFactory.addStringLiteralType("Custom"),
+      flags: ObjectTypePropertyFlags.Required,
+      description: "The cluster type to use. Can be either 'Managed' or 'Custom'.",
+    },
+    kubeconfig: {
+      type: typeFactory.addStringType(/*sensitive*/ true),
+      flags: ObjectTypePropertyFlags.Required,
+      description: "The contents of a kubeconfig file, encoded in Base64. This is used to authenticate with the target Kubernetes cluster.",
+    },
+  });
+
+  return typeFactory.addDiscriminatedObjectType("KubernetesExtensionClusterConfig", "clusterType", commonConfigurationType, {
+    "Managed": managedClusterConfigurationType,
+    "Custom": customClusterConfigurationType,
+  });
+}
+
+function buildFallbackResourceType(typeFactory: TypeFactory) {
+  const fallbackResourceBodyType = typeFactory.addObjectType("FallbackResourceBodyType", {
+    metadata: {
+      type: typeFactory.addObjectType("MetadataObject", {
+        name: {
+          type: typeFactory.addStringType(),
+          flags: ObjectTypePropertyFlags.Required | ObjectTypePropertyFlags.Identifier | ObjectTypePropertyFlags.DeployTimeConstant,
+          description: "Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names",
+        },
+        namespace: {
+          type: typeFactory.addStringType(),
+          flags: ObjectTypePropertyFlags.Identifier | ObjectTypePropertyFlags.DeployTimeConstant,
+          description: "Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the \"default\" namespace, but \"default\" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.",
+        },
+        resourceVersion: {
+          type: typeFactory.addStringType(),
+          flags: ObjectTypePropertyFlags.ReadOnly,
+          description: "An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.",
+        },
+        uid: {
+          type: typeFactory.addStringType(),
+          flags: ObjectTypePropertyFlags.ReadOnly,
+          description: "UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.",
+        },
+        generation: {
+          type: typeFactory.addIntegerType(),
+          flags: ObjectTypePropertyFlags.ReadOnly,
+          description: "A sequence number representing a specific generation of the desired state. Populated by the system. Read-only.",
+        },
+        labels: {
+          type: typeFactory.addObjectType("LabelsObject", {}, typeFactory.addStringType()),
+          flags: ObjectTypePropertyFlags.None,
+          description: "Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels",
+        },
+        annotations: {
+          type: typeFactory.addObjectType("AnnotationsObject", {}, typeFactory.addStringType()),
+          flags: ObjectTypePropertyFlags.None,
+          description: "Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations",
+        },
+        creationTimestamp: {
+          type: typeFactory.addStringType(),
+          flags: ObjectTypePropertyFlags.ReadOnly,
+          description: "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers",
+        },
+        deletionTimestamp: {
+          type: typeFactory.addStringType(),
+          flags: ObjectTypePropertyFlags.ReadOnly,
+          description: "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers",
+        },
+        finallizers: {
+          type: typeFactory.addArrayType(typeFactory.addStringType()),
+          flags: ObjectTypePropertyFlags.None,
+          description: "Must be empty before the object is deleted from the registry. Each entry is an identifier for the responsible component that will remove the entry from the list. If the deletionTimestamp of the object is non-nil, entries in this list can only be removed. Finalizers may be processed and removed in any order.  Order is NOT enforced because it introduces significant risk of stuck finalizers. finalizers is a shared field, any actor with permission can reorder it. If the finalizer list is processed in order, then this can lead to a situation in which the component responsible for the first finalizer in the list is waiting for a signal (field value, external system, or other) produced by a component responsible for a finalizer later in the list, resulting in a deadlock. Without enforced ordering finalizers are free to order amongst themselves and are not vulnerable to ordering changes in the list.",
+        },
+        ownerReferences: {
+          type: typeFactory.addArrayType(typeFactory.addObjectType("OwnerReferenceObject", {
+            apiVersion: {
+              type: typeFactory.addStringType(),
+              flags: ObjectTypePropertyFlags.Required,
+              description: "API version of the referent.",
+            },
+            kind: {
+              type: typeFactory.addStringType(),
+              flags: ObjectTypePropertyFlags.Required,
+              description: "Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+            },
+            name: {
+              type: typeFactory.addStringType(),
+              flags: ObjectTypePropertyFlags.Required,
+              description: "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names",
+            },
+            uid: {
+              type: typeFactory.addStringType(),
+              flags: ObjectTypePropertyFlags.Required,
+              description: "UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids",
+            },
+            controller: {
+              type: typeFactory.addBooleanType(),
+              flags: ObjectTypePropertyFlags.None,
+              description: "If true, this reference points to the managing controller.",
+            },
+            blockOwnerDeletion: {
+              type: typeFactory.addBooleanType(),
+              flags: ObjectTypePropertyFlags.None,
+              description: "If true, AND if the owner has the \"foregroundDeletion\" finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs \"delete\" permission of the owner, otherwise 422 (Unprocessable Entity) will be returned."
+            },
+            managedFields: {
+              type: typeFactory.addArrayType(typeFactory.addObjectType("ManagedFieldsObject", {
+                manager: {
+                  type: typeFactory.addStringType(),
+                  flags: ObjectTypePropertyFlags.None,
+                  description: "Manager is an identifier of the workflow managing these fields.",
+                },
+                operation: {
+                  type: typeFactory.addStringType(),
+                  flags: ObjectTypePropertyFlags.None,
+                  description: "Operation is the type of operation which lead to this ManagedFieldsEntry being created. The only valid values for this field are 'Apply' and 'Update'.",
+                },
+                apiVersion: {
+                  type: typeFactory.addStringType(),
+                  flags: ObjectTypePropertyFlags.Required,
+                  description: "APIVersion defines the version of this resource that this field set applies to. The format is \"group/version\" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted.",
+                },
+                fieldsType: {
+                  type: typeFactory.addStringType(),
+                  flags: ObjectTypePropertyFlags.Required,
+                  description: "FieldsType is the discriminator for the different fields format and version. There is currently only one possible value: \"FieldsV1\"",
+                },
+                fieldsV1: {
+                  type: typeFactory.addObjectType("FieldsV1Object", {}, typeFactory.addAnyType()),
+                  flags: ObjectTypePropertyFlags.None,
+                  description: "FieldsV1 holds the first JSON version of the fields. It is a serialized version of the fields in the object, and is used to determine what fields have changed.",
+                },
+                subresource: {
+                  type: typeFactory.addStringType(),
+                  flags: ObjectTypePropertyFlags.None,
+                  description: "Subresource is the name of the subresource used to update that object, or empty string if the object was updated through the main resource. The value of this field is used to distinguish between managers, even if they share the same name. For example, a status update will be distinct from a regular update using the same manager name. Note that the APIVersion field is not related to the Subresource field and it always corresponds to the version of the main resource.",
+                },
+                time: {
+                  type: typeFactory.addStringType(),
+                  flags: ObjectTypePropertyFlags.None,
+                  description: "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
+                }
+              })),
+              flags: ObjectTypePropertyFlags.ReadOnly,
+              description: "ManagedFields maps workflow-id and version to the set of fields that are managed by that workflow. This is mostly for internal housekeeping, and users typically shouldn't need to set or understand this field. A workflow can be the user's name, a controller's name, or the name of a specific apply path like \"ci-cd\". The set of fields is always in the version that the workflow used when modifying the object.",
+            }
+          })),
+        flags: ObjectTypePropertyFlags.None,
+        description: "",
+        }
+      }),
+      flags: ObjectTypePropertyFlags.Identifier | ObjectTypePropertyFlags.Required,
+      description: "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create",
+    },
+  }, typeFactory.addAnyType());
+
+  return typeFactory.addResourceType("FallbackResourceType", ScopeType.Unknown, undefined, fallbackResourceBodyType, ResourceFlags.None)
 }
 
 async function buildTypeIndex(tag: string, logger: Logger) {
@@ -30,53 +218,22 @@ async function buildTypeIndex(tag: string, logger: Logger) {
   }
 
   const typeFactory = new TypeFactory();
-  const commonConfigurationType = {
-    namespace: {
-      type: typeFactory.addStringType(),
-      flags: ObjectTypePropertyFlags.None,
-      description: "The namespace to use for all namespaced Kubernetes objects within the module. If not set, the default namespace within the kubeconfig file will be used.",
-    },
-    context: {
-      type: typeFactory.addStringType(),
-      flags: ObjectTypePropertyFlags.None,
-      description: "The context to use. If not set, the current-context within the kubeconfig file will be used.",
-    }
-  };
-  const managedClusterConfigurationType = typeFactory.addObjectType("KubernetesExtensionManagedClusterConfig", {
-    credentialType: {
-      type: typeFactory.addUnionType([typeFactory.addStringLiteralType("Admin"), typeFactory.addStringLiteralType("User")]),
-      flags: ObjectTypePropertyFlags.Required,
-      description: "The type of credential to use. Can be either 'Admin' or 'User'.",
-    },
-    managedClusterId: {
-      type: typeFactory.addStringType(),
-      flags: ObjectTypePropertyFlags.Required,
-      description: "The resource ID of the managed Azure Kubernetes Service (AKS) cluster.",
-    },
-  });
-  const customClusterConfigurationType = typeFactory.addObjectType("KubernetesExtensionCustomClusterConfig", {
-    kubeconfig: {
-      type: typeFactory.addStringType(/*sensitive*/ true),
-      flags: ObjectTypePropertyFlags.Required,
-      description: "The contents of a kubeconfig file, encoded in Base64. This is used to authenticate with the target Kubernetes cluster.",
-    },
-  });
-
-  const clusterConfigurationType = typeFactory.addDiscriminatedObjectType("KubernetesExtensionClusterConfig", "clusterType", commonConfigurationType, {
-    "Managed": managedClusterConfigurationType,
-    "Custom": customClusterConfigurationType,
-  });
+  const configurationType = buildConfigurationType(typeFactory);
+  const fallbackResourceType = buildFallbackResourceType(typeFactory);
 
   await writeFile(`${baseDir}/types.json`, writeTypesJson(typeFactory.types));
   await writeFile(`${baseDir}/types.md`, writeMarkdown(typeFactory.types));
 
+  const configurationTypeReference = new CrossFileTypeReference("types.json", configurationType.index);
+  const fallbackResourceTypeReference = new CrossFileTypeReference("types.json", fallbackResourceType.index);
+
   const settings = {
     ...baseSettings,
     version: tag.slice(1), // v1.0.0 => 1.0.0
-    configurationType: new CrossFileTypeReference("types.json", clusterConfigurationType.index),
+    configurationType: configurationTypeReference,
   };
 
-  const index = buildIndex(typeFiles, log => logger.info(log), settings);
+  const index = buildIndex(typeFiles, log => logger.info(log), settings, fallbackResourceTypeReference);
 
   await writeFile(`${baseDir}/index.json`, writeIndexJson(index));
   await writeFile(`${baseDir}/index.md`, writeIndexMarkdown(index));
