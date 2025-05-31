@@ -248,10 +248,12 @@
   "settings": {
     "name": "Kubernetes",
     "isSingleton": true,
-    "isPreview": true,
     "version": "1.33.0",
     "configurationType": {
-      "$ref": "types.json#/7"
+      "$ref": "types.json#/9"
     }
+  },
+  "fallbackResourceType": {
+    "$ref": "types.json#/23"
   }
 }
