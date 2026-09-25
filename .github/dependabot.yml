@@ -12,16 +12,21 @@ updates:
       day: "sunday"
     cooldown:
       default-days: 7
+    groups:
+      github-actions:
+        patterns:
+          - "*"
   - package-ecosystem: "npm"
-    directory: "/src/generator"
+    directories:
+      - "/src/generator"
+      - "/src/autorest.bicep"
     schedule:
       interval: "weekly"
       day: "sunday"
-  - package-ecosystem: "npm"
-    directory: "/src/autorest.bicep"
-    schedule:
-      interval: "weekly"
-      day: "sunday"
+    groups:
+      npm:
+        patterns:
+          - "*"
   - package-ecosystem: "nuget"
     directory: "/"
     schedule:
@@ -30,3 +35,7 @@ updates:
     ignore:
       - dependency-name: "Moq"
       - dependency-name: "FluentAssertions"
+    groups:
+      nuget:
+        patterns:
+          - "*"
