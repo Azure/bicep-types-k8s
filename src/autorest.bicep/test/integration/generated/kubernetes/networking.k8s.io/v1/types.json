@@ -344,11 +344,11 @@
   {
     "$type": "ResourceType",
     "name": "networking.k8s.io/IngressClass@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/16"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -652,11 +652,11 @@
   {
     "$type": "ResourceType",
     "name": "networking.k8s.io/Ingress@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/36"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -959,10 +959,10 @@
   {
     "$type": "ResourceType",
     "name": "networking.k8s.io/NetworkPolicy@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/59"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   }
 ]

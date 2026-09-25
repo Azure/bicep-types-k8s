@@ -480,10 +480,10 @@
   {
     "$type": "ResourceType",
     "name": "discovery.k8s.io/EndpointSlice@v1beta1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/22"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   }
 ]

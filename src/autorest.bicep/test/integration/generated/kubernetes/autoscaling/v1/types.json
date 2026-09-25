@@ -337,11 +337,11 @@
   {
     "$type": "ResourceType",
     "name": "autoscaling/Scale@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/16"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -497,10 +497,10 @@
   {
     "$type": "ResourceType",
     "name": "autoscaling/HorizontalPodAutoscaler@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/23"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   }
 ]

@@ -5,7 +5,7 @@ import { SchemaConverter } from "./converter";
 import { KubernetesDescriptor } from "./kubernetes";
 import { ProviderDefinition, ResourceDefinition } from "./resources";
 import { TypeBuilder } from "./typebuilder";
-import { ObjectType, ObjectTypeProperty, ObjectTypePropertyFlags, ResourceType } from "bicep-types";
+import { ObjectType, ObjectTypeProperty, ObjectTypePropertyFlags, ResourceType } from "@azure/bicep-types";
 
 export class KubernetesConverter extends SchemaConverter {
     Convert(builder: TypeBuilder, provider: ProviderDefinition, fullyQualifiedType: string, definitions: ResourceDefinition[]): ResourceType | null {

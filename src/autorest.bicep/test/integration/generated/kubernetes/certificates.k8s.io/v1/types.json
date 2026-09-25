@@ -459,10 +459,10 @@
   {
     "$type": "ResourceType",
     "name": "certificates.k8s.io/CertificateSigningRequest@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/22"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   }
 ]

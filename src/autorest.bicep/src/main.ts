@@ -4,7 +4,7 @@
 import { AutoRestExtension, AutorestExtensionHost, startSession } from "@autorest/extension-base";
 import { generateTypes } from "./type-generator";
 import { CodeModel, codeModelSchema } from "@autorest/codemodel";
-import { writeTypesJson, writeMarkdown } from "bicep-types";
+import { writeTypesJson, writeMarkdown } from "@azure/bicep-types";
 import { getKubernetesDefinitions } from "./kubernetes"
 
 export async function processRequest(host: AutorestExtensionHost) {

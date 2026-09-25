@@ -5,7 +5,7 @@ import { TypeBuilder } from './typebuilder';
 import { Channel } from '@autorest/extension-base';
 import { Dictionary } from 'lodash';
 import { getFullyQualifiedType, ProviderDefinition, ResourceDefinition } from './resources';
-import { DiscriminatedObjectType, ObjectTypeProperty, ResourceFlags, ResourceType, TypeBaseKind, TypeReference } from 'bicep-types';
+import { DiscriminatedObjectType, ObjectTypeProperty, ResourceType, TypeBaseKind, TypeReference } from '@azure/bicep-types';
 
 export type TypeCallback = (definition: ResourceDefinition, properties: Dictionary<ObjectTypeProperty>) => void;
 export type ObjectTypePropertyCallback = (definition: ResourceDefinition, propertyName: string, propertyType: ObjectTypeProperty) => ObjectTypeProperty;
@@ -127,9 +127,9 @@ export abstract class SchemaConverter {
         return {
             type: TypeBaseKind.ResourceType,
             name: `${fullyQualifiedType}@${result.descriptor.apiVersion}`,
-            scopeType: result.descriptor.scopeType,
             body: result.bodyType,
-            flags: ResourceFlags.None,
+            readableScopes: result.descriptor.scopeType,
+            writableScopes: result.descriptor.scopeType,
         };
     }
 }

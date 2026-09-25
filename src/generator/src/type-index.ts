@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import path from "path";
-import { buildIndex, CrossFileTypeReference, ObjectTypePropertyFlags, readTypesJson, ResourceFlags, ScopeType, TypeFactory, TypeFile, TypeSettings, writeIndexJson, writeIndexMarkdown, writeMarkdown, writeTypesJson } from "bicep-types";
+import { buildIndex, CrossFileTypeReference, ObjectTypePropertyFlags, readTypesJson, TypeFactory, TypeFile, TypeSettings, writeIndexJson, writeIndexMarkdown, writeMarkdown, writeTypesJson } from "@azure/bicep-types";
 import { resolveOutputPath } from "./paths";
 import { findFileRecursively, readUtf8File, writeFile } from "./utils/io";
 import { Logger } from "./logging";
@@ -197,7 +197,7 @@ function buildFallbackResourceType(typeFactory: TypeFactory) {
     },
   }, typeFactory.addAnyType());
 
-  return typeFactory.addResourceType("FallbackResourceType", ScopeType.Unknown, undefined, fallbackResourceBodyType, ResourceFlags.None)
+  return typeFactory.addUnscopedResourceType("FallbackResourceType", fallbackResourceBodyType)
 }
 
 async function buildTypeIndex(tag: string, logger: Logger) {
@@ -246,4 +246,3 @@ export async function buildTypeIndexes(tags: string[], summaryLogger: Logger) {
     await buildTypeIndex(tag, summaryLogger);
   }
 }
-

@@ -327,11 +327,11 @@
   {
     "$type": "ResourceType",
     "name": "core/ConfigMap@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/16"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -552,11 +552,11 @@
   {
     "$type": "ResourceType",
     "name": "core/Endpoints@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/28"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -734,11 +734,11 @@
   {
     "$type": "ResourceType",
     "name": "core/Event@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/34"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -892,11 +892,11 @@
   {
     "$type": "ResourceType",
     "name": "core/LimitRange@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/46"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -1241,11 +1241,11 @@
   {
     "$type": "ResourceType",
     "name": "core/PersistentVolumeClaim@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/66"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -5266,11 +5266,11 @@
   {
     "$type": "ResourceType",
     "name": "core/Pod@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/226"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -5337,11 +5337,11 @@
   {
     "$type": "ResourceType",
     "name": "core/PodTemplate@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/231"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -5532,11 +5532,11 @@
   {
     "$type": "ResourceType",
     "name": "core/ReplicationController@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/240"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -5719,11 +5719,11 @@
   {
     "$type": "ResourceType",
     "name": "core/ResourceQuota@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/254"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -5807,11 +5807,11 @@
   {
     "$type": "ResourceType",
     "name": "core/Secret@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/260"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -5884,11 +5884,11 @@
   {
     "$type": "ResourceType",
     "name": "core/ServiceAccount@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/266"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -6211,11 +6211,11 @@
   {
     "$type": "ResourceType",
     "name": "core/Service@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/283"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -6353,11 +6353,11 @@
   {
     "$type": "ResourceType",
     "name": "core/Namespace@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/292"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -6945,11 +6945,11 @@
   {
     "$type": "ResourceType",
     "name": "core/Node@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/319"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -7875,10 +7875,10 @@
   {
     "$type": "ResourceType",
     "name": "core/PersistentVolume@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/346"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   }
 ]

@@ -454,11 +454,11 @@
   {
     "$type": "ResourceType",
     "name": "policy/PodDisruptionBudget@v1beta1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/22"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -1015,10 +1015,10 @@
   {
     "$type": "ResourceType",
     "name": "policy/PodSecurityPolicy@v1beta1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/55"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   }
 ]

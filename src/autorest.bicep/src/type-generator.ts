@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { AutorestExtensionHost } from "@autorest/extension-base";
-import { TypeFactory, TypeReference } from "bicep-types";
+import { TypeFactory, TypeReference } from "@azure/bicep-types";
 import { Dictionary } from 'lodash';
 import { ProviderDefinition } from "./resources";
 import { TypeBuilder } from "./typebuilder";

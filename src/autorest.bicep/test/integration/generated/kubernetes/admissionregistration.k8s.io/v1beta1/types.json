@@ -591,11 +591,11 @@
   {
     "$type": "ResourceType",
     "name": "admissionregistration.k8s.io/MutatingWebhookConfiguration@v1beta1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/30"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -736,10 +736,10 @@
   {
     "$type": "ResourceType",
     "name": "admissionregistration.k8s.io/ValidatingWebhookConfiguration@v1beta1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/38"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   }
 ]
