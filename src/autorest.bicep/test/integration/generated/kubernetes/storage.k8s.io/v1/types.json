@@ -344,11 +344,11 @@
   {
     "$type": "ResourceType",
     "name": "storage.k8s.io/CSIDriver@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/16"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -467,11 +467,11 @@
   {
     "$type": "ResourceType",
     "name": "storage.k8s.io/CSINode@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/25"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "ObjectType",
@@ -625,11 +625,11 @@
   {
     "$type": "ResourceType",
     "name": "storage.k8s.io/StorageClass@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/36"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -2141,10 +2141,10 @@
   {
     "$type": "ResourceType",
     "name": "storage.k8s.io/VolumeAttachment@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/88"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   }
 ]

@@ -483,10 +483,10 @@
   {
     "$type": "ResourceType",
     "name": "events.k8s.io/Event@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/17"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   }
 ]

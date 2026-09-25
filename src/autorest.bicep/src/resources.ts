@@ -7,7 +7,7 @@ import { ChoiceSchema, CodeModel, HttpMethod, HttpParameter, HttpRequest, HttpRe
 import { Channel, AutorestExtensionHost } from "@autorest/extension-base";
 import { keys, Dictionary, values } from 'lodash';
 import { success, failure, Result } from './utils';
-import { ScopeType } from "bicep-types";
+import { All, ScopeType } from "@azure/bicep-types";
 
 export interface ResourceDescriptor {
   scopeType: ScopeType;
@@ -369,16 +369,10 @@ export function getProviderDefinitions(codeModel: CodeModel, host: AutorestExten
     }
 
     // ambiguous - without any further information, we have to assume 'all'
-    return ScopeType.Unknown;
+    return All;
   }
 
   function mergeScopes(scopeA: ScopeType, scopeB: ScopeType) {
-    // We have to assume any (unknown) scope if either scope is unknown
-    // Bitwise OR will not handle this case correctly as 'unknown' is 0.
-    if (scopeA == ScopeType.Unknown || scopeB == ScopeType.Unknown) {
-      return ScopeType.Unknown;
-    }
-
     return scopeA | scopeB;
   }
 

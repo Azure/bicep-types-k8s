@@ -304,11 +304,11 @@
   {
     "$type": "ResourceType",
     "name": "apps/ControllerRevision@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/14"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -4365,11 +4365,11 @@
   {
     "$type": "ResourceType",
     "name": "apps/DaemonSet@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/179"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -4641,11 +4641,11 @@
   {
     "$type": "ResourceType",
     "name": "apps/Deployment@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/189"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -4828,11 +4828,11 @@
   {
     "$type": "ResourceType",
     "name": "apps/ReplicaSet@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/197"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -5244,10 +5244,10 @@
   {
     "$type": "ResourceType",
     "name": "apps/StatefulSet@v1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/214"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   }
 ]

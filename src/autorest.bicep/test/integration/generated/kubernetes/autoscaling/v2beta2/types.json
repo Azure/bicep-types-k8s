@@ -963,10 +963,10 @@
   {
     "$type": "ResourceType",
     "name": "autoscaling/HorizontalPodAutoscaler@v2beta2",
-    "scopeType": 0,
     "body": {
       "$ref": "#/43"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   }
 ]

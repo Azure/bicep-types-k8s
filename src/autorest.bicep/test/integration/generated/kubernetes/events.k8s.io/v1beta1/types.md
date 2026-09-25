@@ -1,7 +1,8 @@
 # events.k8s.io @ v1beta1
 
 ## Resource events.k8s.io/Event@v1beta1
-* **Valid Scope(s)**: Unknown
+* **Readable Scope(s)**: Tenant, ManagementGroup, Subscription, ResourceGroup, Extension
+* **Writable Scope(s)**: Tenant, ManagementGroup, Subscription, ResourceGroup, Extension
 ### Properties
 * **action**: string: action is what action was taken/failed regarding to the regarding object. It is machine-readable. This field can have at most 128 characters.
 * **apiVersion**: 'events.k8s.io/v1beta1' (ReadOnly, DeployTimeConstant): APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources

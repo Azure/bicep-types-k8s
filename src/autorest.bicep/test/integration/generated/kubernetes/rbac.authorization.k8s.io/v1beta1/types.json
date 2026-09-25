@@ -371,11 +371,11 @@
   {
     "$type": "ResourceType",
     "name": "rbac.authorization.k8s.io/ClusterRoleBinding@v1beta1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/17"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "ObjectType",
@@ -592,11 +592,11 @@
   {
     "$type": "ResourceType",
     "name": "rbac.authorization.k8s.io/ClusterRole@v1beta1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/35"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -656,11 +656,11 @@
   {
     "$type": "ResourceType",
     "name": "rbac.authorization.k8s.io/RoleBinding@v1beta1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/40"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   },
   {
     "$type": "StringLiteralType",
@@ -713,10 +713,10 @@
   {
     "$type": "ResourceType",
     "name": "rbac.authorization.k8s.io/Role@v1beta1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/45"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   }
 ]

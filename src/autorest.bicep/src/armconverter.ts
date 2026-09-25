@@ -6,7 +6,7 @@ import { Dictionary } from "lodash";
 import { SchemaConverter } from "./converter";
 import { ProviderDefinition, ResourceDefinition } from "./resources";
 import { TypeBuilder } from "./typebuilder";
-import { ObjectTypeProperty, ObjectTypePropertyFlags, ResourceType, TypeReference } from "bicep-types";
+import { ObjectTypeProperty, ObjectTypePropertyFlags, ResourceType, TypeReference } from "@azure/bicep-types";
 
 export class ARMConverter extends SchemaConverter {
     Convert(builder: TypeBuilder, provider: ProviderDefinition, fullyQualifiedType: string, definitions: ResourceDefinition[]): ResourceType | null {

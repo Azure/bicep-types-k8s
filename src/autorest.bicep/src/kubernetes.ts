@@ -5,7 +5,7 @@ import { KubernetesConverter } from './kubernetesconverter';
 import { CodeModel, HttpResponse, ObjectSchema, Operation, SchemaResponse } from "@autorest/codemodel";
 import { Channel, AutorestExtensionHost } from "@autorest/extension-base";
 import { ProviderDefinition, ResourceDefinition, ResourceDescriptor } from './resources';
-import { ScopeType } from 'bicep-types';
+import { All } from '@azure/bicep-types';
 
 export interface KubernetesDescriptor extends ResourceDescriptor {
     group: string;
@@ -78,7 +78,7 @@ export function getKubernetesDefinitions(codeModel: CodeModel, host: AutorestExt
             }
 
             const descriptor: KubernetesDescriptor = {
-                scopeType: ScopeType.Unknown,
+                scopeType: All,
                 namespace: namespace,
                 apiVersion: group.version,
                 typeSegments: [kindKey],

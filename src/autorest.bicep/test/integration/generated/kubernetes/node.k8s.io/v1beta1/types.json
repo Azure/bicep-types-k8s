@@ -407,10 +407,10 @@
   {
     "$type": "ResourceType",
     "name": "node.k8s.io/RuntimeClass@v1beta1",
-    "scopeType": 0,
     "body": {
       "$ref": "#/20"
     },
-    "flags": 0
+    "readableScopes": 31,
+    "writableScopes": 31
   }
 ]
